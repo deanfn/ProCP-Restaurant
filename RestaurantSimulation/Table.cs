@@ -51,7 +51,10 @@ namespace RestaurantSimulation
         {
             return "size: " + size + ", id: " + id;
         }
-
+        /// <summary>
+        /// TODO <--- Simple explanation please
+        /// </summary>
+        /// <param name="pb"></param>
         public override void Drawing(ref PictureBox pb)
         {
             if (size == 2)

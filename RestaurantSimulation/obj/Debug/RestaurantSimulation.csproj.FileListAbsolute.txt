@@ -7,3 +7,6 @@ C:\Users\Dean\Documents\GitHub\ProCP-Restaurant\RestaurantSimulation\obj\Debug\R
 C:\Users\Dean\Documents\GitHub\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csproj.GenerateResource.Cache
 C:\Users\Dean\Documents\GitHub\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
 C:\Users\Dean\Documents\GitHub\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe.config
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
