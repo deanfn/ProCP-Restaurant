@@ -58,6 +58,10 @@ namespace RestaurantSimulation
                 Image i = (Bitmap)Properties.Resources.Table.Clone();
 
                 g.DrawImage(i, col, row, width, height);
+
+            Font newFont = new Font("Arial", 16);
+            g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (x*40) + 10, (y*40) + 10);
+
         }
     }
 }
