@@ -15,7 +15,7 @@ namespace RestaurantSimulation
         {
             foreach (Component com in componentOnPlan)
             {
-                if ((c.x1 == com.x1 && c.y1 == com.y1) || (c.x1 == com.x2 && c.y1 == com.y2) || (c.x2 == com.x1 && c.y2 == com.y1))
+                if ((c.x == com.x && c.y == com.y))
                 {
                     MessageBox.Show("Please Select Free Spot!");
                     return false;

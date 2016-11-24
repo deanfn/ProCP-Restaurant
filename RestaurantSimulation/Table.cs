@@ -29,18 +29,6 @@ namespace RestaurantSimulation
             this.merging = merg;
             this.id = count;
             count++;
-
-            if(size == 4)
-            {
-                this.x2 = p.X / 40;
-                this.y2 = (p.Y + 40) / 40;
-            }
-
-            else
-            {
-                this.x2 = -1;
-                this.y2 = -1;
-            }
         }
 
         /// <summary>
@@ -57,13 +45,11 @@ namespace RestaurantSimulation
         /// <param name="pb"></param>
         public override void Drawing(ref PictureBox pb)
         {
-            if (size == 2)
-            {
                 Graphics g = pb.CreateGraphics();
 
                 // Location
-                int col = ((x1) * 40) + 1;
-                int row = ((y1) * 40) + 1;
+                int col = ((x) * 40) + 1;
+                int row = ((y) * 40) + 1;
 
                 //Image Size
                 int width = 39;
@@ -72,28 +58,6 @@ namespace RestaurantSimulation
                 Image i = (Bitmap)Properties.Resources.Table.Clone();
 
                 g.DrawImage(i, col, row, width, height);
-            }
-
-            if (size == 4)
-            {
-                Graphics g = pb.CreateGraphics();
-
-                // Location
-                int col = ((x1) * 40) + 1;
-                int row = ((y1) * 40) + 1;
-                int col1 = ((x2) * 40) + 1;
-                int row1 = ((y2) * 40) + 1;
-
-                //Image Size
-                int width = 39;
-                int height = 39;
-
-                Image i = (Bitmap)Properties.Resources.Table.Clone();
-
-                g.DrawImage(i, col, row, width, height);
-                g.DrawImage(i, col1, row1, width, height);
-            }
-
         }
     }
 }
