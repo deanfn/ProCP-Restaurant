@@ -101,8 +101,30 @@ namespace RestaurantSimulation
                         choosenComponent = null;
                     }
                 }
+            }
 
-                
+            if (choosenComponent == component.bar)
+            {
+                if (rbSize2.Checked)
+                {
+                    Bar newBar = new Bar(2, e.Location);
+
+                    if (newPlan.AddComponent(newBar))
+                    {
+                        newBar.Drawing(ref RestaurantPlan);
+                        choosenComponent = null;
+                    }
+                }
+
+                else
+                {
+                    Bar newBar = new Bar(4, e.Location);
+                    if (newPlan.AddComponent(newBar))
+                    {
+                        newBar.Drawing(ref RestaurantPlan);
+                        choosenComponent = null;
+                    }
+                }
             }
         }
     }

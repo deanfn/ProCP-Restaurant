@@ -45,19 +45,19 @@ namespace RestaurantSimulation
         /// <param name="pb"></param>
         public override void Drawing(ref PictureBox pb)
         {
-                Graphics g = pb.CreateGraphics();
+            Graphics g = pb.CreateGraphics();
 
-                // Location
-                int col = ((x) * 40) + 1;
-                int row = ((y) * 40) + 1;
+            // Location
+            int col = ((x) * 40) + 1;
+            int row = ((y) * 40) + 1;
 
-                //Image Size
-                int width = 39;
-                int height = 39;
+            //Image Size
+            int width = 39;
+            int height = 39;
 
-                Image i = (Bitmap)Properties.Resources.Table.Clone();
+            Image i = (Bitmap)Properties.Resources.Table.Clone();
 
-                g.DrawImage(i, col, row, width, height);
+            g.DrawImage(i, col, row, width, height);
 
             Font newFont = new Font("Arial", 16);
             g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (x*40) + 10, (y*40) + 10);
