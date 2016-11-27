@@ -89,6 +89,10 @@ namespace RestaurantSimulation
                         newTable.Drawing(ref RestaurantPlan);
                         choosenComponent = null;
                     }
+                    else
+                    {
+                        newTable.DecreaseCount();
+                    }
                 }
 
                 else
@@ -99,6 +103,10 @@ namespace RestaurantSimulation
                     {
                         newTable.Drawing(ref RestaurantPlan);
                         choosenComponent = null;
+                    }
+                    else
+                    {
+                        newTable.DecreaseCount();
                     }
                 }
             }
@@ -114,6 +122,10 @@ namespace RestaurantSimulation
                         newBar.Drawing(ref RestaurantPlan);
                         choosenComponent = null;
                     }
+                    else
+                    {
+                        newBar.DecreaseCount();
+                    }
                 }
 
                 else
@@ -123,6 +135,10 @@ namespace RestaurantSimulation
                     {
                         newBar.Drawing(ref RestaurantPlan);
                         choosenComponent = null;
+                    }
+                    else
+                    {
+                        newBar.DecreaseCount();
                     }
                 }
             }

@@ -65,5 +65,10 @@ namespace RestaurantSimulation
             g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (X*40) + 10, (Y*40) + 10);
             g.DrawString(ID.ToString(), new Font("Arial", 10), Brushes.Black, (X * 40), (Y * 40));
         }
+
+        public void DecreaseCount()
+        {
+            count -= 1;
+        }
     }
 }

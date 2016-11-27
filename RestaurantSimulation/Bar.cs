@@ -48,5 +48,10 @@ namespace RestaurantSimulation
             g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (X * 40) + 10, (Y * 40) + 10);
 
         }
+
+        public void DecreaseCount()
+        {
+            count -= 1;
+        }
     }
 }
