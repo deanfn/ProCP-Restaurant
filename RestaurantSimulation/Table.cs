@@ -40,6 +40,7 @@ namespace RestaurantSimulation
         {
             return "size: " + size + ", id: " + ID;
         }
+
         /// <summary>
         /// TODO <--- Simple explanation please
         /// </summary>

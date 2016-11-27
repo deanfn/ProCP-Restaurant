@@ -49,11 +49,11 @@ namespace RestaurantSimulation
             return true;
         }
 
-        public Component GetComponent(int X, int Y)
+        public Component GetComponent(int x, int y)
         {
             foreach (Component c in componentOnPlan)
             {
-                if(c.X==X && c.Y==Y)
+                if(c.X == x && c.Y == y)
                 {
                     return c;
                 }
