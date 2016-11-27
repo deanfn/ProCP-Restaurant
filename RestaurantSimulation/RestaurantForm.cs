@@ -29,7 +29,7 @@ namespace RestaurantSimulation
         public int col = 0;
 
         //Enum
-        enum component { table, bar};
+        enum component { table, bar, groupArea, smokingArea };
         component? choosenComponent = null;
 
         public RestaurantForm()
@@ -126,6 +126,50 @@ namespace RestaurantSimulation
                     }
                 }
             }
+
+            // Draw group area
+            if (choosenComponent == component.groupArea)
+            {
+                var groupArea = new GroupArea(e.Location);
+
+                if (newPlan.AddComponent(groupArea))
+                {
+                    groupArea.Drawing(ref RestaurantPlan);
+                    choosenComponent = null;
+                }
+            }
+
+            // Draw smoke area
+            if (choosenComponent == component.smokingArea)
+            {
+                var smokeArea = new SmokeArea(e.Location);
+
+                if (newPlan.AddComponent(smokeArea))
+                {
+                    smokeArea.Drawing(ref RestaurantPlan);
+                    choosenComponent = null;
+                }
+            }
+        }
+
+        private void btnGroupA_Click(object sender, EventArgs e)
+        {
+            choosenComponent = component.groupArea;
+        }
+
+        private void btnSmokingA_Click(object sender, EventArgs e)
+        {
+            choosenComponent = component.smokingArea;
+        }
+
+        private void btnShowGATables_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(GroupArea.GroupAreaTables());
+        }
+
+        private void btnShowSATables_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(SmokeArea.SmokeAreaTables());
         }
     }
 }

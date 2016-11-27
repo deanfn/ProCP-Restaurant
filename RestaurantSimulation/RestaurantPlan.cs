@@ -15,8 +15,31 @@ namespace RestaurantSimulation
         {
             foreach (Component com in componentOnPlan)
             {
-                if ((c.x == com.x && c.y == com.y) || ((c.x * 40) + 40)/40 == com.x || ((c.x * 40) - 40) / 40 == com.x ||  ((c.y * 40) + 40) / 40 == com.y || ((c.y * 40) - 40) / 40 == com.y)
+                
+                if ((c.X == com.X && c.Y == com.Y) || ((c.X * 40) + 40)/40 == com.X ||
+                    ((c.X * 40) - 40) / 40 == com.X ||  ((c.Y * 40) + 40) / 40 == com.Y ||
+                    ((c.Y * 40) - 40) / 40 == com.Y)
                 {
+                    if ((com is GroupArea || com is SmokeArea) && c is Bar)
+                    {
+                        MessageBox.Show("The bar can be placed only outside of special areas!");
+                        return false;
+                    }
+                    else if (c.X == com.X && c.Y == com.Y && com is GroupArea && c is Table)
+                    {
+                        if ((com as GroupArea).AddTable(c))
+                        {
+                            break;
+                        }
+                    }
+                    else if (c.X == com.X && c.Y == com.Y && com is SmokeArea && c is Table)
+                    {
+                        if ((com as SmokeArea).AddTable(c))
+                        {
+                            break;
+                        }
+                    }
+
                     MessageBox.Show("Please Select Free Spot!");
                     return false;
                 }
@@ -26,11 +49,11 @@ namespace RestaurantSimulation
             return true;
         }
 
-        public Component GetComponent(int x, int y)
+        public Component GetComponent(int X, int Y)
         {
             foreach (Component c in componentOnPlan)
             {
-                if(c.x==x && c.y==y)
+                if(c.X==X && c.Y==Y)
                 {
                     return c;
                 }

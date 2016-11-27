@@ -10,11 +10,12 @@ namespace RestaurantSimulation
 {
     class Table : Component
     {
-        public int id;
         public int size;
         public bool available;
         public bool merging;
         private static int count = 0;
+
+        public int ID { get; }
 
         /// <summary>
         /// Creates new Table object, with unique ID
@@ -27,7 +28,7 @@ namespace RestaurantSimulation
             this.size = size;
             this.available = true;
             this.merging = merg;
-            this.id = count;
+            this.ID = count;
             count++;
         }
 
@@ -37,7 +38,7 @@ namespace RestaurantSimulation
         /// <returns></returns>
         public override string ToString()
         {
-            return "size: " + size + ", id: " + id;
+            return "size: " + size + ", id: " + ID;
         }
         /// <summary>
         /// TODO <--- Simple explanation please
@@ -48,8 +49,8 @@ namespace RestaurantSimulation
             Graphics g = pb.CreateGraphics();
 
             // Location
-            int col = ((x) * 40) + 1;
-            int row = ((y) * 40) + 1;
+            int col = ((X) * 40) + 1;
+            int row = ((Y) * 40) + 1;
 
             //Image Size
             int width = 39;
@@ -60,8 +61,8 @@ namespace RestaurantSimulation
             g.DrawImage(i, col, row, width, height);
 
             Font newFont = new Font("Arial", 16);
-            g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (x*40) + 10, (y*40) + 10);
-
+            g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (X*40) + 10, (Y*40) + 10);
+            g.DrawString(ID.ToString(), new Font("Arial", 10), Brushes.Black, (X * 40), (Y * 40));
         }
     }
 }

@@ -33,8 +33,8 @@ namespace RestaurantSimulation
             Graphics g = pb.CreateGraphics();
 
             // Location
-            int col = ((x) * 40) + 1;
-            int row = ((y) * 40) + 1;
+            int col = ((X) * 40) + 1;
+            int row = ((Y) * 40) + 1;
 
             //Image Size
             int width = 39;
@@ -45,7 +45,7 @@ namespace RestaurantSimulation
             g.DrawImage(i, col, row, width, height);
 
             Font newFont = new Font("Arial", 16);
-            g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (x * 40) + 10, (y * 40) + 10);
+            g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (X * 40) + 10, (Y * 40) + 10);
 
         }
     }

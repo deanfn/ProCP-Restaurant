@@ -55,6 +55,8 @@
             this.btnWaitingA = new System.Windows.Forms.Button();
             this.btnTable = new System.Windows.Forms.Button();
             this.RestaurantPlan = new System.Windows.Forms.PictureBox();
+            this.btnShowGATables = new System.Windows.Forms.Button();
+            this.btnShowSATables = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -74,9 +76,9 @@
             this.groupBox3.Controls.Add(this.PeakHourlbl);
             this.groupBox3.Controls.Add(this.RestaurantStafflbl);
             this.groupBox3.Controls.Add(this.CustomerFlowlbl);
-            this.groupBox3.Location = new System.Drawing.Point(0, 300);
+            this.groupBox3.Location = new System.Drawing.Point(7, 312);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 185);
+            this.groupBox3.Size = new System.Drawing.Size(193, 173);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Restaurant properties";
@@ -119,14 +121,14 @@
             // 
             // tbRestaurantStaff
             // 
-            this.tbRestaurantStaff.Location = new System.Drawing.Point(100, 51);
+            this.tbRestaurantStaff.Location = new System.Drawing.Point(91, 55);
             this.tbRestaurantStaff.Name = "tbRestaurantStaff";
             this.tbRestaurantStaff.Size = new System.Drawing.Size(94, 20);
             this.tbRestaurantStaff.TabIndex = 4;
             // 
             // tbCustomerFlow
             // 
-            this.tbCustomerFlow.Location = new System.Drawing.Point(100, 22);
+            this.tbCustomerFlow.Location = new System.Drawing.Point(91, 26);
             this.tbCustomerFlow.Name = "tbCustomerFlow";
             this.tbCustomerFlow.Size = new System.Drawing.Size(94, 20);
             this.tbCustomerFlow.TabIndex = 3;
@@ -163,35 +165,37 @@
             this.RestaurantStafflbl.AutoSize = true;
             this.RestaurantStafflbl.Location = new System.Drawing.Point(7, 58);
             this.RestaurantStafflbl.Name = "RestaurantStafflbl";
-            this.RestaurantStafflbl.Size = new System.Drawing.Size(88, 13);
+            this.RestaurantStafflbl.Size = new System.Drawing.Size(85, 13);
             this.RestaurantStafflbl.TabIndex = 1;
-            this.RestaurantStafflbl.Text = "Restaurant staff: ";
+            this.RestaurantStafflbl.Text = "Restaurant staff:";
             // 
             // CustomerFlowlbl
             // 
             this.CustomerFlowlbl.AutoSize = true;
             this.CustomerFlowlbl.Location = new System.Drawing.Point(7, 29);
             this.CustomerFlowlbl.Name = "CustomerFlowlbl";
-            this.CustomerFlowlbl.Size = new System.Drawing.Size(91, 13);
+            this.CustomerFlowlbl.Size = new System.Drawing.Size(82, 13);
             this.CustomerFlowlbl.TabIndex = 0;
-            this.CustomerFlowlbl.Text = "Customer flow   :  ";
+            this.CustomerFlowlbl.Text = "Customer flow:  ";
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnShowSATables);
+            this.groupBox2.Controls.Add(this.btnShowGATables);
             this.groupBox2.Controls.Add(this.btnUnmerge);
             this.groupBox2.Controls.Add(this.btnMerge);
             this.groupBox2.Controls.Add(this.btnConfirm);
             this.groupBox2.Controls.Add(this.btnDelete);
-            this.groupBox2.Location = new System.Drawing.Point(0, 173);
+            this.groupBox2.Location = new System.Drawing.Point(7, 173);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(199, 121);
+            this.groupBox2.Size = new System.Drawing.Size(189, 133);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Component properties";
             // 
             // btnUnmerge
             // 
-            this.btnUnmerge.Location = new System.Drawing.Point(109, 58);
+            this.btnUnmerge.Location = new System.Drawing.Point(101, 58);
             this.btnUnmerge.Name = "btnUnmerge";
             this.btnUnmerge.Size = new System.Drawing.Size(81, 23);
             this.btnUnmerge.TabIndex = 6;
@@ -200,7 +204,7 @@
             // 
             // btnMerge
             // 
-            this.btnMerge.Location = new System.Drawing.Point(12, 58);
+            this.btnMerge.Location = new System.Drawing.Point(9, 58);
             this.btnMerge.Name = "btnMerge";
             this.btnMerge.Size = new System.Drawing.Size(81, 23);
             this.btnMerge.TabIndex = 5;
@@ -209,7 +213,7 @@
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Location = new System.Drawing.Point(12, 29);
+            this.btnConfirm.Location = new System.Drawing.Point(9, 29);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(81, 23);
             this.btnConfirm.TabIndex = 4;
@@ -219,7 +223,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(109, 29);
+            this.btnDelete.Location = new System.Drawing.Point(101, 29);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(81, 23);
             this.btnDelete.TabIndex = 3;
@@ -229,7 +233,7 @@
             // rbSize4
             // 
             this.rbSize4.AutoSize = true;
-            this.rbSize4.Location = new System.Drawing.Point(62, 55);
+            this.rbSize4.Location = new System.Drawing.Point(56, 55);
             this.rbSize4.Name = "rbSize4";
             this.rbSize4.Size = new System.Drawing.Size(31, 17);
             this.rbSize4.TabIndex = 2;
@@ -240,7 +244,7 @@
             // rbSize2
             // 
             this.rbSize2.AutoSize = true;
-            this.rbSize2.Location = new System.Drawing.Point(15, 55);
+            this.rbSize2.Location = new System.Drawing.Point(9, 55);
             this.rbSize2.Name = "rbSize2";
             this.rbSize2.Size = new System.Drawing.Size(31, 17);
             this.rbSize2.TabIndex = 1;
@@ -251,7 +255,7 @@
             // TableSizelbl
             // 
             this.TableSizelbl.AutoSize = true;
-            this.TableSizelbl.Location = new System.Drawing.Point(12, 39);
+            this.TableSizelbl.Location = new System.Drawing.Point(6, 39);
             this.TableSizelbl.Name = "TableSizelbl";
             this.TableSizelbl.Size = new System.Drawing.Size(61, 13);
             this.TableSizelbl.TabIndex = 0;
@@ -267,16 +271,16 @@
             this.groupBox1.Controls.Add(this.btnTable);
             this.groupBox1.Controls.Add(this.rbSize2);
             this.groupBox1.Controls.Add(this.TableSizelbl);
-            this.groupBox1.Location = new System.Drawing.Point(0, 2);
+            this.groupBox1.Location = new System.Drawing.Point(10, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(199, 165);
+            this.groupBox1.Size = new System.Drawing.Size(189, 165);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Component menu";
             // 
             // btnBar
             // 
-            this.btnBar.Location = new System.Drawing.Point(14, 113);
+            this.btnBar.Location = new System.Drawing.Point(8, 113);
             this.btnBar.Name = "btnBar";
             this.btnBar.Size = new System.Drawing.Size(81, 23);
             this.btnBar.TabIndex = 0;
@@ -286,25 +290,27 @@
             // 
             // btnGroupA
             // 
-            this.btnGroupA.Location = new System.Drawing.Point(109, 113);
+            this.btnGroupA.Location = new System.Drawing.Point(101, 113);
             this.btnGroupA.Name = "btnGroupA";
             this.btnGroupA.Size = new System.Drawing.Size(81, 23);
             this.btnGroupA.TabIndex = 0;
             this.btnGroupA.Text = "Group area";
             this.btnGroupA.UseVisualStyleBackColor = true;
+            this.btnGroupA.Click += new System.EventHandler(this.btnGroupA_Click);
             // 
             // btnSmokingA
             // 
-            this.btnSmokingA.Location = new System.Drawing.Point(109, 84);
+            this.btnSmokingA.Location = new System.Drawing.Point(101, 84);
             this.btnSmokingA.Name = "btnSmokingA";
             this.btnSmokingA.Size = new System.Drawing.Size(81, 23);
             this.btnSmokingA.TabIndex = 0;
             this.btnSmokingA.Text = "Smoking area";
             this.btnSmokingA.UseVisualStyleBackColor = true;
+            this.btnSmokingA.Click += new System.EventHandler(this.btnSmokingA_Click);
             // 
             // btnWaitingA
             // 
-            this.btnWaitingA.Location = new System.Drawing.Point(109, 55);
+            this.btnWaitingA.Location = new System.Drawing.Point(101, 55);
             this.btnWaitingA.Name = "btnWaitingA";
             this.btnWaitingA.Size = new System.Drawing.Size(81, 23);
             this.btnWaitingA.TabIndex = 0;
@@ -313,7 +319,7 @@
             // 
             // btnTable
             // 
-            this.btnTable.Location = new System.Drawing.Point(14, 84);
+            this.btnTable.Location = new System.Drawing.Point(8, 84);
             this.btnTable.Name = "btnTable";
             this.btnTable.Size = new System.Drawing.Size(81, 23);
             this.btnTable.TabIndex = 0;
@@ -330,6 +336,26 @@
             this.RestaurantPlan.TabStop = false;
             this.RestaurantPlan.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.RestaurantPlan.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RestaurantPlan_MouseClick);
+            // 
+            // btnShowGATables
+            // 
+            this.btnShowGATables.Location = new System.Drawing.Point(101, 87);
+            this.btnShowGATables.Name = "btnShowGATables";
+            this.btnShowGATables.Size = new System.Drawing.Size(81, 40);
+            this.btnShowGATables.TabIndex = 7;
+            this.btnShowGATables.Text = "Show Group Area Tables";
+            this.btnShowGATables.UseVisualStyleBackColor = true;
+            this.btnShowGATables.Click += new System.EventHandler(this.btnShowGATables_Click);
+            // 
+            // btnShowSATables
+            // 
+            this.btnShowSATables.Location = new System.Drawing.Point(9, 87);
+            this.btnShowSATables.Name = "btnShowSATables";
+            this.btnShowSATables.Size = new System.Drawing.Size(81, 40);
+            this.btnShowSATables.TabIndex = 8;
+            this.btnShowSATables.Text = "Show Smoke Area Tables";
+            this.btnShowSATables.UseVisualStyleBackColor = true;
+            this.btnShowSATables.Click += new System.EventHandler(this.btnShowSATables_Click);
             // 
             // RestaurantForm
             // 
@@ -381,6 +407,8 @@
         private System.Windows.Forms.Button btnWaitingA;
         private System.Windows.Forms.Button btnTable;
         private System.Windows.Forms.PictureBox RestaurantPlan;
+        private System.Windows.Forms.Button btnShowGATables;
+        private System.Windows.Forms.Button btnShowSATables;
     }
 }
 

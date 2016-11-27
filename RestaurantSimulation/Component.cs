@@ -8,21 +8,18 @@ using System.Windows.Forms;
 
 namespace RestaurantSimulation
 {
-    class Component
+    abstract class Component
     {
         //Properties to Get X and Y Location
-        public int x { get; set; }
-        public int y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Component(Point p)
         {
-            this.x = p.X / 40;
-            this.y = p.Y / 40;
+            this.X = p.X / 40;
+            this.Y = p.Y / 40;
         }
 
-        public virtual void Drawing(ref PictureBox pb)
-        {
-
-        }
+        public abstract void Drawing(ref PictureBox pb);
     }
 }

@@ -73,6 +73,26 @@ namespace RestaurantSimulation.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GroupArea {
+            get {
+                object obj = ResourceManager.GetObject("GroupArea", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap smoking_allowed {
+            get {
+                object obj = ResourceManager.GetObject("smoking_allowed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Table {
             get {
                 object obj = ResourceManager.GetObject("Table", resourceCulture);
