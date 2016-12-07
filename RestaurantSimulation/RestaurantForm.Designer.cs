@@ -41,6 +41,8 @@
             this.RestaurantStafflbl = new System.Windows.Forms.Label();
             this.CustomerFlowlbl = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnShowSATables = new System.Windows.Forms.Button();
+            this.btnShowGATables = new System.Windows.Forms.Button();
             this.btnUnmerge = new System.Windows.Forms.Button();
             this.btnMerge = new System.Windows.Forms.Button();
             this.btnConfirm = new System.Windows.Forms.Button();
@@ -55,8 +57,6 @@
             this.btnWaitingA = new System.Windows.Forms.Button();
             this.btnTable = new System.Windows.Forms.Button();
             this.RestaurantPlan = new System.Windows.Forms.PictureBox();
-            this.btnShowGATables = new System.Windows.Forms.Button();
-            this.btnShowSATables = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -193,6 +193,26 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Component properties";
             // 
+            // btnShowSATables
+            // 
+            this.btnShowSATables.Location = new System.Drawing.Point(9, 87);
+            this.btnShowSATables.Name = "btnShowSATables";
+            this.btnShowSATables.Size = new System.Drawing.Size(81, 40);
+            this.btnShowSATables.TabIndex = 8;
+            this.btnShowSATables.Text = "Show Smoke Area Tables";
+            this.btnShowSATables.UseVisualStyleBackColor = true;
+            this.btnShowSATables.Click += new System.EventHandler(this.btnShowSATables_Click);
+            // 
+            // btnShowGATables
+            // 
+            this.btnShowGATables.Location = new System.Drawing.Point(101, 87);
+            this.btnShowGATables.Name = "btnShowGATables";
+            this.btnShowGATables.Size = new System.Drawing.Size(81, 40);
+            this.btnShowGATables.TabIndex = 7;
+            this.btnShowGATables.Text = "Show Group Area Tables";
+            this.btnShowGATables.UseVisualStyleBackColor = true;
+            this.btnShowGATables.Click += new System.EventHandler(this.btnShowGATables_Click);
+            // 
             // btnUnmerge
             // 
             this.btnUnmerge.Location = new System.Drawing.Point(101, 58);
@@ -229,6 +249,7 @@
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // rbSize4
             // 
@@ -336,26 +357,6 @@
             this.RestaurantPlan.TabStop = false;
             this.RestaurantPlan.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.RestaurantPlan.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RestaurantPlan_MouseClick);
-            // 
-            // btnShowGATables
-            // 
-            this.btnShowGATables.Location = new System.Drawing.Point(101, 87);
-            this.btnShowGATables.Name = "btnShowGATables";
-            this.btnShowGATables.Size = new System.Drawing.Size(81, 40);
-            this.btnShowGATables.TabIndex = 7;
-            this.btnShowGATables.Text = "Show Group Area Tables";
-            this.btnShowGATables.UseVisualStyleBackColor = true;
-            this.btnShowGATables.Click += new System.EventHandler(this.btnShowGATables_Click);
-            // 
-            // btnShowSATables
-            // 
-            this.btnShowSATables.Location = new System.Drawing.Point(9, 87);
-            this.btnShowSATables.Name = "btnShowSATables";
-            this.btnShowSATables.Size = new System.Drawing.Size(81, 40);
-            this.btnShowSATables.TabIndex = 8;
-            this.btnShowSATables.Text = "Show Smoke Area Tables";
-            this.btnShowSATables.UseVisualStyleBackColor = true;
-            this.btnShowSATables.Click += new System.EventHandler(this.btnShowSATables_Click);
             // 
             // RestaurantForm
             // 

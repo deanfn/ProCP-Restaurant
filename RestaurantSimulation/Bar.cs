@@ -49,7 +49,7 @@ namespace RestaurantSimulation
 
         }
 
-        public void DecreaseCount()
+        public override void DecreaseCount()
         {
             count -= 1;
         }

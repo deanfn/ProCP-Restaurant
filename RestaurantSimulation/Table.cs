@@ -15,7 +15,7 @@ namespace RestaurantSimulation
         public bool merging;
         private static int count = 0;
 
-        public int ID { get; }
+        public int ID { get; set; }
 
         /// <summary>
         /// Creates new Table object, with unique ID
@@ -66,9 +66,14 @@ namespace RestaurantSimulation
             g.DrawString(ID.ToString(), new Font("Arial", 10), Brushes.Black, (X * 40), (Y * 40));
         }
 
-        public void DecreaseCount()
+        public override void DecreaseCount()
         {
             count -= 1;
+        }
+
+        public override void DecreaseID()
+        {
+            ID--;
         }
     }
 }

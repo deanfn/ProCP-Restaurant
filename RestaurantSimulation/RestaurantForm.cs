@@ -29,7 +29,7 @@ namespace RestaurantSimulation
         public int col = 0;
 
         //Enum
-        enum component { table, bar, groupArea, smokingArea };
+        enum component { table, bar, groupArea, smokingArea, eraser };
         component? choosenComponent = null;
 
         public RestaurantForm()
@@ -160,6 +160,12 @@ namespace RestaurantSimulation
             //            choosenComponent = null;
             //        }
             //    }
+
+            if(choosenComponent == component.eraser)
+            {
+                newPlan.removeComponent(newPlan.GetComponent(col, row));
+                newPlan.Redraw(ref RestaurantPlan);
+            }
         }
 
         private void btnGroupA_Click(object sender, EventArgs e)
@@ -180,6 +186,11 @@ namespace RestaurantSimulation
         private void btnShowSATables_Click(object sender, EventArgs e)
         {
             MessageBox.Show(SmokeArea.SmokeAreaTables());
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            choosenComponent = component.eraser;
         }
     }
 }

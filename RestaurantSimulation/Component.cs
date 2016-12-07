@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace RestaurantSimulation
 {
-    abstract class Component
+    class Component
     {
         //Properties to Get X and Y Location
         public int X { get; set; }
@@ -20,6 +20,10 @@ namespace RestaurantSimulation
             this.Y = p.Y / 40;
         }
 
-        public abstract void Drawing(ref PictureBox pb);
+        public virtual void Drawing(ref PictureBox pb) { }
+        public virtual void DecreaseCount() { }
+        public virtual void DecreaseID() { }
+        
+        
     }
 }
