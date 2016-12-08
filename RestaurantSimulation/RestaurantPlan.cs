@@ -249,13 +249,13 @@ namespace RestaurantSimulation
             return false;
         }
 
-        public void Redraw(ref PictureBox pb)
-        {
-            pb.Refresh();
-            foreach (Component c in componentOnPlan)
-            {
-                c.Drawing(ref pb);
-            }
-        }
+        //public void Redraw(ref PictureBox pb)
+        //{
+        //    pb.Refresh();
+        //    foreach (Component c in componentOnPlan)
+        //    {
+        //        c.Drawing(ref pb);
+        //    }
+        //}
     }
 }
