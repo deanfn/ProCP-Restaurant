@@ -29,7 +29,7 @@ namespace RestaurantSimulation
         int col = 0;
 
         //Enum
-        enum component { table, bar, groupArea, smokingArea, waitingArea };
+        enum component { table, bar, groupArea, smokingArea, waitingArea, eraser };
         component? choosenComponent = null;
 
         public RestaurantForm()
@@ -150,7 +150,7 @@ namespace RestaurantSimulation
             //}
 
             // Add new component to the restaurant plan
-            if (choosenComponent != null)
+            if (choosenComponent != null && choosenComponent != component.eraser)
             {
                 if (newPlan.AddComponent(e.Location, (int)choosenComponent, size, false))
                 {
@@ -160,6 +160,10 @@ namespace RestaurantSimulation
                 {
                     MessageBox.Show("Please, Select a Free Spot");
                 }
+            }
+            else if (choosenComponent == component.eraser)
+            {
+                newPlan.RemoveComponent(newPlan.GetComponent(col, row));
             }
 
             RestaurantPlan.Invalidate();
@@ -188,6 +192,11 @@ namespace RestaurantSimulation
         private void btnWaitingA_Click(object sender, EventArgs e)
         {
             choosenComponent = component.waitingArea;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            choosenComponent = component.eraser;
         }
     }
 }

@@ -46,9 +46,14 @@ namespace RestaurantSimulation
 
         }
 
-        public void DecreaseCount()
+        public override void DecreaseCount()
         {
-            count -= 1;
+            count--;
+        }
+
+        public override void DecreaseID()
+        {
+            id--;
         }
     }
 }

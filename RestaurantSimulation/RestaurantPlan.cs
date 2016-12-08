@@ -160,6 +160,46 @@ namespace RestaurantSimulation
                 return true;
         }
 
+        public bool RemoveComponent(Component c)
+        {
+            int ComCounter = 0;
+
+            foreach (Component com in componentOnPlan)
+            {
+                if (c.X == com.X && c.Y == com.Y)
+                {
+                    if (c is Table || c is Bar)
+                    {
+                        for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                        {
+                            if (c is Table)
+                            {
+                                componentOnPlan.ElementAt(i).DecreaseID();
+                            }
+                        }
+
+                        for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                        {
+                            if (c is Bar)
+                            {
+                                componentOnPlan.ElementAt(i).DecreaseID();
+                            }
+                        }
+
+                        c.DecreaseCount();
+
+                    }
+
+                    componentOnPlan.Remove(c);
+                    return true;
+                }
+
+                ComCounter++;
+            }
+
+            return false;
+        }
+
         // Draw all the components on the plan
         public void DrawComponents(Graphics g)
         {

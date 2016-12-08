@@ -15,7 +15,7 @@ namespace RestaurantSimulation
         private bool merging;
         private static int count = 0;
 
-        public int ID { get; }
+        public int ID { get; set; }
 
         // Boolean indicating whether the table is on group area spot or not.
         public bool OnGA { get; set; }
@@ -92,9 +92,14 @@ namespace RestaurantSimulation
             }
         }
 
-        public void DecreaseCount()
+        public override void DecreaseCount()
         {
             count -= 1;
+        }
+
+        public override void DecreaseID()
+        {
+            ID--;
         }
     }
 }

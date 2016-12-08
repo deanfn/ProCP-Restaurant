@@ -51,5 +51,17 @@ namespace RestaurantSimulation
 
             return false;
         }
+
+        // Implementation is not necessary. Areas don't have IDs.
+        public override void DecreaseCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        // Implementation is not necessary. Areas don't have IDs.
+        public override void DecreaseID()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
