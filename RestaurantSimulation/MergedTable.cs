@@ -48,7 +48,7 @@ namespace RestaurantSimulation
             int temp = 0;
             for (int i = 0; i <= t1.tablel.Count - 1; i++)
             {
-                temp += t1.tablel[i].size;
+                //temp += t1.tablel[i].size;
             }
             size = temp;
         }
@@ -62,7 +62,7 @@ namespace RestaurantSimulation
             int temp = 0;
             for (int i = 0; i <= mt1.tablel.Count - 1; i++)
             {
-                temp += mt1.tablel[i].size;
+                //temp += mt1.tablel[i].size;
             }
             if (temp <= 20)
             {

@@ -20,6 +20,6 @@ namespace RestaurantSimulation
             this.Y = p.Y / 40;
         }
 
-        public abstract void Drawing(ref PictureBox pb);
+        public abstract void Drawing(Graphics g);
     }
 }

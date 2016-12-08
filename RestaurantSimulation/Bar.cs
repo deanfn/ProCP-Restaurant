@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace RestaurantSimulation
 {
@@ -12,8 +11,8 @@ namespace RestaurantSimulation
     {
         private int id;
         private static int count;
-        public int size;
-        public bool available;
+        private int size;
+        private bool available;
 
         /// <summary>
         /// Creates new Bar object
@@ -28,10 +27,8 @@ namespace RestaurantSimulation
         }
 
         //Draw Bar
-        public override void Drawing(ref PictureBox pb)
+        public override void Drawing(Graphics g)
         {
-            Graphics g = pb.CreateGraphics();
-
             // Location
             int col = ((X) * 40) + 1;
             int row = ((Y) * 40) + 1;

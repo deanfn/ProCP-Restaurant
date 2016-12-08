@@ -19,23 +19,23 @@ namespace RestaurantSimulation
         Image table = Resources.Table;
 
         //Gridbox Drawing Properties
-        public Graphics grid;
-        public Pen gridLine = new Pen(Color.White);
-        public int gridHeight = 12;
-        public int gridWidth = 17;
-        public int cellWidth = 40;
-        public int cellHeight = 40;
-        public int row = 0;
-        public int col = 0;
+        Graphics grid;
+        Pen gridLine = new Pen(Color.White);
+        int gridHeight = 12;
+        int gridWidth = 17;
+        int cellWidth = 40;
+        int cellHeight = 40;
+        int row = 0;
+        int col = 0;
 
         //Enum
-        enum component { table, bar, groupArea, smokingArea };
+        enum component { table, bar, groupArea, smokingArea, waitingArea };
         component? choosenComponent = null;
 
         public RestaurantForm()
         {
             InitializeComponent();
-            
+
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -61,6 +61,12 @@ namespace RestaurantSimulation
                 x = 0;
                 y += cellHeight;
             }
+
+            // If there are components on the plan it is going to draw them
+            if (!newPlan.Empty())
+            {
+                newPlan.DrawComponents(e.Graphics);
+            }
         }
 
         private void btnTable_Click(object sender, EventArgs e)
@@ -77,89 +83,86 @@ namespace RestaurantSimulation
         {
             col = e.Location.X / 40;
             row = e.Location.Y / 40;
-
-            if(choosenComponent == component.table)
+            int size;
+            
+            if (rbSize2.Checked)
             {
-                if (rbSize2.Checked)
-                {
-
-                    if (newPlan.AddTable(2, false, e.Location))
-                    {
-                        newPlan.GetComponent(col, row).Drawing(ref RestaurantPlan);
-                        choosenComponent = null;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please Select a Free Spot");
-                    }
-                }
-
-                else
-                {
-                    if (newPlan.AddTable(4, false, e.Location))
-                    {
-                        newPlan.GetComponent(col, row).Drawing(ref RestaurantPlan);
-                        choosenComponent = null;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please Select a Free Spot");
-                    }
-                }
+                size = 2;
+            }
+            else
+            {
+                size = 4;
             }
 
-            if (choosenComponent == component.bar)
-            {
-                if (rbSize2.Checked)
-                {
-                    if (newPlan.AddBar(2, e.Location))
-                    {
-                        newPlan.GetComponent(col, row).Drawing(ref RestaurantPlan);
-                        choosenComponent = null;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please Select a Free Spot");
-                    }
-                }
-
-                else
-                {
-                    if (newPlan.AddBar(4, e.Location))
-                    {
-                        newPlan.GetComponent(col, row).Drawing(ref RestaurantPlan);
-                        choosenComponent = null;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please Select a Free Spot");
-                    }
-                }
-            }
-
-            //    // Draw group area
-            //    if (choosenComponent == component.groupArea)
+            //if(choosenComponent == component.table)
+            //{
+            //    if (rbSize2.Checked)
             //    {
-            //        var groupArea = new GroupArea(e.Location);
 
-            //        if (newPlan.AddComponent(groupArea))
+            //        if (newPlan.AddTable(2, false, e.Location))
             //        {
-            //            groupArea.Drawing(ref RestaurantPlan);
             //            choosenComponent = null;
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Please Select a Free Spot");
             //        }
             //    }
 
-            //    // Draw smoke area
-            //    if (choosenComponent == component.smokingArea)
+            //    else
             //    {
-            //        var smokeArea = new SmokeArea(e.Location);
-
-            //        if (newPlan.AddComponent(smokeArea))
+            //        if (newPlan.AddTable(4, false, e.Location))
             //        {
-            //            smokeArea.Drawing(ref RestaurantPlan);
             //            choosenComponent = null;
             //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Please Select a Free Spot");
+            //        }
             //    }
+            //}
+
+            //if (choosenComponent == component.bar)
+            //{
+            //    if (rbSize2.Checked)
+            //    {
+            //        if (newPlan.AddBar(2, e.Location))
+            //        {
+            //            choosenComponent = null;
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Please Select a Free Spot");
+            //        }
+            //    }
+
+            //    else
+            //    {
+            //        if (newPlan.AddBar(4, e.Location))
+            //        {
+            //            choosenComponent = null;
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Please Select a Free Spot");
+            //        }
+            //    }
+            //}
+
+            // Add new component to the restaurant plan
+            if (choosenComponent != null)
+            {
+                if (newPlan.AddComponent(e.Location, (int)choosenComponent, size, false))
+                {
+                    choosenComponent = null;
+                }
+                else
+                {
+                    MessageBox.Show("Please, Select a Free Spot");
+                }
+            }
+
+            RestaurantPlan.Invalidate();
         }
 
         private void btnGroupA_Click(object sender, EventArgs e)
@@ -180,6 +183,11 @@ namespace RestaurantSimulation
         private void btnShowSATables_Click(object sender, EventArgs e)
         {
             MessageBox.Show(SmokeArea.SmokeAreaTables());
+        }
+
+        private void btnWaitingA_Click(object sender, EventArgs e)
+        {
+            choosenComponent = component.waitingArea;
         }
     }
 }

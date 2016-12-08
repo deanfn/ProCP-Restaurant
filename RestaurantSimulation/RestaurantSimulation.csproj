@@ -59,7 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestaurantPlan.cs" />
     <Compile Include="SmokeArea.cs" />
+    <Compile Include="SpecialAreas.cs" />
     <Compile Include="Table.cs" />
+    <Compile Include="WaitingArea.cs" />
     <EmbeddedResource Include="RestaurantForm.resx">
       <DependentUpon>RestaurantForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -95,6 +97,7 @@
     <None Include="Resources\GroupArea.png" />
     <None Include="Resources\SmokeArea.png" />
     <None Include="Resources\smoking-allowed.png" />
+    <None Include="Resources\Icon-WaitingArea.jpg" />
     <Content Include="Resources\Table.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

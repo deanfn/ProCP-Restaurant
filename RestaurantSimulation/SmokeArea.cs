@@ -4,27 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace RestaurantSimulation
 {
-    class SmokeArea : Component
+    class SmokeArea : SpecialAreas
     {
         private static List<Component> tablesList = new List<Component>();
         private const int maxTables = 5;
 
-        public bool Free { get; set; }
-
         public SmokeArea(Point coordinates) : base(coordinates)
         {
-            Free = true;
+
         }
 
-        public override void Drawing(ref PictureBox pb)
+        public override void Drawing(Graphics g)
         {
-            // In order to draw on the picturebox we must create a Graphics object
-            Graphics g = pb.CreateGraphics();
-
             // Location
             int col = ((X) * 40) + 1;
             int row = ((Y) * 40) + 1;
@@ -36,15 +30,16 @@ namespace RestaurantSimulation
             Image i = (Bitmap)Properties.Resources.smoking_allowed;
 
             g.DrawImage(i, col, row, width, height);
+            g.DrawImage(i, col + 40, row, width, height);
+            g.DrawImage(i, col, row + 40, width, height);
+            g.DrawImage(i, col + 40, row + 40, width, height);
         }
 
-        public bool AddTable(Component c)
+        public override bool AddTable(Component c)
         {
-            if (this.Free && tablesList.Count <= maxTables)
+            if (base.AddTable(c) && tablesList.Count < maxTables)
             {
                 tablesList.Add(c);
-                Free = false;
-
                 return true;
             }
 
