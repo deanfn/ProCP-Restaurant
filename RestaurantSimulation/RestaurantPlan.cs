@@ -208,5 +208,54 @@ namespace RestaurantSimulation
                 c.Drawing(g);
             }
         }
+
+        public bool removeComponent(Component c)
+        {
+            int ComCounter = 0;
+
+            foreach(Component com in componentOnPlan)
+            {
+                if (c.X == com.X && c.Y == com.Y)
+                {
+                    if(c is Table || c is Bar)
+                    {
+                        for(int i = ComCounter; i<componentOnPlan.Count; i++)
+                        {
+                            if (c is Table)
+                            {
+                                componentOnPlan.ElementAt(i).DecreaseID();
+                            }
+                        }
+
+                        for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                        {
+                            if (c is Bar)
+                            {
+                                componentOnPlan.ElementAt(i).DecreaseID();
+                            }
+                        }
+
+                        c.DecreaseCount();
+
+                    }
+
+                    componentOnPlan.Remove(c);
+                    return true;
+                }
+
+                ComCounter++;
+            }
+
+            return false;
+        }
+
+        public void Redraw(ref PictureBox pb)
+        {
+            pb.Refresh();
+            foreach (Component c in componentOnPlan)
+            {
+                c.Drawing(ref pb);
+            }
+        }
     }
 }
