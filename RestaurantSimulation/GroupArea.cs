@@ -15,7 +15,7 @@ namespace RestaurantSimulation
 
         public GroupArea(Point coordinates) : base(coordinates)
         {
-
+            
         }
 
         public override void Drawing(Graphics g)

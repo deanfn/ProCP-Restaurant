@@ -28,3 +28,12 @@ f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulati
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csproj.GenerateResource.Cache
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe.config
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csprojResolveAssemblyReference.cache
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.RestaurantForm.resources
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.Properties.Resources.resources
+C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csproj.GenerateResource.Cache

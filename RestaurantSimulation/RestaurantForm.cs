@@ -28,8 +28,13 @@ namespace RestaurantSimulation
         int row = 0;
         int col = 0;
 
+        //Properties for Merging Tab;e
+        int step = 1;
+        int com1size, com2size;
+        List<int> sizeList = new List<int>();
+
         //Enum
-        enum component { table, bar, groupArea, smokingArea, waitingArea, eraser };
+        enum component { table, bar, groupArea, smokingArea, waitingArea, eraser, merge };
         component? choosenComponent = null;
 
         public RestaurantForm()
@@ -83,75 +88,22 @@ namespace RestaurantSimulation
         {
             col = e.Location.X / 40;
             row = e.Location.Y / 40;
-            int size;
-            
-            if (rbSize2.Checked)
-            {
-                size = 2;
-            }
-            else
-            {
-                size = 4;
-            }
 
-            //if(choosenComponent == component.table)
-            //{
-            //    if (rbSize2.Checked)
-            //    {
-
-            //        if (newPlan.AddTable(2, false, e.Location))
-            //        {
-            //            choosenComponent = null;
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Please Select a Free Spot");
-            //        }
-            //    }
-
-            //    else
-            //    {
-            //        if (newPlan.AddTable(4, false, e.Location))
-            //        {
-            //            choosenComponent = null;
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Please Select a Free Spot");
-            //        }
-            //    }
-            //}
-
-            //if (choosenComponent == component.bar)
-            //{
-            //    if (rbSize2.Checked)
-            //    {
-            //        if (newPlan.AddBar(2, e.Location))
-            //        {
-            //            choosenComponent = null;
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Please Select a Free Spot");
-            //        }
-            //    }
-
-            //    else
-            //    {
-            //        if (newPlan.AddBar(4, e.Location))
-            //        {
-            //            choosenComponent = null;
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Please Select a Free Spot");
-            //        }
-            //    }
-            //}
 
             // Add new component to the restaurant plan
-            if (choosenComponent != null && choosenComponent != component.eraser)
+            if (choosenComponent != null && choosenComponent != component.eraser && choosenComponent != component.merge)
             {
+                int size;
+
+                if (rbSize2.Checked)
+                {
+                    size = 2;
+                }
+                else
+                {
+                    size = 4;
+                }
+
                 if (newPlan.AddComponent(e.Location, (int)choosenComponent, size, false))
                 {
                     choosenComponent = null;
@@ -161,9 +113,46 @@ namespace RestaurantSimulation
                     MessageBox.Show("Please, Select a Free Spot");
                 }
             }
+
             else if (choosenComponent == component.eraser)
             {
                 newPlan.RemoveComponent(newPlan.GetComponent(col, row));
+            }
+
+            else if (choosenComponent == component.merge)
+            {
+                if (step == 1)
+                {
+                    Component com1 = newPlan.GetComponent(col, row);
+                    com1size = com1.GetSize();
+                    sizeList.Add(com1size);
+                    newPlan.RemoveComponent(com1);
+                }
+
+                if (step == 2)
+                {
+                    Component com2 = newPlan.GetComponent(col, row);
+                    com2size = com2.GetSize();
+                    sizeList.Add(com2size);
+                    newPlan.RemoveComponent(com2);
+                }
+
+                if (step ==3)
+                {
+                    if (newPlan.AddMergedTable(sizeList, e.Location))
+                    {
+                        step = 0;
+                        sizeList.Clear();
+                        choosenComponent = null;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please Select a Free Spot");
+                        step--;
+                    }
+                }
+
+                step++;
             }
 
             RestaurantPlan.Invalidate();
@@ -198,5 +187,65 @@ namespace RestaurantSimulation
         {
             choosenComponent = component.eraser;
         }
+
+        private void btnMerge_Click(object sender, EventArgs e)
+        {
+            choosenComponent = component.merge;
+        }
     }
 }
+
+//if(choosenComponent == component.table)
+//{
+//    if (rbSize2.Checked)
+//    {
+
+//        if (newPlan.AddTable(2, false, e.Location))
+//        {
+//            choosenComponent = null;
+//        }
+//        else
+//        {
+//            MessageBox.Show("Please Select a Free Spot");
+//        }
+//    }
+
+//    else
+//    {
+//        if (newPlan.AddTable(4, false, e.Location))
+//        {
+//            choosenComponent = null;
+//        }
+//        else
+//        {
+//            MessageBox.Show("Please Select a Free Spot");
+//        }
+//    }
+//}
+
+//if (choosenComponent == component.bar)
+//{
+//    if (rbSize2.Checked)
+//    {
+//        if (newPlan.AddBar(2, e.Location))
+//        {
+//            choosenComponent = null;
+//        }
+//        else
+//        {
+//            MessageBox.Show("Please Select a Free Spot");
+//        }
+//    }
+
+//    else
+//    {
+//        if (newPlan.AddBar(4, e.Location))
+//        {
+//            choosenComponent = null;
+//        }
+//        else
+//        {
+//            MessageBox.Show("Please Select a Free Spot");
+//        }
+//    }
+//}

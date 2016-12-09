@@ -101,5 +101,20 @@ namespace RestaurantSimulation
         {
             ID--;
         }
+
+        public override int GetSize()
+        {
+            return size;
+        }
+
+        public override List<int> getXpointList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<int> getYpointList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
