@@ -98,6 +98,7 @@
     <None Include="Resources\SmokeArea.png" />
     <None Include="Resources\smoking-allowed.png" />
     <None Include="Resources\Icon-WaitingArea.jpg" />
+    <Content Include="Resources\MergedTable.jpg" />
     <Content Include="Resources\Table.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,7 +10,7 @@ namespace RestaurantSimulation
     class MergedTable:Component
     {
         public int size = 0;
-        public List<int> table;
+        public List<int> table = new List<int>();
         public List<int> XpointList = new List<int>();
         public List<int> YpointList = new List<int>();
         private static int count = 0;
@@ -91,7 +91,7 @@ namespace RestaurantSimulation
             int width = 39;
             int height = 39;
 
-            Image i = (Bitmap)Properties.Resources.GroupArea;
+            Image i = (Bitmap)Properties.Resources.MergedTable;
 
             if (size <= 4)
             {
@@ -135,12 +135,12 @@ namespace RestaurantSimulation
 
         public override void DecreaseCount()
         {
-            throw new NotImplementedException();
+            count--;
         }
 
         public override void DecreaseID()
         {
-            throw new NotImplementedException();
+            id--;
         }
 
         public override int GetSize()
@@ -156,6 +156,11 @@ namespace RestaurantSimulation
         public override List<int> getYpointList()
         {
             return YpointList;
+        }
+
+        public List<int> getTableList()
+        {
+            return table;
         }
     }
 }

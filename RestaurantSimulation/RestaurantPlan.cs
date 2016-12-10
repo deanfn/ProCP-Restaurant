@@ -9,13 +9,11 @@ namespace RestaurantSimulation
 {
     class RestaurantPlan
     {
-        private List<Component> componentOnPlan;
-        private List<MergedTable> mergedTableonPlan;
+        public List<Component> componentOnPlan;
 
         public RestaurantPlan()
         {
             componentOnPlan = new List<Component>();
-            mergedTableonPlan = new List<MergedTable>();
         }
 
         public bool AddComponent(Point coordinates, int type, int size, bool merged)
@@ -138,6 +136,21 @@ namespace RestaurantSimulation
             return null;
         }
 
+        public Component GetNoArea(int x, int y)
+        {
+            foreach (Component c in componentOnPlan)
+            {
+                if (!(c is SpecialAreas))
+                {
+                    if (c.X == x && c.Y == y)
+                    {
+                        return c;
+                    }
+                }
+            }
+            return null;
+        }
+
         // Check whether there are components
         public bool Empty()
         {
@@ -155,11 +168,11 @@ namespace RestaurantSimulation
             {
                 if (c.X == com.X && c.Y == com.Y)
                 {
-                    if (c is Table || c is Bar)
+                    if (c is Table || c is Bar || c is MergedTable)
                     {
                         for (int i = ComCounter; i < componentOnPlan.Count; i++)
                         {
-                            if (c is Table)
+                            if (c is Table && componentOnPlan.ElementAt(i) is Table)
                             {
                                 componentOnPlan.ElementAt(i).DecreaseID();
                             }
@@ -167,7 +180,15 @@ namespace RestaurantSimulation
 
                         for (int i = ComCounter; i < componentOnPlan.Count; i++)
                         {
-                            if (c is Bar)
+                            if (c is Bar && componentOnPlan.ElementAt(i) is Bar)
+                            {
+                                componentOnPlan.ElementAt(i).DecreaseID();
+                            }
+                        }
+
+                        for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                        {
+                            if (c is MergedTable && componentOnPlan.ElementAt(i) is MergedTable)
                             {
                                 componentOnPlan.ElementAt(i).DecreaseID();
                             }
@@ -199,10 +220,17 @@ namespace RestaurantSimulation
         public bool AddMergedTable(List<int> size, Point p)
         {
             Component comp = new MergedTable(size, p);
-
             
             foreach (Component c in componentOnPlan)
             {
+                if (c is GroupArea && comp is MergedTable)
+                {
+                    if ((c as GroupArea).AddTable(comp))
+                    {
+                        break;
+                    }
+                }
+
                 foreach (Component mer in componentOnPlan)
                 {
                     for (int i = 0; i < comp.getXpointList().Count; i++)
@@ -215,7 +243,7 @@ namespace RestaurantSimulation
 
                             int XLcheck = comp.getXpointList().ElementAt(i);
                             int YLcheck = comp.getYpointList().ElementAt(i);
-
+                            
                             if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
                                 (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
                                 (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
@@ -230,14 +258,11 @@ namespace RestaurantSimulation
                                 (XLcheck == c.X && YLcheck - 1 == c.Y) || (XLcheck - 1 == c.X && YLcheck + 1 == c.Y) ||
                                 (XLcheck + 1 == c.X && YLcheck - 1 == c.Y))
                             {
-                                if (comp is Table)
+                                if (comp is MergedTable)
                                 {
-                                    (comp as Table).DecreaseCount();
+                                    (comp as MergedTable).DecreaseCount();
                                 }
-                                else if (comp is Bar)
-                                {
-                                    (comp as Bar).DecreaseCount();
-                                }
+
                                 return false;
                             }
                         }
@@ -251,14 +276,11 @@ namespace RestaurantSimulation
                                 (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
                                 (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
                             {
-                                if (comp is Table)
+                                if (comp is MergedTable)
                                 {
-                                    (comp as Table).DecreaseCount();
+                                    (comp as MergedTable).DecreaseCount();
                                 }
-                                else if (comp is Bar)
-                                {
-                                    (comp as Bar).DecreaseCount();
-                                }
+
                                 return false;
                             }
                         }

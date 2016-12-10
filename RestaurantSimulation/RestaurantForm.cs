@@ -123,31 +123,105 @@ namespace RestaurantSimulation
             {
                 if (step == 1)
                 {
-                    Component com1 = newPlan.GetComponent(col, row);
-                    com1size = com1.GetSize();
-                    sizeList.Add(com1size);
-                    newPlan.RemoveComponent(com1);
+                    Component com1 = newPlan.GetNoArea(col, row);
+
+                    if (com1 != null)
+                    {
+                        if (com1 is MergedTable)
+                        {
+                            foreach (int i in (com1 as MergedTable).table)
+                            {
+                                sizeList.Add(i);
+                            }
+                        }
+
+                        else
+                        {
+                            if ((com1 as Table).OnGA == true)
+                            {
+                                com2size = com1.GetSize();
+                                sizeList.Add(com2size);
+                            }
+
+                            else
+                            {
+                                MessageBox.Show("Only Table on Group Area can be Merged");
+                                step--;
+                            }
+                        }
+
+                        newPlan.RemoveComponent(com1);
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Please select a Table");
+                        step--;
+                    }
+
+                    com1 = null;
                 }
 
                 if (step == 2)
                 {
-                    Component com2 = newPlan.GetComponent(col, row);
-                    com2size = com2.GetSize();
-                    sizeList.Add(com2size);
-                    newPlan.RemoveComponent(com2);
+                    Component com2 = newPlan.GetNoArea(col, row);
+
+                    if (com2 != null)
+                    {
+                        if (com2 is MergedTable)
+                        {
+                            foreach (int i in (com2 as MergedTable).getTableList())
+                            {
+                                sizeList.Add(i);
+                            }
+                        }
+
+                        else
+                        {
+                            if ((com2 as Table).OnGA == true)
+                            {
+                                com2size = com2.GetSize();
+                                sizeList.Add(com2size);
+                            }
+
+                            else
+                            {
+                                MessageBox.Show("Only Table on Group Area can be Merged");
+                                step--;
+                            }
+                        }
+
+                        newPlan.RemoveComponent(com2);
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Please select a Table");
+                        step--;
+                    }
+
+                    com2 = null;
                 }
 
                 if (step ==3)
                 {
-                    if (newPlan.AddMergedTable(sizeList, e.Location))
+                    if (newPlan.GetComponent(col, row) is GroupArea)
                     {
-                        step = 0;
-                        sizeList.Clear();
-                        choosenComponent = null;
+                        if (newPlan.AddMergedTable(sizeList, e.Location))
+                        {
+                            step = 0;
+                            sizeList.Clear();
+                            choosenComponent = null;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please Select a Free Spot");
+                            step--;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Please Select a Free Spot");
+                        MessageBox.Show("Merged Table Can Only be Put on Group Area");
                         step--;
                     }
                 }
@@ -191,6 +265,8 @@ namespace RestaurantSimulation
         private void btnMerge_Click(object sender, EventArgs e)
         {
             choosenComponent = component.merge;
+            step = 1;
+            sizeList.Clear();
         }
     }
 }
