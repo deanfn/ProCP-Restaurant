@@ -68,15 +68,5 @@ namespace RestaurantSimulation
         {
             throw new NotImplementedException();
         }
-
-        public override List<int> getXpointList()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override List<int> getYpointList()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

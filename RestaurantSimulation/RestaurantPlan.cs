@@ -16,14 +16,14 @@ namespace RestaurantSimulation
             componentOnPlan = new List<Component>();
         }
 
-        public bool AddComponent(Point coordinates, int type, int size, bool merged)
+        public bool AddComponent(Point coordinates, int type, int size)
         {
             Component comp;
 
             switch (type)
             {
                 case 0:
-                    comp = new Table(size, merged, coordinates);
+                    comp = new Table(size, coordinates);
                     break;
                 case 1:
                     comp = new Bar(size, coordinates);
@@ -68,108 +68,66 @@ namespace RestaurantSimulation
                         break;
                     }
                 }
-                foreach (Component mer in componentOnPlan)
-                {
-                    if (mer is MergedTable)
+                else if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
+                        (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
+                        (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
+                        (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
+                        (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
                     {
-                        if ((mer as MergedTable).getXpointList().Count != 0)
+                        if (comp is Table)
                         {
-                            int Xcheck = mer.getXpointList().ElementAt(0);
-                            int Ycheck = mer.getYpointList().ElementAt(0);
-
-                            if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
-                                (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
-                                (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
-                                (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
-                                (comp.X + 1 == c.X && comp.Y - 1 == c.Y) || (comp.X == Xcheck && comp.Y == Ycheck) || (comp.X + 1 == Xcheck && comp.Y == Ycheck) ||
-                                (comp.X == Xcheck && comp.Y + 1 == Ycheck) || (comp.X + 1 == Xcheck && comp.Y + 1 == Ycheck) ||
-                                (comp.X - 1 == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y == Ycheck) ||
-                                (comp.X == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y + 1 == Ycheck) ||
-                                (comp.X + 1 == Xcheck && comp.Y - 1 == Ycheck))
-                            {
-                                if (comp is Table)
-                                {
-                                    (comp as Table).DecreaseCount();
-                                }
-                                else if (comp is Bar)
-                                {
-                                    (comp as Bar).DecreaseCount();
-                                }
-                                return false;
-                            }
+                            (comp as Table).DecreaseCount();
                         }
-
-                        else
+                        else if (comp is Bar)
                         {
-                            if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
-                            (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
-                            (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
-                            (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
-                            (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
-                            {
-                                if (comp is Table)
-                                {
-                                    (comp as Table).DecreaseCount();
-                                }
-                                else if (comp is Bar)
-                                {
-                                    (comp as Bar).DecreaseCount();
-                                }
-                                return false;
-                            }
+                            (comp as Bar).DecreaseCount();
                         }
+                        return false;
                     }
 
-                    else
-                    {
-                        if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
-                            (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
-                            (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
-                            (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
-                            (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
-                        {
-                            if (comp is Table)
-                            {
-                                (comp as Table).DecreaseCount();
-                            }
-                            else if (comp is Bar)
-                            {
-                                (comp as Bar).DecreaseCount();
-                            }
-                            return false;
-                        }
-                    }
-                }
             }
 
             componentOnPlan.Add(comp);
             return true;
         }
 
+        /* Returns the the table that is located
+         * at the specified coordinates. Null if there
+         * is no such table. */
         public Component GetComponent(int x, int y)
         {
-            foreach (Component c in componentOnPlan)
+            var mergedTables = componentOnPlan.FindAll(t => t is MergedTable);
+
+            foreach (var t in mergedTables)
             {
-                if (c.X == x && c.Y == y)
+                foreach (var point in (t as MergedTable).Coordinates)
                 {
-                    return c;
+                    if (point.X == x && point.Y == y)
+                        return t;
                 }
             }
-            return null;
+
+            return componentOnPlan.Find(t => (t is Table && t.X == x && t.Y == y));
         }
 
-        public Component GetNoArea(int x, int y)
+        /* Checks whether two points are within a Group area and if they are
+         * returns that group area, otherwise returns null. */
+        public Component GetGroupArea(int x, int y)
         {
-            foreach (Component c in componentOnPlan)
+            // List of all group areas.
+            var groupAreas = componentOnPlan.FindAll(c => c is GroupArea);
+
+            foreach (var ga in groupAreas)
             {
-                if (!(c is SpecialAreas))
+                foreach (var point in (ga as GroupArea).Coordinates)
                 {
-                    if (c.X == x && c.Y == y)
+                    if ((x == point.X && y == point.Y))
                     {
-                        return c;
+                        return ga;
                     }
                 }
             }
+
             return null;
         }
 
@@ -242,137 +200,203 @@ namespace RestaurantSimulation
             }
         }
 
-        public bool AddMergedTable(List<int> size, Point p)
+        // Merge two tables
+        public bool MergeTables(Component t1, Component t2, Point location)
         {
-            Component comp = new MergedTable(size, p);
-            
-            foreach (Component c in componentOnPlan)
+            if (t1 is MergedTable && t2 is MergedTable)
             {
-                if (c is GroupArea && comp is MergedTable)
+                if (((t1 as MergedTable).Tables.Count > 1 && (t2 as MergedTable).Tables.Count < 3) ||
+                    (t1 as MergedTable).Tables.Count < 3 && (t2 as MergedTable).Tables.Count > 1)
                 {
-                    if ((c as GroupArea).AddTable(comp))
-                    {
-                        break;
-                    }
-                }
-
-                foreach (Component mer in componentOnPlan)
-                {
-                    for (int i = 0; i < comp.getXpointList().Count; i++)
-                    { 
-
-                        if (mer is MergedTable)
-                        {
-                            int Xcheck = mer.getXpointList().ElementAt(0);
-                            int Ycheck = mer.getYpointList().ElementAt(0);
-
-                            int XLcheck = comp.getXpointList().ElementAt(i);
-                            int YLcheck = comp.getYpointList().ElementAt(i);
-                            
-                            if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
-                                (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
-                                (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
-                                (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
-                                (comp.X + 1 == c.X && comp.Y - 1 == c.Y) || (comp.X == Xcheck && comp.Y == Ycheck) || (comp.X + 1 == Xcheck && comp.Y == Ycheck) ||
-                                (comp.X == Xcheck && comp.Y + 1 == Ycheck) || (comp.X + 1 == Xcheck && comp.Y + 1 == Ycheck) ||
-                                (comp.X - 1 == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y == Ycheck) ||
-                                (comp.X == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y + 1 == Ycheck) ||
-                                (comp.X + 1 == Xcheck && comp.Y - 1 == Ycheck) || (XLcheck == c.X && YLcheck == c.Y) || (XLcheck + 1 == c.X && YLcheck == c.Y) ||
-                                (XLcheck == c.X && YLcheck + 1 == c.Y) || (XLcheck + 1 == c.X && YLcheck + 1 == c.Y) ||
-                                (XLcheck - 1 == c.X && YLcheck - 1 == c.Y) || (XLcheck - 1 == c.X && YLcheck == c.Y) ||
-                                (XLcheck == c.X && YLcheck - 1 == c.Y) || (XLcheck - 1 == c.X && YLcheck + 1 == c.Y) ||
-                                (XLcheck + 1 == c.X && YLcheck - 1 == c.Y))
-                            {
-                                if (comp is MergedTable)
-                                {
-                                    (comp as MergedTable).DecreaseCount();
-                                }
-
-                                return false;
-                            }
-                        }
-                    
-
-                            else
-                            {
-                                if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
-                                (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
-                                (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
-                                (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
-                                (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
-                            {
-                                if (comp is MergedTable)
-                                {
-                                    (comp as MergedTable).DecreaseCount();
-                                }
-
-                                return false;
-                            }
-                        }
-                    }
+                    return false;
                 }
             }
-            componentOnPlan.Add(comp);
+            else if (t1 is MergedTable && !(t2 as Table).OnGA)
+            {
+                return false;
+            }
+            else if (t2 is MergedTable && !(t1 as Table).OnGA)
+            {
+                return false;
+            }
+            else if (!(t1 as Table).OnGA && !(t2 as Table).OnGA)
+            {
+                return false;
+            }
+
+            // Create a MergedTable object
+            var mergedTable = new MergedTable(location, t1, t2);
+
+            for (int i = 0; i < mergedTable.Coordinates.Count; i++)
+            {
+                var ga = GetGroupArea(mergedTable.Coordinates[i].X, mergedTable.Coordinates[i].Y);
+
+                if (ga == null)
+                {
+                    return false;
+                }
+                else if (i + 1 == mergedTable.Coordinates.Count)
+                {
+                    (ga as GroupArea).AddTable(mergedTable);
+                    (ga as GroupArea).Remove(t1);
+                    (ga as GroupArea).Remove(t2);
+                }
+            }
+
+            // Add the merged table to the list of all components on the plan
+            componentOnPlan.Add(mergedTable);
+
+            // Remove the two tables from the list of components.
+            componentOnPlan.Remove(t1);
+            componentOnPlan.Remove(t2);
+
             return true;
         }
 
-       
+        //public bool AddMergedTable(List<int> size, Point p)
+        //{
+        //    Component comp = new MergedTable(size, p);
+
+        //    foreach (Component c in componentOnPlan)
+        //    {
+        //        if (c is GroupArea && comp is MergedTable)
+        //        {
+        //            if ((c as GroupArea).AddTable(comp))
+        //            {
+        //                break;
+        //            }
+        //        }
+
+        //        foreach (Component mer in componentOnPlan)
+        //        {
+        //            for (int i = 0; i < comp.getXpointList().Count; i++)
+        //            { 
+
+        //                if (mer is MergedTable)
+        //                {
+        //                    int Xcheck = mer.getXpointList().ElementAt(0);
+        //                    int Ycheck = mer.getYpointList().ElementAt(0);
+
+        //                    int XLcheck = comp.getXpointList().ElementAt(i);
+        //                    int YLcheck = comp.getYpointList().ElementAt(i);
+
+        //                    if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
+        //                        (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
+        //                        (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
+        //                        (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
+        //                        (comp.X + 1 == c.X && comp.Y - 1 == c.Y) || (comp.X == Xcheck && comp.Y == Ycheck) || (comp.X + 1 == Xcheck && comp.Y == Ycheck) ||
+        //                        (comp.X == Xcheck && comp.Y + 1 == Ycheck) || (comp.X + 1 == Xcheck && comp.Y + 1 == Ycheck) ||
+        //                        (comp.X - 1 == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y == Ycheck) ||
+        //                        (comp.X == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y + 1 == Ycheck) ||
+        //                        (comp.X + 1 == Xcheck && comp.Y - 1 == Ycheck) || (XLcheck == c.X && YLcheck == c.Y) || (XLcheck + 1 == c.X && YLcheck == c.Y) ||
+        //                        (XLcheck == c.X && YLcheck + 1 == c.Y) || (XLcheck + 1 == c.X && YLcheck + 1 == c.Y) ||
+        //                        (XLcheck - 1 == c.X && YLcheck - 1 == c.Y) || (XLcheck - 1 == c.X && YLcheck == c.Y) ||
+        //                        (XLcheck == c.X && YLcheck - 1 == c.Y) || (XLcheck - 1 == c.X && YLcheck + 1 == c.Y) ||
+        //                        (XLcheck + 1 == c.X && YLcheck - 1 == c.Y))
+        //                    {
+        //                        if (comp is MergedTable)
+        //                        {
+        //                            (comp as MergedTable).DecreaseCount();
+        //                        }
+
+        //                        return false;
+        //                    }
+        //                }
+
+
+        //                    else
+        //                    {
+        //                        if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
+        //                        (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
+        //                        (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
+        //                        (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
+        //                        (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
+        //                    {
+        //                        if (comp is MergedTable)
+        //                        {
+        //                            (comp as MergedTable).DecreaseCount();
+        //                        }
+
+        //                        return false;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    componentOnPlan.Add(comp);
+        //    return true;
+        //}
+
     }
 }
 
-//public void Redraw(ref PictureBox pb)
+//foreach (Component mer in componentOnPlan)
 //{
-//    pb.Refresh();
-//    foreach (Component c in componentOnPlan)
+//    if (mer is MergedTable)
 //    {
-//        c.Drawing(ref pb);
+//        if ((mer as MergedTable).getXpointList().Count != 0)
+//        {
+//            //int Xcheck = mer.getXpointList().ElementAt(0);
+//            //int Ycheck = mer.getYpointList().ElementAt(0);
+
+//            if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
+//                (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
+//                (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
+//                (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
+//                (comp.X + 1 == c.X && comp.Y - 1 == c.Y) || (comp.X == Xcheck && comp.Y == Ycheck) || (comp.X + 1 == Xcheck && comp.Y == Ycheck) ||
+//                (comp.X == Xcheck && comp.Y + 1 == Ycheck) || (comp.X + 1 == Xcheck && comp.Y + 1 == Ycheck) ||
+//                (comp.X - 1 == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y == Ycheck) ||
+//                (comp.X == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y + 1 == Ycheck) ||
+//                (comp.X + 1 == Xcheck && comp.Y - 1 == Ycheck))
+//            {
+//                if (comp is Table)
+//                {
+//                    (comp as Table).DecreaseCount();
+//                }
+//                else if (comp is Bar)
+//                {
+//                    (comp as Bar).DecreaseCount();
+//                }
+//                return false;
+//            }
+//        }
+//        else
+//        {
+//            if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
+//            (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
+//            (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
+//            (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
+//            (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
+//            {
+//                if (comp is Table)
+//                {
+//                    (comp as Table).DecreaseCount();
+//                }
+//                else if (comp is Bar)
+//                {
+//                    (comp as Bar).DecreaseCount();
+//                }
+//                return false;
+//            }
+//        }
 //    }
-//}
-
-//public bool AddTable(int size, bool merge, Point p)
-//{
-//    Table newTable = new Table(size, merge, p);
-
-//    foreach (Component com in componentOnPlan)
+//    else
 //    {
-//        if (com is GroupArea)
+//        if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
+//            (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
+//            (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
+//            (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
+//            (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
 //        {
-//            if ((com as GroupArea).AddTable(newTable))
-//                break;
-//        }
-//        else if (com is SmokeArea)
-//        {
-//            if ((com as SmokeArea).AddTable(newTable))
-//                break;
-//        }
-
-//        if ((newTable.X == com.X && newTable.Y == com.Y) || newTable.X + 1 == com.X && newTable.Y == com.Y || newTable.X - 1 == com.X && newTable.Y == com.Y || newTable.X == com.X && newTable.Y + 1 == com.Y ||
-//            newTable.X == com.X && newTable.Y - 1 == com.Y || newTable.X + 1 == com.X && newTable.Y + 1 == com.Y || newTable.X - 1 == com.X && newTable.Y - 1 == com.Y || newTable.X + 1 == com.X && newTable.Y - 1 == com.Y || newTable.X - 1 == com.X && newTable.Y + 1 == com.Y)
-//        {
-//            newTable.DecreaseCount();
+//            if (comp is Table)
+//            {
+//                (comp as Table).DecreaseCount();
+//            }
+//            else if (comp is Bar)
+//            {
+//                (comp as Bar).DecreaseCount();
+//            }
 //            return false;
 //        }
 //    }
-
-//    this.componentOnPlan.Add(newTable);
-//    return true;
-//}
-
-//public bool AddBar(int size, Point p)
-//{
-//    Bar newBar = new Bar(size, p);
-
-//    foreach (Component com in componentOnPlan)
-//    {
-
-//        if ((newBar.X == com.X && newBar.Y == com.Y) || newBar.X + 1 == com.X && newBar.Y == com.Y || newBar.X - 1 == com.X && newBar.Y == com.Y || newBar.X == com.X && newBar.Y + 1 == com.Y ||
-//            newBar.X == com.X && newBar.Y - 1 == com.Y || newBar.X + 1 == com.X && newBar.Y + 1 == com.Y || newBar.X - 1 == com.X && newBar.Y - 1 == com.Y || newBar.X + 1 == com.X && newBar.Y - 1 == com.Y || newBar.X - 1 == com.X && newBar.Y + 1 == com.Y)
-//        {
-//            newBar.DecreaseCount();
-//            return false;
-//        }
-//    }
-
-//    this.componentOnPlan.Add(newBar);
-//    return true;
 //}

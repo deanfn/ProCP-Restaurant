@@ -45,13 +45,32 @@ namespace RestaurantSimulation
 
         public override bool AddTable(Component c)
         {
-            if (base.AddTable(c) && tablesList.Count < maxTables)
+            if (c is MergedTable && tablesList.Count < maxTables)
+            {
+                foreach (Point p in (c as MergedTable).Coordinates)
+                {
+                    foreach (Point s in this.Coordinates)
+                    {
+                        if (p.Equals(s))
+                        {
+                            tablesList.Add(c);
+                            return true;
+                        }
+                    }
+                }
+            }
+            else if (base.AddTable(c) && tablesList.Count < maxTables)
             {
                 tablesList.Add(c);
                 return true;
             }
 
             return false;
+        }
+
+        public void Remove(Component c)
+        {
+            tablesList.Remove(c);
         }
 
         public static string GroupAreaTables()

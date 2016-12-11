@@ -28,10 +28,12 @@ namespace RestaurantSimulation
         int row = 0;
         int col = 0;
 
-        //Properties for Merging Tab;e
+        //Properties for Merging Table
         int step = 1;
-        int com1size, com2size;
-        List<int> sizeList = new List<int>();
+
+        // Point objects to save the coordinates of the tables to be merged.
+        Point table1;
+        Point table2;
 
         //Enum
         enum component { table, bar, groupArea, smokingArea, waitingArea, eraser, merge };
@@ -40,6 +42,9 @@ namespace RestaurantSimulation
         public RestaurantForm()
         {
             InitializeComponent();
+
+            table1 = new Point();
+            table2 = new Point();
 
         }
 
@@ -104,7 +109,7 @@ namespace RestaurantSimulation
                     size = 4;
                 }
 
-                if (newPlan.AddComponent(e.Location, (int)choosenComponent, size, false))
+                if (newPlan.AddComponent(e.Location, (int)choosenComponent, size))
                 {
                     choosenComponent = null;
                 }
@@ -113,118 +118,141 @@ namespace RestaurantSimulation
                     MessageBox.Show("Please, Select a Free Spot");
                 }
             }
-
             else if (choosenComponent == component.eraser)
             {
                 newPlan.RemoveComponent(newPlan.GetComponent(col, row));
             }
-
             else if (choosenComponent == component.merge)
             {
-                if (step == 1)
+                if (step == 1 && newPlan.GetComponent(col, row) != null)
                 {
-                    Component com1 = newPlan.GetNoArea(col, row);
-
-                    if (com1 != null)
-                    {
-                        if (com1 is MergedTable)
-                        {
-                            foreach (int i in (com1 as MergedTable).table)
-                            {
-                                sizeList.Add(i);
-                            }
-                        }
-
-                        else
-                        {
-                            if ((com1 as Table).OnGA == true)
-                            {
-                                com2size = com1.GetSize();
-                                sizeList.Add(com2size);
-                            }
-
-                            else
-                            {
-                                MessageBox.Show("Only Table on Group Area can be Merged");
-                                step--;
-                            }
-                        }
-
-                        newPlan.RemoveComponent(com1);
-                    }
-
-                    else
-                    {
-                        MessageBox.Show("Please select a Table");
-                        step--;
-                    }
-
-                    com1 = null;
+                    table1.X = col;
+                    table1.Y = row;
                 }
-
-                if (step == 2)
+                else if (step == 2 && newPlan.GetComponent(col, row) != null)
                 {
-                    Component com2 = newPlan.GetNoArea(col, row);
-
-                    if (com2 != null)
-                    {
-                        if (com2 is MergedTable)
-                        {
-                            foreach (int i in (com2 as MergedTable).getTableList())
-                            {
-                                sizeList.Add(i);
-                            }
-                        }
-
-                        else
-                        {
-                            if ((com2 as Table).OnGA == true)
-                            {
-                                com2size = com2.GetSize();
-                                sizeList.Add(com2size);
-                            }
-
-                            else
-                            {
-                                MessageBox.Show("Only Table on Group Area can be Merged");
-                                step--;
-                            }
-                        }
-
-                        newPlan.RemoveComponent(com2);
-                    }
-
-                    else
-                    {
-                        MessageBox.Show("Please select a Table");
-                        step--;
-                    }
-
-                    com2 = null;
+                    table2.X = col;
+                    table2.Y = row;
                 }
-
-                if (step ==3)
+                else if (step == 3 && !table1.Equals(table2))
                 {
-                    if (newPlan.GetComponent(col, row) is GroupArea)
+                    if (!newPlan.MergeTables(newPlan.GetComponent(table1.X, table1.Y), newPlan.GetComponent(table2.X, table2.Y),
+                        e.Location))
                     {
-                        if (newPlan.AddMergedTable(sizeList, e.Location))
-                        {
-                            step = 0;
-                            sizeList.Clear();
-                            choosenComponent = null;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Please Select a Free Spot");
-                            step--;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Merged Table Can Only be Put on Group Area");
-                        step--;
+                        MessageBox.Show("Cannot merge tables!");
+                        step = 1;
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Cannot merge the same table!");
+                    step = 1;
+                }
+                
+                //if (step == 1)
+                //{
+                //    Component com1 = newPlan.GetNoArea(col, row);
+
+                //    if (com1 != null)
+                //    {
+                //        if (com1 is MergedTable)
+                //        {
+                //            foreach (int i in (com1 as MergedTable).table)
+                //            {
+                //                sizeList.Add(i);
+                //            }
+                //        }
+
+                //        else
+                //        {
+                //            if ((com1 as Table).OnGA == true)
+                //            {
+                //                com2size = com1.GetSize();
+                //                sizeList.Add(com2size);
+                //            }
+
+                //            else
+                //            {
+                //                MessageBox.Show("Only Table on Group Area can be Merged");
+                //                step--;
+                //            }
+                //        }
+
+                //        newPlan.RemoveComponent(com1);
+                //    }
+
+                //    else
+                //    {
+                //        MessageBox.Show("Please select a Table");
+                //        step--;
+                //    }
+
+                //    com1 = null;
+                //}
+
+                //if (step == 2)
+                //{
+                //    Component com2 = newPlan.GetNoArea(col, row);
+
+                //    if (com2 != null)
+                //    {
+                //        if (com2 is MergedTable)
+                //        {
+                //            foreach (int i in (com2 as MergedTable).getTableList())
+                //            {
+                //                sizeList.Add(i);
+                //            }
+                //        }
+
+                //        else
+                //        {
+                //            if ((com2 as Table).OnGA == true)
+                //            {
+                //                com2size = com2.GetSize();
+                //                sizeList.Add(com2size);
+                //            }
+
+                //            else
+                //            {
+                //                MessageBox.Show("Only Table on Group Area can be Merged");
+                //                step--;
+                //            }
+                //        }
+
+                //        newPlan.RemoveComponent(com2);
+                //    }
+
+                //    else
+                //    {
+                //        MessageBox.Show("Please select a Table");
+                //        step--;
+                //    }
+
+                //    com2 = null;
+                //}
+
+                //if (step == 3)
+                //{
+                //    if (newPlan.GetComponent(col, row) is GroupArea)
+                //    {
+                //        if (newPlan.AddMergedTable(sizeList, e.Location))
+                //        {
+                //            step = 0;
+                //            sizeList.Clear();
+                //            choosenComponent = null;
+                //        }
+                //        else
+                //        {
+                //            MessageBox.Show("Please Select a Free Spot");
+                //            step--;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        MessageBox.Show("Merged Table Can Only be Put on Group Area");
+                //        step--;
+                //    }
+                //}
 
                 step++;
             }
@@ -266,62 +294,6 @@ namespace RestaurantSimulation
         {
             choosenComponent = component.merge;
             step = 1;
-            sizeList.Clear();
         }
     }
 }
-
-//if(choosenComponent == component.table)
-//{
-//    if (rbSize2.Checked)
-//    {
-
-//        if (newPlan.AddTable(2, false, e.Location))
-//        {
-//            choosenComponent = null;
-//        }
-//        else
-//        {
-//            MessageBox.Show("Please Select a Free Spot");
-//        }
-//    }
-
-//    else
-//    {
-//        if (newPlan.AddTable(4, false, e.Location))
-//        {
-//            choosenComponent = null;
-//        }
-//        else
-//        {
-//            MessageBox.Show("Please Select a Free Spot");
-//        }
-//    }
-//}
-
-//if (choosenComponent == component.bar)
-//{
-//    if (rbSize2.Checked)
-//    {
-//        if (newPlan.AddBar(2, e.Location))
-//        {
-//            choosenComponent = null;
-//        }
-//        else
-//        {
-//            MessageBox.Show("Please Select a Free Spot");
-//        }
-//    }
-
-//    else
-//    {
-//        if (newPlan.AddBar(4, e.Location))
-//        {
-//            choosenComponent = null;
-//        }
-//        else
-//        {
-//            MessageBox.Show("Please Select a Free Spot");
-//        }
-//    }
-//}

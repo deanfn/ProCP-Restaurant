@@ -10,12 +10,11 @@ namespace RestaurantSimulation
 {
     class Table : Component
     {
-        private int size;
         private bool available;
-        private bool merging;
         private static int count = 0;
 
         public int ID { get; set; }
+        public int TableSize { get; set; }
 
         // Boolean indicating whether the table is on group area spot or not.
         public bool OnGA { get; set; }
@@ -32,11 +31,10 @@ namespace RestaurantSimulation
         /// <param name="size"></param>
         /// <param name="avail"></param>
         /// <param name="merg"></param>
-        public Table(int size, bool merg, Point p) : base(p)
+        public Table(int size, Point p) : base(p)
         {
-            this.size = size;
+            this.TableSize = size;
             this.available = true;
-            this.merging = merg;
             OnGA = false;
             OnSA = false;
             OnWA = false;
@@ -50,7 +48,7 @@ namespace RestaurantSimulation
         /// <returns></returns>
         public override string ToString()
         {
-            return "size: " + size + ", id: " + ID;
+            return "size: " + TableSize + ", id: " + ID;
         }
 
         /// <summary>
@@ -73,7 +71,7 @@ namespace RestaurantSimulation
             g.DrawImage(i, col, row, width, height);
 
             Font newFont = new Font("Arial", 16);
-            g.DrawString(Convert.ToString(size), newFont, Brushes.Black, (X*40) + 10, (Y*40) + 10);
+            g.DrawString(Convert.ToString(TableSize), newFont, Brushes.Black, (X*40) + 10, (Y*40) + 10);
             g.DrawString(ID.ToString(), new Font("Arial", 10), Brushes.Black, (X * 40), (Y * 40));
 
             /* This checks if the table is placed on a special area. And if it is
@@ -104,17 +102,7 @@ namespace RestaurantSimulation
 
         public override int GetSize()
         {
-            return size;
-        }
-
-        public override List<int> getXpointList()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override List<int> getYpointList()
-        {
-            throw new NotImplementedException();
+            return TableSize;
         }
     }
 }
