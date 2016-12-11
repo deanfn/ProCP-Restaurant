@@ -70,31 +70,53 @@ namespace RestaurantSimulation
                 }
                 foreach (Component mer in componentOnPlan)
                 {
-                    
                     if (mer is MergedTable)
                     {
-                        int Xcheck = mer.getXpointList().ElementAt(0);
-                        int Ycheck = mer.getYpointList().ElementAt(0);
+                        if ((mer as MergedTable).getXpointList().Count != 0)
+                        {
+                            int Xcheck = mer.getXpointList().ElementAt(0);
+                            int Ycheck = mer.getYpointList().ElementAt(0);
 
-                        if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
+                            if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
+                                (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
+                                (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
+                                (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
+                                (comp.X + 1 == c.X && comp.Y - 1 == c.Y) || (comp.X == Xcheck && comp.Y == Ycheck) || (comp.X + 1 == Xcheck && comp.Y == Ycheck) ||
+                                (comp.X == Xcheck && comp.Y + 1 == Ycheck) || (comp.X + 1 == Xcheck && comp.Y + 1 == Ycheck) ||
+                                (comp.X - 1 == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y == Ycheck) ||
+                                (comp.X == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y + 1 == Ycheck) ||
+                                (comp.X + 1 == Xcheck && comp.Y - 1 == Ycheck))
+                            {
+                                if (comp is Table)
+                                {
+                                    (comp as Table).DecreaseCount();
+                                }
+                                else if (comp is Bar)
+                                {
+                                    (comp as Bar).DecreaseCount();
+                                }
+                                return false;
+                            }
+                        }
+
+                        else
+                        {
+                            if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
                             (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
                             (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
                             (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
-                            (comp.X + 1 == c.X && comp.Y - 1 == c.Y) || (comp.X == Xcheck && comp.Y == Ycheck) || (comp.X + 1 == Xcheck && comp.Y == Ycheck) ||
-                            (comp.X == Xcheck && comp.Y + 1 == Ycheck) || (comp.X + 1 == Xcheck && comp.Y + 1 == Ycheck) ||
-                            (comp.X - 1 == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y == Ycheck) ||
-                            (comp.X == Xcheck && comp.Y - 1 == Ycheck) || (comp.X - 1 == Xcheck && comp.Y + 1 == Ycheck) ||
-                            (comp.X + 1 == Xcheck && comp.Y - 1 == Ycheck))
-                        {
-                            if (comp is Table)
+                            (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
                             {
-                                (comp as Table).DecreaseCount();
+                                if (comp is Table)
+                                {
+                                    (comp as Table).DecreaseCount();
+                                }
+                                else if (comp is Bar)
+                                {
+                                    (comp as Bar).DecreaseCount();
+                                }
+                                return false;
                             }
-                            else if (comp is Bar)
-                            {
-                                (comp as Bar).DecreaseCount();
-                            }
-                            return false;
                         }
                     }
 
@@ -164,45 +186,48 @@ namespace RestaurantSimulation
         {
             int ComCounter = 0;
 
-            foreach (Component com in componentOnPlan)
+            if (c != null)
             {
-                if (c.X == com.X && c.Y == com.Y)
+                foreach (Component com in componentOnPlan)
                 {
-                    if (c is Table || c is Bar || c is MergedTable)
+                    if (c.X == com.X && c.Y == com.Y)
                     {
-                        for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                        if (c is Table || c is Bar || c is MergedTable)
                         {
-                            if (c is Table && componentOnPlan.ElementAt(i) is Table)
+                            for (int i = ComCounter; i < componentOnPlan.Count; i++)
                             {
-                                componentOnPlan.ElementAt(i).DecreaseID();
+                                if (c is Table && componentOnPlan.ElementAt(i) is Table)
+                                {
+                                    componentOnPlan.ElementAt(i).DecreaseID();
+                                }
                             }
+
+                            for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                            {
+                                if (c is Bar && componentOnPlan.ElementAt(i) is Bar)
+                                {
+                                    componentOnPlan.ElementAt(i).DecreaseID();
+                                }
+                            }
+
+                            for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                            {
+                                if (c is MergedTable && componentOnPlan.ElementAt(i) is MergedTable)
+                                {
+                                    componentOnPlan.ElementAt(i).DecreaseID();
+                                }
+                            }
+
+                            c.DecreaseCount();
+
                         }
 
-                        for (int i = ComCounter; i < componentOnPlan.Count; i++)
-                        {
-                            if (c is Bar && componentOnPlan.ElementAt(i) is Bar)
-                            {
-                                componentOnPlan.ElementAt(i).DecreaseID();
-                            }
-                        }
-
-                        for (int i = ComCounter; i < componentOnPlan.Count; i++)
-                        {
-                            if (c is MergedTable && componentOnPlan.ElementAt(i) is MergedTable)
-                            {
-                                componentOnPlan.ElementAt(i).DecreaseID();
-                            }
-                        }
-
-                        c.DecreaseCount();
-
+                        componentOnPlan.Remove(c);
+                        return true;
                     }
 
-                    componentOnPlan.Remove(c);
-                    return true;
+                    ComCounter++;
                 }
-
-                ComCounter++;
             }
 
             return false;
