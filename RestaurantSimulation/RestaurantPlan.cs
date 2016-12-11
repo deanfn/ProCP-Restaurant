@@ -242,9 +242,9 @@ namespace RestaurantSimulation
             }
         }
 
-        public bool AddMergedTable(List<int> size, Point p)
+        public bool AddMergedTable(List<Component> TableList, Point p)
         {
-            Component comp = new MergedTable(size, p);
+            Component comp = new MergedTable(TableList, p);
             
             foreach (Component c in componentOnPlan)
             {

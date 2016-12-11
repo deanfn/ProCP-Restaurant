@@ -9,20 +9,27 @@ namespace RestaurantSimulation
 {
     class MergedTable:Component
     {
-        public int size = 0;
-        public List<int> table = new List<int>();
+        public int size;
+        public List<Component> tableList = new List<Component>();
         public List<int> XpointList = new List<int>();
         public List<int> YpointList = new List<int>();
         private static int count = 0;
         private int id;
         int Xpoint, Ypoint;
 
-        public MergedTable(List<int> listSize, Point p):base(p)
+        public MergedTable(List<Component> TableList, Point p):base(p)
         {
+
+            //Store the table size for the unmerge
+            tableList = TableList;
+
+            //Assign for table ID
+            id = count;
+
             //Determine the size if the merged table
-            foreach (int i in listSize)
+            foreach (Component c in tableList)
             {
-                size += i;
+                size += c.GetSize();
             }
 
             //Determine how many grid required
@@ -70,13 +77,7 @@ namespace RestaurantSimulation
                     YpointList.Add(Ypoint);
                 }
             }
-
-            //Store the table size for the unmerge
-            table = listSize;
-
-            //Assign for table ID
-            id = count;
-
+            
             //Increment everytime table is placed
             count++;
         }
@@ -145,7 +146,7 @@ namespace RestaurantSimulation
 
         public override int GetSize()
         {
-            throw new NotImplementedException();
+            return size;
         }
 
         public override List<int> getXpointList()
@@ -158,9 +159,9 @@ namespace RestaurantSimulation
             return YpointList;
         }
 
-        public List<int> getTableList()
+        public List<Component> getTableList()
         {
-            return table;
+            return tableList;
         }
     }
 }

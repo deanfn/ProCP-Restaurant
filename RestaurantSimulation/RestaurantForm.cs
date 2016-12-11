@@ -28,10 +28,9 @@ namespace RestaurantSimulation
         int row = 0;
         int col = 0;
 
-        //Properties for Merging Tab;e
+        //Properties for Merging Table
         int step = 1;
-        int com1size, com2size;
-        List<int> sizeList = new List<int>();
+        List<Component> TableList = new List<Component>();
 
         //Enum
         enum component { table, bar, groupArea, smokingArea, waitingArea, eraser, merge };
@@ -129,18 +128,16 @@ namespace RestaurantSimulation
                     {
                         if (com1 is MergedTable)
                         {
-                            foreach (int i in (com1 as MergedTable).table)
-                            {
-                                sizeList.Add(i);
-                            }
+                            TableList.Add(com1);
+                            newPlan.componentOnPlan.Remove(com1);
                         }
 
                         else
                         {
                             if ((com1 as Table).OnGA == true)
                             {
-                                com2size = com1.GetSize();
-                                sizeList.Add(com2size);
+                                TableList.Add(com1);
+                                newPlan.componentOnPlan.Remove(com1);
                             }
 
                             else
@@ -149,8 +146,6 @@ namespace RestaurantSimulation
                                 step--;
                             }
                         }
-
-                        newPlan.RemoveComponent(com1);
                     }
 
                     else
@@ -170,18 +165,16 @@ namespace RestaurantSimulation
                     {
                         if (com2 is MergedTable)
                         {
-                            foreach (int i in (com2 as MergedTable).getTableList())
-                            {
-                                sizeList.Add(i);
-                            }
+                            TableList.Add(com2);
+                            newPlan.componentOnPlan.Remove(com2);
                         }
 
                         else
                         {
                             if ((com2 as Table).OnGA == true)
                             {
-                                com2size = com2.GetSize();
-                                sizeList.Add(com2size);
+                                TableList.Add(com2);
+                                newPlan.componentOnPlan.Remove(com2);
                             }
 
                             else
@@ -190,8 +183,6 @@ namespace RestaurantSimulation
                                 step--;
                             }
                         }
-
-                        newPlan.RemoveComponent(com2);
                     }
 
                     else
@@ -207,10 +198,10 @@ namespace RestaurantSimulation
                 {
                     if (newPlan.GetComponent(col, row) is GroupArea)
                     {
-                        if (newPlan.AddMergedTable(sizeList, e.Location))
+                        if (newPlan.AddMergedTable(TableList, e.Location))
                         {
                             step = 0;
-                            sizeList.Clear();
+                            TableList.Clear();
                             choosenComponent = null;
                         }
                         else
@@ -266,7 +257,7 @@ namespace RestaurantSimulation
         {
             choosenComponent = component.merge;
             step = 1;
-            sizeList.Clear();
+            TableList.Clear();
         }
     }
 }
