@@ -221,6 +221,7 @@
             this.btnUnmerge.TabIndex = 6;
             this.btnUnmerge.Text = "Un-merge";
             this.btnUnmerge.UseVisualStyleBackColor = true;
+            this.btnUnmerge.Click += new System.EventHandler(this.btnUnmerge_Click);
             // 
             // btnMerge
             // 

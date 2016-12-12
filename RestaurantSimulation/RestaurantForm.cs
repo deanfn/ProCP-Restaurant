@@ -36,7 +36,7 @@ namespace RestaurantSimulation
         Point table2;
 
         //Enum
-        enum component { table, bar, groupArea, smokingArea, waitingArea, eraser, merge };
+        enum component { table, bar, groupArea, smokingArea, waitingArea, eraser, merge, unmerge };
         component? choosenComponent = null;
 
         public RestaurantForm()
@@ -96,7 +96,7 @@ namespace RestaurantSimulation
 
 
             // Add new component to the restaurant plan
-            if (choosenComponent != null && choosenComponent != component.eraser && choosenComponent != component.merge)
+            if (choosenComponent != null && choosenComponent != component.eraser && choosenComponent != component.merge && choosenComponent!=component.unmerge)
             {
                 int size;
 
@@ -256,6 +256,27 @@ namespace RestaurantSimulation
 
                 step++;
             }
+            else if (choosenComponent == component.unmerge)
+            {
+                if ((newPlan.GetComponent(col,row) is MergedTable))
+                {
+                    table1.X = col;
+                    table1.Y = row;
+
+                }
+                else if (newPlan.ListCheck(newPlan.GetComponent(table1.X, table1.Y)))
+                {
+                    if (!newPlan.UnMergeTable(newPlan.GetComponent(table1.X, table1.Y), e.Location))
+                    {
+                        MessageBox.Show("Cannot place table here.");
+                    }
+                }
+                if (!newPlan.ListCheck(newPlan.GetComponent(table1.X, table1.Y)))
+                {
+                    newPlan.RemoveComponent(newPlan.GetComponent(table1.X, table1.Y));
+                    choosenComponent = null;
+                }
+            }
 
             RestaurantPlan.Invalidate();
         }
@@ -294,6 +315,11 @@ namespace RestaurantSimulation
         {
             choosenComponent = component.merge;
             step = 1;
+        }
+
+        private void btnUnmerge_Click(object sender, EventArgs e)
+        {
+            choosenComponent = component.unmerge;
         }
     }
 }

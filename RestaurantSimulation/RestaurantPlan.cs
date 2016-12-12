@@ -73,17 +73,17 @@ namespace RestaurantSimulation
                         (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
                         (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
                         (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
+                {
+                    if (comp is Table)
                     {
-                        if (comp is Table)
-                        {
-                            (comp as Table).DecreaseCount();
-                        }
-                        else if (comp is Bar)
-                        {
-                            (comp as Bar).DecreaseCount();
-                        }
-                        return false;
+                        (comp as Table).DecreaseCount();
                     }
+                    else if (comp is Bar)
+                    {
+                        (comp as Bar).DecreaseCount();
+                    }
+                    return false;
+                }
 
             }
 
@@ -252,7 +252,31 @@ namespace RestaurantSimulation
 
             return true;
         }
-
+        public bool UnMergeTable(Component mt, Point location)
+        {
+            if (mt is MergedTable)
+            {
+                if ((mt as MergedTable).Tables.Count > 0)
+                {
+                    int size = (mt as MergedTable).Tables[0].GetSize();
+                    if (AddComponent(location, 0, size))
+                    {
+                        (mt as MergedTable).Tables.RemoveAt(0);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+        public bool ListCheck(Component mt)
+        {
+            if((mt as MergedTable).Tables.Count != 0)
+            {
+                return true;
+            }
+            return false;
+        }
         //public bool AddMergedTable(List<int> size, Point p)
         //{
         //    Component comp = new MergedTable(size, p);
