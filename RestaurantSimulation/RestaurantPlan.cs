@@ -258,12 +258,23 @@ namespace RestaurantSimulation
             {
                 if ((mt as MergedTable).Tables.Count > 0)
                 {
+                    //For Unmerging  
                     int size = (mt as MergedTable).Tables[0].GetSize();
-                    if (AddComponent(location, 0, size))
+                    if ((mt as MergedTable).Tables[0] is MergedTable)
+                    {
+                        AddComponent(location, 0, size);
+                        if (!(mt as MergedTable).RemoveFirstObject())
+                        {
+                            (mt as MergedTable).Tables.RemoveAt(0);
+                        }
+                        return true;
+                    }
+                    else if (AddComponent(location, 0, size))
                     {
                         (mt as MergedTable).Tables.RemoveAt(0);
                         return true;
                     }
+
                 }
                 return false;
             }
