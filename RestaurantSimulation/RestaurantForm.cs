@@ -165,7 +165,7 @@ namespace RestaurantSimulation
                 {
                     if (!newPlan.UnMergeTable(newPlan.GetComponent(table1.X, table1.Y), e.Location))
                     {
-                        MessageBox.Show("Cannot place table here.");
+                        MessageBox.Show("Cannot place table here or you haven't selected merged table.");
                     }
                 }
                 if (!newPlan.ListCheck(newPlan.GetComponent(table1.X, table1.Y)))

@@ -154,28 +154,52 @@ namespace RestaurantSimulation
         //For Unmerging 
         public override int GetSize()
         {
-            return Tables[0].GetSize();
-        }
-        //For Unmerging 
-        public int MergedTableSize()
-        {
-            int size = 0;
-            for (int i = 0; i <= Tables.Count-1; i++)
+            int size;
+            try
             {
-                size += Tables[i].GetSize();
-            }
-            return size;
-        }
-        //For Unmerging 
-        public bool RemoveFirstObject()
-        {
-            if(Tables.Count != 0)
-            {
+                size = Tables[0].GetSize();
                 Tables.RemoveAt(0);
-                return true;
+                return size;
             }
-            return false;
-            
+            catch (ArgumentOutOfRangeException)
+            {
+                return -1;
+            }
         }
+
+
+        public int FirstTableSize()
+        {
+            int size = Tables[0].GetSize();
+            if (size != -1)
+            {
+                return size;
+            }
+            return -1;
+
+
+        }
+
+        //For Unmerging 
+        //public int MergedTableSize()
+        //{
+        //    int size = 0;
+
+        //    for (int i = 0; i <= Tables.Count-1; i++)
+        //    {
+        //        size += Tables[i].GetSize();
+        //    }
+        //    return size;
+        //}
+        ////For Unmerging 
+        //public bool RemoveFirstObject()
+        //{
+        //    if(Tables.Count != 0)
+        //    {
+        //        Tables.RemoveAt(0);
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }
