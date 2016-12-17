@@ -96,7 +96,7 @@ namespace RestaurantSimulation
 
 
             // Add new component to the restaurant plan
-            if (choosenComponent != null && choosenComponent != component.eraser && choosenComponent != component.merge && choosenComponent!=component.unmerge)
+            if (choosenComponent != null && choosenComponent != component.eraser && choosenComponent != component.merge && choosenComponent != component.unmerge)
             {
                 int size;
 
@@ -118,10 +118,12 @@ namespace RestaurantSimulation
                     MessageBox.Show("Please, Select a Free Spot");
                 }
             }
+
             else if (choosenComponent == component.eraser)
             {
                 newPlan.RemoveComponent(newPlan.GetComponent(col, row));
             }
+
             else if (choosenComponent == component.merge)
             {
                 if (step == 1 && newPlan.GetComponent(col, row) != null)
@@ -148,12 +150,12 @@ namespace RestaurantSimulation
                     MessageBox.Show("Cannot merge the same table!");
                     step = 1;
                 }
-
                 step++;
             }
+
             else if (choosenComponent == component.unmerge)
             {
-                if ((newPlan.GetComponent(col,row) is MergedTable))
+                if ((newPlan.GetComponent(col, row) is MergedTable))
                 {
                     table1.X = col;
                     table1.Y = row;
@@ -163,7 +165,7 @@ namespace RestaurantSimulation
                 {
                     if (!newPlan.UnMergeTable(newPlan.GetComponent(table1.X, table1.Y), e.Location))
                     {
-                        MessageBox.Show("Cannot place table here.");
+                        MessageBox.Show("Cannot place table here or you haven't selected merged table.");
                     }
                 }
                 if (!newPlan.ListCheck(newPlan.GetComponent(table1.X, table1.Y)))

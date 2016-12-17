@@ -9,12 +9,7 @@ namespace RestaurantSimulation
 {
     class MergedTable : Table
     {
-        //public List<int> table = new List<int>();
-        //public List<int> XpointList = new List<int>();
-        //public List<int> YpointList = new List<int>();
         private static int count = 0;
-        //private int id;
-        //int Xpoint, Ypoint;
 
         // The list of tables that are merged.
         public List<Component> Tables { get; set; }
@@ -23,7 +18,8 @@ namespace RestaurantSimulation
         public List<Point> Coordinates { get; set; }
 
 
-        public MergedTable(Point p, Component t1, Component t2) : base((t1 as Table).TableSize + (t2 as Table).TableSize, p)
+        public MergedTable(Point p, Component t1, Component t2)
+            : base((t1 as Table).TableSize + (t2 as Table).TableSize, p)
         {
             Tables = new List<Component>();
             Coordinates = new List<Point>();
@@ -32,7 +28,7 @@ namespace RestaurantSimulation
             Tables.Add(t1);
             Tables.Add(t2);
 
-            
+
             OnGA = true;
 
             /* Determine the size of the merged table.
@@ -170,9 +166,55 @@ namespace RestaurantSimulation
             ID--;
         }
 
+        //For Unmerging 
         public override int GetSize()
         {
-            throw new NotImplementedException();
+            int size;
+            try
+            {
+                size = Tables[0].GetSize();
+                Tables.RemoveAt(0);
+                return size;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return -1;
+            }
         }
+
+
+        public int FirstTableSize()
+        {
+            int size = Tables[0].GetSize();
+            if (size != -1)
+            {
+                return size;
+            }
+            return -1;
+
+
+        }
+
+        //For Unmerging 
+        //public int MergedTableSize()
+        //{
+        //    int size = 0;
+
+        //    for (int i = 0; i <= Tables.Count-1; i++)
+        //    {
+        //        size += Tables[i].GetSize();
+        //    }
+        //    return size;
+        //}
+        ////For Unmerging 
+        //public bool RemoveFirstObject()
+        //{
+        //    if(Tables.Count != 0)
+        //    {
+        //        Tables.RemoveAt(0);
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }

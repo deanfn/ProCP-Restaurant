@@ -258,7 +258,26 @@ namespace RestaurantSimulation
         {
             if (mt is MergedTable)
             {
-                if ((mt as MergedTable).Tables.Count > 0)
+                if ((mt as MergedTable).Tables[0] is MergedTable)
+                {
+                    int size = (mt as MergedTable).FirstTableSize();
+                    if (size != -1)
+                    {
+                        AddComponent(location, 0, size);
+                        return true;
+                    }
+                    else
+                    {
+                        (mt as MergedTable).Tables.RemoveAt(0);
+                        size = (mt as MergedTable).Tables[0].GetSize();
+                        if (AddComponent(location, 0, size))
+                        {
+                            (mt as MergedTable).Tables.RemoveAt(0);
+                            return true;
+                        }
+                    }
+                }
+                else
                 {
                     int size = (mt as MergedTable).Tables[0].GetSize();
                     if (AddComponent(location, 0, size))
@@ -267,13 +286,13 @@ namespace RestaurantSimulation
                         return true;
                     }
                 }
-                return false;
+              return false;
             }
             return false;
         }
         public bool ListCheck(Component mt)
         {
-            if((mt as MergedTable).Tables.Count != 0)
+            if ((mt as MergedTable).Tables.Count != 0)
             {
                 return true;
             }
