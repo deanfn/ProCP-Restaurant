@@ -47,17 +47,16 @@ namespace RestaurantSimulation
         {
             if (c is MergedTable && tablesList.Count < maxTables)
             {
-                foreach (Point p in (c as MergedTable).Coordinates)
+                for (int i = 0; i < Coordinates.Count; i++)
                 {
-                    foreach (Point s in this.Coordinates)
+                    if (this.Coordinates[i].Equals(Coordinates[i]) && FreeSpots[i])
                     {
-                        if (p.Equals(s))
-                        {
-                            tablesList.Add(c);
-                            return true;
-                        }
+                        this.FreeSpots[i] = false;
                     }
                 }
+
+                tablesList.Add(c);
+                return true;
             }
             else if (base.AddTable(c) && tablesList.Count < maxTables)
             {

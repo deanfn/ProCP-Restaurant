@@ -145,6 +145,21 @@ namespace RestaurantSimulation
             g.DrawString(ID.ToString(), new Font("Arial", 10), Brushes.Black, (X * 40), (Y * 40));
         }
 
+        /* Checks if a tables coordinates are the same as
+         * the coordinates of merging table. */
+        public bool CheckCoordinates(Component c)
+        {
+            foreach (Point p in Coordinates)
+            {
+                if (p.Equals(c))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public override void DecreaseCount()
         {
             count--;

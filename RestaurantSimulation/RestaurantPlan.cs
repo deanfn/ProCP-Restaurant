@@ -208,6 +208,7 @@ namespace RestaurantSimulation
                 if (((t1 as MergedTable).Tables.Count > 1 && (t2 as MergedTable).Tables.Count < 3) ||
                     (t1 as MergedTable).Tables.Count < 3 && (t2 as MergedTable).Tables.Count > 1)
                 {
+                    
                     return false;
                 }
             }
@@ -252,6 +253,7 @@ namespace RestaurantSimulation
 
             return true;
         }
+
         public bool UnMergeTable(Component mt, Point location)
         {
             if (mt is MergedTable)
