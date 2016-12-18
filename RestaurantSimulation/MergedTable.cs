@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace RestaurantSimulation
                 Coordinates.Add(new Point(p.X / 40, p.Y / 40));
                 Coordinates.Add(new Point((p.X + 40) / 40, p.Y / 40));
             }
-            else if (TableSize >= 10 && TableSize <= 12)
+            else if (TableSize >= 10)
             {
                 Coordinates.Add(new Point(p.X / 40, p.Y / 40));
                 Coordinates.Add(new Point((p.X + 40) / 40, p.Y / 40));
@@ -51,60 +52,32 @@ namespace RestaurantSimulation
 
             //Increment everytime table is placed
             count++;
+        }
 
-            //foreach (int i in listSize)
-            //{
-            //    size += i;
-            //}
+        public MergedTable(List<Component> tables, int size, Point location) : base(size, location)
+        {
+            OnGA = true;
 
-            //Determine how many grid required
-            //if(size >= 5 && size <= 8)
-            //{
-            //    Xpoint = (p.X + 40) / 40;
-            //    Ypoint = (p.Y) / 40;
+            Tables = tables;
+            Coordinates = new List<Point>();
 
-            //    XpointList.Add(Xpoint);
-            //    YpointList.Add(Ypoint);
-            //}
+            if (TableSize == 8)
+            {
+                Coordinates.Add(new Point(location.X / 40, location.Y / 40));
+                Coordinates.Add(new Point((location.X + 40) / 40, location.Y / 40));
+            }
+            else if (TableSize >= 10)
+            {
+                Coordinates.Add(new Point(location.X / 40, location.Y / 40));
+                Coordinates.Add(new Point((location.X + 40) / 40, location.Y / 40));
+                Coordinates.Add(new Point((location.X + 80) / 40, location.Y / 40));
+            }
 
-            //else if (size >= 9 && size <= 12)
-            //{
-            //    for(int i = 1; i <= 2; i++)
-            //    {
-            //        Xpoint = (p.X + 40 * i) / i;
-            //        Ypoint = (p.Y) / 40;
+            //Assign for table ID
+            this.ID = count;
 
-            //        XpointList.Add(Xpoint);
-            //        YpointList.Add(Ypoint);
-            //    }
-            //}
-
-            //else if (size >= 13 && size <= 16)
-            //{
-            //    for (int i = 1; i <= 3; i++)
-            //    {
-            //        Xpoint = (p.X + 40 * i) / i;
-            //        Ypoint = (p.Y) / 40;
-
-            //        XpointList.Add(Xpoint);
-            //        YpointList.Add(Ypoint);
-            //    }
-            //}
-
-            //else if (size >= 17 && size <= 20)
-            //{
-            //    for (int i = 1; i <= 4; i++)
-            //    {
-            //        Xpoint = (p.X + 40 * i) / i;
-            //        Ypoint = (p.Y) / 40;
-
-            //        XpointList.Add(Xpoint);
-            //        YpointList.Add(Ypoint);
-            //    }
-            //}
-
-            //Store the table size for the unmerge
-            //table = listSize;
+            //Increment everytime table is placed
+            count++;
         }
 
         public override void Drawing(Graphics g)
@@ -129,7 +102,7 @@ namespace RestaurantSimulation
                 g.DrawImage(i, col + 40, row, width, height);
             }
 
-            else if (TableSize >= 10 && TableSize <= 12)
+            else if (TableSize >= 10)
             {
                 g.DrawImage(i, col, row, width, height);
                 g.DrawImage(i, col + 40, row, width, height);

@@ -15,7 +15,7 @@ namespace RestaurantSimulation
 
         public GroupArea(Point coordinates) : base(coordinates)
         {
-            
+
         }
 
         public override void Drawing(Graphics g)
@@ -45,13 +45,13 @@ namespace RestaurantSimulation
 
         public override bool AddTable(Component c)
         {
-            if (c is MergedTable && tablesList.Count < maxTables)
+            if (c is MergedTable && tablesList.Count < maxTables && !tablesList.Contains(c))
             {
-                for (int i = 0; i < Coordinates.Count; i++)
+                foreach (Spot s in Spots)
                 {
-                    if (this.Coordinates[i].Equals(Coordinates[i]) && FreeSpots[i])
+                    if ((c as MergedTable).Coordinates.Contains(s.Coordinates))
                     {
-                        this.FreeSpots[i] = false;
+                        s.Free = false;
                     }
                 }
 
@@ -67,9 +67,9 @@ namespace RestaurantSimulation
             return false;
         }
 
-        public void Remove(Component c)
+        public void RemoveTable(Component table)
         {
-            tablesList.Remove(c);
+            tablesList.Remove(table);
         }
 
         public static string GroupAreaTables()

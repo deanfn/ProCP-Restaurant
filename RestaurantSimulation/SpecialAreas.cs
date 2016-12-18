@@ -9,26 +9,16 @@ namespace RestaurantSimulation
 {
     class SpecialAreas : Component
     {
-        // Boolean array to check if there are free spots in the group area
-        public bool[] FreeSpots { get; set; }
-
-        // Coordinates for every spot in the area. On click four group area spots are drawn
-        public List<Point> Coordinates { get; set; }
+        // List of spots
+        public List<Spot> Spots { get; set; }
 
         public SpecialAreas(Point coordinates) : base(coordinates)
         {
-            FreeSpots = new bool[4];
-            Coordinates = new List<Point>();
-
-            Coordinates.Add(new Point(coordinates.X / 40, coordinates.Y / 40));
-            Coordinates.Add(new Point(coordinates.X / 40 + 1, coordinates.Y / 40));
-            Coordinates.Add(new Point(coordinates.X / 40 + 1, coordinates.Y / 40 + 1));
-            Coordinates.Add(new Point(coordinates.X / 40, coordinates.Y / 40 + 1));
-
-            for (int i = 0; i < FreeSpots.Length; i++)
-            {
-                FreeSpots[i] = true;
-            }
+            Spots = new List<Spot>();
+            Spots.Add(new Spot(new Point(coordinates.X / 40, coordinates.Y / 40)));
+            Spots.Add(new Spot(new Point(coordinates.X / 40 + 1, coordinates.Y / 40)));
+            Spots.Add(new Spot(new Point(coordinates.X / 40 + 1, coordinates.Y / 40 + 1)));
+            Spots.Add(new Spot(new Point(coordinates.X / 40, coordinates.Y / 40 + 1)));
         }
 
         // No need to write implementation.
@@ -40,11 +30,11 @@ namespace RestaurantSimulation
         // This method is used to add tables to the static lists of the special area classes
         public virtual bool AddTable(Component c)
         {
-            for (int i = 0; i < FreeSpots.Length; i++)
+            foreach (var spot in Spots)
             {
-                if (Coordinates[i].X == c.X && Coordinates[i].Y == c.Y && FreeSpots[i])
+                if (spot.Coordinates.X == c.X && spot.Coordinates.Y == c.Y && spot.Free)
                 {
-                    FreeSpots[i] = false;
+                    spot.Free = false;
                     return true;
                 }
             }

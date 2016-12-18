@@ -60,6 +60,7 @@
     <Compile Include="RestaurantPlan.cs" />
     <Compile Include="SmokeArea.cs" />
     <Compile Include="SpecialAreas.cs" />
+    <Compile Include="Spot.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="WaitingArea.cs" />
     <EmbeddedResource Include="RestaurantForm.resx">

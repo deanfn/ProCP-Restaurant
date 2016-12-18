@@ -42,6 +42,12 @@ namespace RestaurantSimulation
                     break;
             }
 
+            // Prevents overlapping between regular table and merged table.
+            if (comp is Table && GetComponent(comp.X, comp.Y) != null)
+            {
+                return false;
+            }
+
             foreach (Component c in componentOnPlan)
             {
                 if (c is GroupArea && comp is Table)
@@ -68,11 +74,19 @@ namespace RestaurantSimulation
                         break;
                     }
                 }
+                else if (c is Table && comp is GroupArea)
+                {
+                    foreach (Spot s in (comp as GroupArea).Spots)
+                    {
+                        if (c.X == s.Coordinates.X && c.Y == s.Coordinates.Y)
+                            return false;
+                    }
+                }
                 else if ((comp.X == c.X && comp.Y == c.Y) || (comp.X + 1 == c.X && comp.Y == c.Y) ||
-                        (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
-                        (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
-                        (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
-                        (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
+                    (comp.X == c.X && comp.Y + 1 == c.Y) || (comp.X + 1 == c.X && comp.Y + 1 == c.Y) ||
+                    (comp.X - 1 == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y == c.Y) ||
+                    (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
+                    (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
                 {
                     if (comp is Table)
                     {
@@ -82,9 +96,9 @@ namespace RestaurantSimulation
                     {
                         (comp as Bar).DecreaseCount();
                     }
+
                     return false;
                 }
-
             }
 
             componentOnPlan.Add(comp);
@@ -119,9 +133,9 @@ namespace RestaurantSimulation
 
             foreach (var ga in groupAreas)
             {
-                foreach (var point in (ga as GroupArea).Coordinates)
+                foreach (var point in (ga as GroupArea).Spots)
                 {
-                    if ((x == point.X && y == point.Y))
+                    if ((x == point.Coordinates.X && y == point.Coordinates.Y))
                     {
                         return ga;
                     }
@@ -200,58 +214,123 @@ namespace RestaurantSimulation
             }
         }
 
+        /* Returns all the group area spots on the restaurant plan. */
+        private List<Spot> GetGAsFreeSpots()
+        {
+            var allCoordinates = new List<Spot>();
+            var allGAs = componentOnPlan.FindAll(area => area is GroupArea);
+
+            foreach (var ga in allGAs)
+            {
+                allCoordinates.AddRange((ga as GroupArea).Spots.Where(p => p.Free == true));
+            }
+
+            return allCoordinates;
+        }
+
+        // Checks if the coordinates are within the set of free group area spots.
+        private bool CheckCoordinates(List<Point> coordinates)
+        {
+            var gaFreeSpots = GetGAsFreeSpots();
+            int i = 0;
+
+            foreach (var spot in gaFreeSpots)
+            {
+                if (coordinates.Contains(spot.Coordinates) && i < coordinates.Count)
+                {
+                    i++;
+                    continue;
+                }
+                else if (i >= coordinates.Count)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // Merge two tables
         public bool MergeTables(Component t1, Component t2, Point location)
         {
+            MergedTable mergedTable = null;
+
             if (t1 is MergedTable && t2 is MergedTable)
             {
-                if (((t1 as MergedTable).Tables.Count > 1 && (t2 as MergedTable).Tables.Count < 3) ||
-                    (t1 as MergedTable).Tables.Count < 3 && (t2 as MergedTable).Tables.Count > 1)
+                List<Component> tablesList;
+
+                if ((t1 as MergedTable).Tables.Count <= 2 && (t2 as MergedTable).Tables.Count <= 2)
                 {
-                    
-                    return false;
+                    tablesList = (t1 as MergedTable).Tables.Concat((t2 as MergedTable).Tables).ToList();
+                    int size = (t1 as MergedTable).TableSize + (t2 as MergedTable).TableSize;
+
+                    mergedTable = new MergedTable(tablesList, size, location);
                 }
-            }
-            else if (t1 is MergedTable && !(t2 as Table).OnGA)
-            {
-                return false;
-            }
-            else if (t2 is MergedTable && !(t1 as Table).OnGA)
-            {
-                return false;
-            }
-            else if (!(t1 as Table).OnGA && !(t2 as Table).OnGA)
-            {
-                return false;
-            }
-
-            // Create a MergedTable object
-            var mergedTable = new MergedTable(location, t1, t2);
-
-            for (int i = 0; i < mergedTable.Coordinates.Count; i++)
-            {
-                var ga = GetGroupArea(mergedTable.Coordinates[i].X, mergedTable.Coordinates[i].Y);
-
-                if (ga == null)
+                else
                 {
                     return false;
                 }
-                else if (i + 1 == mergedTable.Coordinates.Count)
-                {
-                    (ga as GroupArea).AddTable(mergedTable);
-                    (ga as GroupArea).Remove(t1);
-                    (ga as GroupArea).Remove(t2);
-                }
+            }
+            else if (t1 is MergedTable && !(t2 as Table).OnGA || t2 is MergedTable && !(t1 as Table).OnGA ||
+                !(t1 as Table).OnGA && !(t2 as Table).OnGA)
+            {
+                return false;
+            }
+            else
+            {
+                // Creates a MergedTable object
+                mergedTable = new MergedTable(location, t1, t2);
             }
 
-            // Add the merged table to the list of all components on the plan
-            componentOnPlan.Add(mergedTable);
+            var ga = GetGroupArea(mergedTable.X, mergedTable.Y);
 
-            // Remove the two tables from the list of components.
+            if (CheckCoordinates(mergedTable.Coordinates))
+            {
+                componentOnPlan.Add(mergedTable);
+                (ga as GroupArea).AddTable(mergedTable);
+
+                foreach (Point p in mergedTable.Coordinates)
+                {
+                    var groupArea = GetGroupArea(p.X, p.Y);
+                    var spot = (groupArea as GroupArea).Spots.Find(s => s.Coordinates.Equals(p));
+                    spot.Free = false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            // Removes the tables from the group areas
+            RemoveTableFromGA(t1);
+            RemoveTableFromGA(t2);
+
             componentOnPlan.Remove(t1);
             componentOnPlan.Remove(t2);
 
             return true;
+        }
+
+        // Removes tables from a group area and marks the spots as free.
+        private void RemoveTableFromGA(Component table)
+        {
+            if (table is MergedTable)
+            {
+                foreach (Point p in (table as MergedTable).Coordinates)
+                {
+                    var ga = GetGroupArea(p.X, p.Y);
+                    var spot = (ga as GroupArea).Spots.Find(s => s.Coordinates.Equals(p));
+                    spot.Free = true;
+                }
+            }
+            else
+            {
+                var ga = GetGroupArea(table.X, table.Y);
+                var spot = (ga as GroupArea).Spots.Find(s => s.Coordinates.Equals(new Point(table.X, table.Y)));
+                spot.Free = true;
+            }
+
+            (GetGroupArea(table.X, table.Y) as GroupArea).RemoveTable(table);
         }
 
         public bool UnMergeTable(Component mt, Point location)
@@ -286,10 +365,11 @@ namespace RestaurantSimulation
                         return true;
                     }
                 }
-              return false;
+                return false;
             }
             return false;
         }
+
         public bool ListCheck(Component mt)
         {
             if ((mt as MergedTable).Tables.Count != 0)
