@@ -241,10 +241,11 @@ namespace RestaurantSimulation
                     i++;
                     continue;
                 }
-                else if (i >= coordinates.Count)
-                {
-                    return true;
-                }
+            }
+
+            if (i >= coordinates.Count)
+            {
+                return true;
             }
 
             return false;
@@ -271,8 +272,9 @@ namespace RestaurantSimulation
                     return false;
                 }
             }
-            else if (t1 is MergedTable && !(t2 as Table).OnGA || t2 is MergedTable && !(t1 as Table).OnGA ||
-                !(t1 as Table).OnGA && !(t2 as Table).OnGA)
+            else if ((t1 is MergedTable && !(t2 as Table).OnGA) || (t2 is MergedTable && !(t1 as Table).OnGA) ||
+                (!(t1 as Table).OnGA && !(t2 as Table).OnGA) || (t1 is MergedTable && (t1 as MergedTable).Tables.Count >= 3) ||
+                (t2 is MergedTable && (t2 as MergedTable).Tables.Count >= 3))
             {
                 return false;
             }

@@ -25,9 +25,22 @@ namespace RestaurantSimulation
             Tables = new List<Component>();
             Coordinates = new List<Point>();
 
-            // Adds the two tables 
-            Tables.Add(t1);
-            Tables.Add(t2);
+            // Adds the two tables
+            if (t1 is MergedTable)
+            {
+                (t1 as MergedTable).Tables.Add(t2);
+                Tables = (t1 as MergedTable).Tables;
+            }
+            else if (t2 is MergedTable)
+            {
+                (t2 as MergedTable).Tables.Add(t1);
+                Tables = (t2 as MergedTable).Tables;
+            }
+            else
+            {
+                Tables.Add(t1);
+                Tables.Add(t2);
+            }
 
 
             OnGA = true;
@@ -54,6 +67,7 @@ namespace RestaurantSimulation
             count++;
         }
 
+        
         public MergedTable(List<Component> tables, int size, Point location) : base(size, location)
         {
             OnGA = true;
