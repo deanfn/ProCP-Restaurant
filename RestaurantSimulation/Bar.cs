@@ -27,7 +27,7 @@ namespace RestaurantSimulation
         }
 
         //Draw Bar
-        public override void Drawing(Graphics g)
+        public override void Draw(Graphics g)
         {
             // Location
             int col = ((X) * 40) + 1;

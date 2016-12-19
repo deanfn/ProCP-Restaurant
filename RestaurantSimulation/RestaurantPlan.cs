@@ -193,7 +193,10 @@ namespace RestaurantSimulation
                             c.DecreaseCount();
 
                         }
-
+                        if (c is Table && (c as Table).OnGA)
+                        {
+                            RemoveTableFromGA(c);
+                        }
                         componentOnPlan.Remove(c);
                         return true;
                     }
@@ -210,7 +213,7 @@ namespace RestaurantSimulation
         {
             foreach (var c in componentOnPlan)
             {
-                c.Drawing(g);
+                c.Draw(g);
             }
         }
 
@@ -339,33 +342,11 @@ namespace RestaurantSimulation
         {
             if (mt is MergedTable)
             {
-                if ((mt as MergedTable).Tables[0] is MergedTable)
+                int size = (mt as MergedTable).Tables[0].GetSize();
+                if (AddComponent(location, 0, size))
                 {
-                    int size = (mt as MergedTable).FirstTableSize();
-                    if (size != -1)
-                    {
-                        AddComponent(location, 0, size);
-                        return true;
-                    }
-                    else
-                    {
-                        (mt as MergedTable).Tables.RemoveAt(0);
-                        size = (mt as MergedTable).Tables[0].GetSize();
-                        if (AddComponent(location, 0, size))
-                        {
-                            (mt as MergedTable).Tables.RemoveAt(0);
-                            return true;
-                        }
-                    }
-                }
-                else
-                {
-                    int size = (mt as MergedTable).Tables[0].GetSize();
-                    if (AddComponent(location, 0, size))
-                    {
-                        (mt as MergedTable).Tables.RemoveAt(0);
-                        return true;
-                    }
+                    (mt as MergedTable).Tables.RemoveAt(0);
+                    return true;
                 }
                 return false;
             }

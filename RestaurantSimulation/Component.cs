@@ -20,7 +20,7 @@ namespace RestaurantSimulation
             this.Y = p.Y / 40;
         }
 
-        public abstract void Drawing(Graphics g);
+        public abstract void Draw(Graphics g);
         public abstract void DecreaseCount();
         public abstract void DecreaseID();
         public abstract int GetSize();

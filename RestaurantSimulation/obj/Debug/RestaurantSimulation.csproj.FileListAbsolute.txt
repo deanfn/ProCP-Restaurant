@@ -33,7 +33,6 @@ C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\Re
 C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
 C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
 C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csprojResolveAssemblyReference.cache
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe.config
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
