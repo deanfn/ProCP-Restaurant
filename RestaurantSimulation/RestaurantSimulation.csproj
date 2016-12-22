@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Bar.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="CustomerGroup.cs" />
     <Compile Include="GroupArea.cs" />
     <Compile Include="RestaurantForm.cs">
       <SubType>Form</SubType>

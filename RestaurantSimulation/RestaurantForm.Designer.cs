@@ -56,11 +56,11 @@
             this.btnSmokingA = new System.Windows.Forms.Button();
             this.btnWaitingA = new System.Windows.Forms.Button();
             this.btnTable = new System.Windows.Forms.Button();
-            this.RestaurantPlan = new System.Windows.Forms.PictureBox();
+            this.restaurantPlan = new System.Windows.Forms.PictureBox();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RestaurantPlan)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.restaurantPlan)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -351,22 +351,22 @@
             this.btnTable.UseVisualStyleBackColor = true;
             this.btnTable.Click += new System.EventHandler(this.btnTable_Click);
             // 
-            // RestaurantPlan
+            // restaurantPlan
             // 
-            this.RestaurantPlan.Location = new System.Drawing.Point(205, 2);
-            this.RestaurantPlan.Name = "RestaurantPlan";
-            this.RestaurantPlan.Size = new System.Drawing.Size(680, 483);
-            this.RestaurantPlan.TabIndex = 6;
-            this.RestaurantPlan.TabStop = false;
-            this.RestaurantPlan.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            this.RestaurantPlan.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RestaurantPlan_MouseClick);
+            this.restaurantPlan.Location = new System.Drawing.Point(205, 2);
+            this.restaurantPlan.Name = "restaurantPlan";
+            this.restaurantPlan.Size = new System.Drawing.Size(680, 483);
+            this.restaurantPlan.TabIndex = 6;
+            this.restaurantPlan.TabStop = false;
+            this.restaurantPlan.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.restaurantPlan.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RestaurantPlan_MouseClick);
             // 
             // RestaurantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 486);
-            this.Controls.Add(this.RestaurantPlan);
+            this.Controls.Add(this.restaurantPlan);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -377,7 +377,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RestaurantPlan)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.restaurantPlan)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -410,7 +410,7 @@
         private System.Windows.Forms.Button btnSmokingA;
         private System.Windows.Forms.Button btnWaitingA;
         private System.Windows.Forms.Button btnTable;
-        private System.Windows.Forms.PictureBox RestaurantPlan;
+        private System.Windows.Forms.PictureBox restaurantPlan;
         private System.Windows.Forms.Button btnShowGATables;
         private System.Windows.Forms.Button btnShowSATables;
     }

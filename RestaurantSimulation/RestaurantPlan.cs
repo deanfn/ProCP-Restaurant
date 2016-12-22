@@ -7,13 +7,32 @@ using System.Drawing;
 
 namespace RestaurantSimulation
 {
-    class RestaurantPlan
+    sealed class RestaurantPlan
     {
-        public List<Component> componentOnPlan;
+        private static readonly RestaurantPlan instance = new RestaurantPlan();
+        private List<Component> componentOnPlan;
+        private List<CustomerGroup> customers;
 
-        public RestaurantPlan()
+        // Property to get the instance
+        public static RestaurantPlan Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        // Explicit static constructor to tell C# compiler
+        // not to mark type as beforefieldinit
+        static RestaurantPlan()
+        {
+
+        }
+
+        private RestaurantPlan()
         {
             componentOnPlan = new List<Component>();
+            customers = new List<CustomerGroup>();
         }
 
         public bool AddComponent(Point coordinates, int type, int size)

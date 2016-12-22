@@ -13,7 +13,7 @@ namespace RestaurantSimulation
 {
     public partial class RestaurantForm : Form
     {
-        RestaurantPlan newPlan = new RestaurantPlan();
+        RestaurantPlan newPlan;
 
         //Image Resource
         Image table = Resources.Table;
@@ -46,6 +46,7 @@ namespace RestaurantSimulation
             table1 = new Point();
             table2 = new Point();
 
+            newPlan = RestaurantPlan.Instance;
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -175,7 +176,7 @@ namespace RestaurantSimulation
                 }
             }
 
-            RestaurantPlan.Invalidate();
+            restaurantPlan.Invalidate();
         }
 
         private void btnGroupA_Click(object sender, EventArgs e)
