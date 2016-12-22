@@ -22,7 +22,7 @@ namespace RestaurantSimulation
         }
 
         // No need to write implementation.
-        public override void Drawing(Graphics g)
+        public override void Draw(Graphics g)
         {
             throw new NotImplementedException();
         }
