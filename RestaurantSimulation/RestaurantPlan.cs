@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Timers;
 
 namespace RestaurantSimulation
 {
     class RestaurantPlan
     {
         public List<Component> componentOnPlan;
+
+        //Properties for simulation running
+        private List<Customer> customerList;
+        private bool simulation;
 
         public RestaurantPlan()
         {
@@ -360,6 +365,38 @@ namespace RestaurantSimulation
                 return true;
             }
             return false;
+        }
+
+        public void StartSimulation(int custFlow, int lunchTimer, int dinnerTimer, bool peakHour, bool runSimulation)
+        {
+            Timer totalTimer = new Timer();
+            Random r = new Random();
+
+            simulation = runSimulation;
+            int currentFlow = 0;
+            int bigGroupChance;
+
+            totalTimer.Start();
+
+            while (simulation)
+            {
+                if (custFlow >= currentFlow)
+                {
+                    //Creating new customers
+                    bigGroupChance = r.Next(1, 11);
+                    if (bigGroupChance != 10)
+                    {
+                        //Create person group of max 4 people.
+                        //customerList.Add(new Person());
+                    }
+                    else
+                    {
+                        //Create person group of 5-16 people.
+                        //customerList.Add(new Person());
+                    }
+                }
+            }
+            totalTimer.Stop();
         }
 
     }
