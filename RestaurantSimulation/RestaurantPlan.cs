@@ -12,15 +12,11 @@ namespace RestaurantSimulation
     {
         private static readonly RestaurantPlan instance = new RestaurantPlan();
         private List<Component> componentOnPlan;
-        private List<CustomerGroup> customers;
 
-<<<<<<< HEAD
         //Properties for simulation running
-        private List<Customer> customerList;
+        private List<CustomerGroup> customerList;
         private bool simulation;
 
-        public RestaurantPlan()
-=======
         // Property to get the instance
         public static RestaurantPlan Instance
         {
@@ -34,14 +30,12 @@ namespace RestaurantSimulation
         // not to mark type as beforefieldinit
         static RestaurantPlan()
         {
-
         }
 
         private RestaurantPlan()
->>>>>>> origin/simulation
         {
             componentOnPlan = new List<Component>();
-            customers = new List<CustomerGroup>();
+            customerList = new List<CustomerGroup>();
         }
 
         public bool AddComponent(Point coordinates, int type, int size)

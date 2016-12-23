@@ -46,11 +46,7 @@
   <ItemGroup>
     <Compile Include="Bar.cs" />
     <Compile Include="Component.cs" />
-<<<<<<< HEAD
-    <Compile Include="Customer.cs" />
-=======
     <Compile Include="CustomerGroup.cs" />
->>>>>>> origin/simulation
     <Compile Include="GroupArea.cs" />
     <Compile Include="RestaurantForm.cs">
       <SubType>Form</SubType>
