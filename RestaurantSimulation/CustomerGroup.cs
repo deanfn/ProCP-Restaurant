@@ -11,18 +11,21 @@ namespace RestaurantSimulation
 
     class CustomerGroup
     {
-        
         private mealType? meal = null;
-
         private Timer t;
+        private static int id = 0;
 
         public int ID { get; set; }
-        public int groupSize { get; set; }
+        public int GroupSize { get; set; }
 
-        public CustomerGroup(int id, int gSize, int dinnerT, int lunchT)
+        public CustomerGroup(int gSize, int dinnerT, int lunchT)
         {
+            id++;
+            /* When a group of customers come to the restaurant it will be assigned an ID,
+             * if there is available table that ID will be replaced with the table ID, if not
+             * the ID will remain until a table becomes available. */
             this.ID = id;
-            this.groupSize = gSize;
+            this.GroupSize = gSize;
             this.meal = DinnerOrLunch(meal);
             t = new Timer(SetInterval(meal,dinnerT,lunchT));
             t.Start();

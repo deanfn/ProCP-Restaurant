@@ -10,7 +10,6 @@ namespace RestaurantSimulation
 {
     class Table : Component
     {
-        private bool available;
         private static int count = 0;
 
         public int ID { get; set; }
@@ -25,6 +24,9 @@ namespace RestaurantSimulation
         // Boolean that indicates if the table is on a waiting area.
         public bool OnWA { get; set; }
 
+        // True if table is available, false otherwise.
+        public bool Available { get; set; }
+
         /// <summary>
         /// Creates new Table object, with unique ID
         /// </summary>
@@ -34,7 +36,7 @@ namespace RestaurantSimulation
         public Table(int size, Point p) : base(p)
         {
             this.TableSize = size;
-            this.available = true;
+            this.Available = true;
             OnGA = false;
             OnSA = false;
             OnWA = false;

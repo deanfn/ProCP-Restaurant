@@ -8,6 +8,8 @@ using System.Timers;
 
 namespace RestaurantSimulation
 {
+    enum TimeOfDay { afternoon, evening }
+
     sealed class RestaurantPlan
     {
         private static readonly RestaurantPlan instance = new RestaurantPlan();
@@ -16,6 +18,9 @@ namespace RestaurantSimulation
         //Properties for simulation running
         private List<CustomerGroup> customerList;
         private bool simulation;
+
+        // Lobby object. Note the Lobby class is singleton, only one object can exists.
+        private Lobby lobby;
 
         // Property to get the instance
         public static RestaurantPlan Instance
@@ -36,6 +41,7 @@ namespace RestaurantSimulation
         {
             componentOnPlan = new List<Component>();
             customerList = new List<CustomerGroup>();
+            lobby = Lobby.Instance;
         }
 
         public bool AddComponent(Point coordinates, int type, int size)
@@ -384,6 +390,23 @@ namespace RestaurantSimulation
             return false;
         }
 
+        // Creates a Customer group on TimerTick.
+        private CustomerGroup GenerateGroup(int dinnerTime, int lunchTime)
+        {
+            Random r = new Random();
+
+            var size = r.Next(1, 17);
+            var custGroup = new CustomerGroup(size, dinnerTime, lunchTime);
+
+            return custGroup;
+        }
+
+        // Places group on available table that closely matches the size of the group.
+        //private bool AssignCustGroupToTable(CustomerGroup group)
+        //{
+            
+        //}
+
         public void StartSimulation(int custFlow, int lunchTimer, int dinnerTimer, bool peakHour, bool runSimulation)
         {
             Timer totalTimer = new Timer();
@@ -413,6 +436,7 @@ namespace RestaurantSimulation
                     }
                 }
             }
+
             totalTimer.Stop();
         }
 
