@@ -47,5 +47,11 @@ namespace RestaurantSimulation
                 return false;
             }
         }
+
+        public bool RemoveCustGroupFromLobby()
+        {
+            // To be implemented.
+            return false;
+        }
     }
 }

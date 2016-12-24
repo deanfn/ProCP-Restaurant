@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Timers;
+using System.Diagnostics;
 
 namespace RestaurantSimulation
 {
@@ -21,6 +22,18 @@ namespace RestaurantSimulation
 
         // Lobby object. Note the Lobby class is singleton, only one object can exists.
         private Lobby lobby;
+
+        // Fields to store the duration of the lunch and dinner respectively.
+        private int lunchDuration;
+        private int dinnerDuration;
+
+        // Fields that keep track of all the data that later can be saved.
+        private int customersSendAway;
+        private TimeSpan simulationRunTime;
+
+        // Timer and stopwatch
+        private Timer totalTimer;
+        private Stopwatch stopWatch;
 
         // Property to get the instance
         public static RestaurantPlan Instance
@@ -42,6 +55,10 @@ namespace RestaurantSimulation
             componentOnPlan = new List<Component>();
             customerList = new List<CustomerGroup>();
             lobby = Lobby.Instance;
+            simulationRunTime = new TimeSpan();
+            customersSendAway = 0;
+            stopWatch = new Stopwatch();
+            totalTimer = new Timer();
         }
 
         public bool AddComponent(Point coordinates, int type, int size)
@@ -394,51 +411,90 @@ namespace RestaurantSimulation
         private CustomerGroup GenerateGroup(int dinnerTime, int lunchTime)
         {
             Random r = new Random();
+            int size = 0;
 
-            var size = r.Next(1, 17);
+            /* If the number is less or equal to 8 the group will be with size 1 to 4 people,
+             * else the group will be larger, up to 16 people. */
+            if (r.Next(1, 11) <= 8)
+            {
+                size = r.Next(1, 5);
+            }
+            else
+            {
+                size = r.Next(5, 17);
+            }
+
             var custGroup = new CustomerGroup(size, dinnerTime, lunchTime);
 
             return custGroup;
         }
 
         // Places group on available table that closely matches the size of the group.
-        //private bool AssignCustGroupToTable(CustomerGroup group)
-        //{
-            
-        //}
-
-        public void StartSimulation(int custFlow, int lunchTimer, int dinnerTimer, bool peakHour, bool runSimulation)
+        private bool CheckForFreeTable(CustomerGroup group)
         {
-            Timer totalTimer = new Timer();
-            Random r = new Random();
+            var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+            (t as Table).TableSize >= group.GroupSize && !(t as Table).OnWA);
 
-            simulation = runSimulation;
-            int currentFlow = 0;
-            int bigGroupChance;
-
-            totalTimer.Start();
-
-            while (simulation)
+            if (availableTable != null)
             {
-                if (custFlow >= currentFlow)
+                // Place group on the available table
+            }
+            else
+            {
+                // Check if there are any available waiting area tables.
+                var waitingAreaTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+                (t as Table).TableSize >= group.GroupSize && (t as Table).OnWA);
+
+                // If there is no table on waiting area for the group place group in the lobby.
+                if (waitingAreaTable != null)
                 {
-                    //Creating new customers
-                    bigGroupChance = r.Next(1, 11);
-                    if (bigGroupChance != 10)
-                    {
-                        //Create person group of max 4 people.
-                        //customerList.Add(new Person());
-                    }
-                    else
-                    {
-                        //Create person group of 5-16 people.
-                        //customerList.Add(new Person());
-                    }
+                    // Accommodate group on waiting area table
+                }
+                else if (!lobby.AddCustGroupToLobby(group))
+                {
+                    return false;
                 }
             }
 
-            totalTimer.Stop();
+            return true;
         }
 
+        /* The interval of the timer depends on the custFlow parameter. After the interval elapse
+         * new custgroup will be generated. */
+        public void StartSimulation(int custFlow, int lunchTime, int dinnerTime, bool peakHour, bool runSimulation)
+        {
+            totalTimer.AutoReset = true;
+            totalTimer.Elapsed += TotalTimer_Elapsed;
+            totalTimer.Interval = custFlow;
+
+            lunchDuration = lunchTime;
+            dinnerDuration = dinnerTime;
+
+            stopWatch.Start();
+            totalTimer.Start();
+        }
+
+        // This is executed everytime the timer interval elapses.
+        private void TotalTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var generatedGroup = GenerateGroup(dinnerDuration, lunchDuration);
+
+            if (!CheckForFreeTable(generatedGroup))
+            {
+                customersSendAway += generatedGroup.GroupSize;
+            }
+        }
+
+        public void StopPauseSimulation(bool pause)
+        {
+            totalTimer.Stop();
+            stopWatch.Stop();
+
+            if (!pause)
+            {
+                simulationRunTime = stopWatch.Elapsed;
+                stopWatch.Reset();
+            }
+        }
     }
 }

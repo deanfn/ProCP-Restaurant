@@ -27,6 +27,8 @@ namespace RestaurantSimulation
         // True if table is available, false otherwise.
         public bool Available { get; set; }
 
+        public CustomerGroup Customers { get; set; }
+
         /// <summary>
         /// Creates new Table object, with unique ID
         /// </summary>
@@ -73,8 +75,16 @@ namespace RestaurantSimulation
             g.DrawImage(i, col, row, width, height);
 
             Font newFont = new Font("Arial", 16);
-            g.DrawString(Convert.ToString(TableSize), newFont, Brushes.Black, (X*40) + 10, (Y*40) + 10);
             g.DrawString(ID.ToString(), new Font("Arial", 10), Brushes.Black, (X * 40), (Y * 40));
+
+            if (Customers != null)
+            {
+                g.DrawString(Customers.GroupSize.ToString(), newFont, Brushes.Black, (X * 40) - 10, (Y * 40) - 10);
+            }
+            else
+            {
+                g.DrawString(0 + "/" + Convert.ToString(TableSize), newFont, Brushes.Black, (X * 40) + 1, (Y * 40) + 10);
+            }
 
             /* This checks if the table is placed on a special area. And if it is
              * it will draw a string in the top right corner indicating what is the area. */
@@ -105,6 +115,13 @@ namespace RestaurantSimulation
         public override int GetSize()
         {
             return TableSize;
+        }
+
+        // Seats customers to the table.
+        public bool SeatCustomersAtTable(CustomerGroup customers)
+        {
+            // To be implemented.
+            return false;
         }
 
     }
