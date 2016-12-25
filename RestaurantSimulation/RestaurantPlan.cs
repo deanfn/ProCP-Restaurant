@@ -472,7 +472,7 @@ namespace RestaurantSimulation
             {
                 totalTimer.AutoReset = true;
                 totalTimer.Elapsed += TotalTimer_Elapsed;
-                totalTimer.Interval = custFlow * 1000;
+                totalTimer.Interval = custFlow * 100;
 
                 secondsTimer.AutoReset = true;
                 secondsTimer.Interval = 1000;

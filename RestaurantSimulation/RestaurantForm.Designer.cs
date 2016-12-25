@@ -35,11 +35,9 @@
             this.lblDinnerDuration = new System.Windows.Forms.Label();
             this.lblLunchDuration = new System.Windows.Forms.Label();
             this.cbPeakHour = new System.Windows.Forms.CheckBox();
-            this.tbRestaurantStaff = new System.Windows.Forms.TextBox();
             this.PeakHourOptionlbl = new System.Windows.Forms.Label();
             this.lblPeakHours = new System.Windows.Forms.Label();
             this.PeakHourlbl = new System.Windows.Forms.Label();
-            this.RestaurantStafflbl = new System.Windows.Forms.Label();
             this.CustomerFlowlbl = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnShowSATables = new System.Windows.Forms.Button();
@@ -92,11 +90,9 @@
             this.groupBox3.Controls.Add(this.lblDinnerDuration);
             this.groupBox3.Controls.Add(this.lblLunchDuration);
             this.groupBox3.Controls.Add(this.cbPeakHour);
-            this.groupBox3.Controls.Add(this.tbRestaurantStaff);
             this.groupBox3.Controls.Add(this.PeakHourOptionlbl);
             this.groupBox3.Controls.Add(this.lblPeakHours);
             this.groupBox3.Controls.Add(this.PeakHourlbl);
-            this.groupBox3.Controls.Add(this.RestaurantStafflbl);
             this.groupBox3.Controls.Add(this.CustomerFlowlbl);
             this.groupBox3.Location = new System.Drawing.Point(7, 312);
             this.groupBox3.Name = "groupBox3";
@@ -107,9 +103,14 @@
             // 
             // nudCustomerFlow
             // 
+            this.nudCustomerFlow.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.nudCustomerFlow.Location = new System.Drawing.Point(91, 27);
             this.nudCustomerFlow.Maximum = new decimal(new int[] {
-            60,
+            200,
             0,
             0,
             0});
@@ -122,14 +123,14 @@
             this.nudCustomerFlow.Size = new System.Drawing.Size(94, 20);
             this.nudCustomerFlow.TabIndex = 11;
             this.nudCustomerFlow.Value = new decimal(new int[] {
-            1,
+            50,
             0,
             0,
             0});
             // 
             // nudDinnerDuration
             // 
-            this.nudDinnerDuration.Location = new System.Drawing.Point(216, 109);
+            this.nudDinnerDuration.Location = new System.Drawing.Point(218, 87);
             this.nudDinnerDuration.Maximum = new decimal(new int[] {
             120,
             0,
@@ -151,7 +152,7 @@
             // 
             // nudLunchDuration
             // 
-            this.nudLunchDuration.Location = new System.Drawing.Point(216, 82);
+            this.nudLunchDuration.Location = new System.Drawing.Point(218, 60);
             this.nudLunchDuration.Maximum = new decimal(new int[] {
             120,
             0,
@@ -174,7 +175,7 @@
             // lblDinnerDuration
             // 
             this.lblDinnerDuration.AutoSize = true;
-            this.lblDinnerDuration.Location = new System.Drawing.Point(127, 111);
+            this.lblDinnerDuration.Location = new System.Drawing.Point(129, 89);
             this.lblDinnerDuration.Name = "lblDinnerDuration";
             this.lblDinnerDuration.Size = new System.Drawing.Size(84, 13);
             this.lblDinnerDuration.TabIndex = 8;
@@ -183,7 +184,7 @@
             // lblLunchDuration
             // 
             this.lblLunchDuration.AutoSize = true;
-            this.lblLunchDuration.Location = new System.Drawing.Point(127, 85);
+            this.lblLunchDuration.Location = new System.Drawing.Point(129, 63);
             this.lblLunchDuration.Name = "lblLunchDuration";
             this.lblLunchDuration.Size = new System.Drawing.Size(83, 13);
             this.lblLunchDuration.TabIndex = 7;
@@ -192,23 +193,16 @@
             // cbPeakHour
             // 
             this.cbPeakHour.AutoSize = true;
-            this.cbPeakHour.Location = new System.Drawing.Point(100, 84);
+            this.cbPeakHour.Location = new System.Drawing.Point(102, 62);
             this.cbPeakHour.Name = "cbPeakHour";
             this.cbPeakHour.Size = new System.Drawing.Size(15, 14);
             this.cbPeakHour.TabIndex = 5;
             this.cbPeakHour.UseVisualStyleBackColor = true;
             // 
-            // tbRestaurantStaff
-            // 
-            this.tbRestaurantStaff.Location = new System.Drawing.Point(91, 55);
-            this.tbRestaurantStaff.Name = "tbRestaurantStaff";
-            this.tbRestaurantStaff.Size = new System.Drawing.Size(94, 20);
-            this.tbRestaurantStaff.TabIndex = 4;
-            // 
             // PeakHourOptionlbl
             // 
             this.PeakHourOptionlbl.AutoSize = true;
-            this.PeakHourOptionlbl.Location = new System.Drawing.Point(97, 111);
+            this.PeakHourOptionlbl.Location = new System.Drawing.Point(99, 89);
             this.PeakHourOptionlbl.Name = "PeakHourOptionlbl";
             this.PeakHourOptionlbl.Size = new System.Drawing.Size(19, 13);
             this.PeakHourOptionlbl.TabIndex = 2;
@@ -217,7 +211,7 @@
             // lblPeakHours
             // 
             this.lblPeakHours.AutoSize = true;
-            this.lblPeakHours.Location = new System.Drawing.Point(7, 111);
+            this.lblPeakHours.Location = new System.Drawing.Point(9, 89);
             this.lblPeakHours.Name = "lblPeakHours";
             this.lblPeakHours.Size = new System.Drawing.Size(94, 13);
             this.lblPeakHours.TabIndex = 2;
@@ -226,20 +220,11 @@
             // PeakHourlbl
             // 
             this.PeakHourlbl.AutoSize = true;
-            this.PeakHourlbl.Location = new System.Drawing.Point(7, 85);
+            this.PeakHourlbl.Location = new System.Drawing.Point(9, 63);
             this.PeakHourlbl.Name = "PeakHourlbl";
             this.PeakHourlbl.Size = new System.Drawing.Size(94, 13);
             this.PeakHourlbl.TabIndex = 2;
             this.PeakHourlbl.Text = "Peak hour option: ";
-            // 
-            // RestaurantStafflbl
-            // 
-            this.RestaurantStafflbl.AutoSize = true;
-            this.RestaurantStafflbl.Location = new System.Drawing.Point(7, 58);
-            this.RestaurantStafflbl.Name = "RestaurantStafflbl";
-            this.RestaurantStafflbl.Size = new System.Drawing.Size(85, 13);
-            this.RestaurantStafflbl.TabIndex = 1;
-            this.RestaurantStafflbl.Text = "Restaurant staff:";
             // 
             // CustomerFlowlbl
             // 
@@ -617,11 +602,9 @@
 
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox cbPeakHour;
-        private System.Windows.Forms.TextBox tbRestaurantStaff;
         private System.Windows.Forms.Label PeakHourOptionlbl;
         private System.Windows.Forms.Label lblPeakHours;
         private System.Windows.Forms.Label PeakHourlbl;
-        private System.Windows.Forms.Label RestaurantStafflbl;
         private System.Windows.Forms.Label CustomerFlowlbl;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnUnmerge;

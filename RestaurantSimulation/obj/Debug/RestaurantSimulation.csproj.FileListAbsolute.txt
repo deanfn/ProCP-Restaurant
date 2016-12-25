@@ -42,3 +42,4 @@ f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulati
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csprojResolveAssemblyReference.cache
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csprojResolveAssemblyReference.cache
