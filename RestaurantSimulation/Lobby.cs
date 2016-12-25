@@ -40,6 +40,7 @@ namespace RestaurantSimulation
             {
                 customers.Add(group);
                 Size += group.GroupSize;
+                group.Wait();
                 return true;
             }
             else
@@ -48,10 +49,15 @@ namespace RestaurantSimulation
             }
         }
 
-        public bool RemoveCustGroupFromLobby()
+        public void RemoveCustGroupFromLobby(CustomerGroup group)
         {
-            // To be implemented.
-            return false;
+            Size -= group.GroupSize;
+            customers.Remove(group);
+        }
+
+        public List<CustomerGroup> GetGroupsInLobby()
+        {
+            return customers;
         }
     }
 }

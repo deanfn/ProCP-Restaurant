@@ -79,7 +79,8 @@ namespace RestaurantSimulation
 
             if (Customers != null)
             {
-                g.DrawString(Customers.GroupSize.ToString(), newFont, Brushes.Black, (X * 40) - 10, (Y * 40) - 10);
+                g.DrawString(Customers.GroupSize.ToString() + "/" + TableSize.ToString(), newFont, Brushes.Black,
+                    (X * 40) + 1, (Y * 40) + 10);
             }
             else
             {
@@ -120,8 +121,27 @@ namespace RestaurantSimulation
         // Seats customers to the table.
         public bool SeatCustomersAtTable(CustomerGroup customers)
         {
-            // To be implemented.
-            return false;
+            Customers = customers;
+            Available = false;
+            Customers.ID = ID;
+
+            if (OnWA)
+            {
+                Customers.Wait();
+            }
+            else
+            {
+                Customers.StopWaiting();
+                Customers.StartEating();
+            }
+
+            return true;
+        }
+
+        public void ClearTable()
+        {
+            Customers = null;
+            Available = true;
         }
 
     }

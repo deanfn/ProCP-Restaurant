@@ -30,9 +30,10 @@ namespace RestaurantSimulation
         // Fields that keep track of all the data that later can be saved.
         private int customersSendAway;
         private TimeSpan simulationRunTime;
+        private int servedCustomers;
 
         // Timer and stopwatch
-        private Timer totalTimer;
+        private Timer totalTimer, secondsTimer;
         private Stopwatch stopWatch;
 
         // Property to get the instance
@@ -59,6 +60,7 @@ namespace RestaurantSimulation
             customersSendAway = 0;
             stopWatch = new Stopwatch();
             totalTimer = new Timer();
+            secondsTimer = new Timer();
         }
 
         public bool AddComponent(Point coordinates, int type, int size)
@@ -437,7 +439,8 @@ namespace RestaurantSimulation
 
             if (availableTable != null)
             {
-                // Place group on the available table
+                (availableTable as Table).SeatCustomersAtTable(group);
+                customerList.Add(group);
             }
             else
             {
@@ -448,7 +451,7 @@ namespace RestaurantSimulation
                 // If there is no table on waiting area for the group place group in the lobby.
                 if (waitingAreaTable != null)
                 {
-                    // Accommodate group on waiting area table
+                    (waitingAreaTable as Table).SeatCustomersAtTable(group);
                 }
                 else if (!lobby.AddCustGroupToLobby(group))
                 {
@@ -461,17 +464,70 @@ namespace RestaurantSimulation
 
         /* The interval of the timer depends on the custFlow parameter. After the interval elapse
          * new custgroup will be generated. */
-        public void StartSimulation(int custFlow, int lunchTime, int dinnerTime, bool peakHour, bool runSimulation)
+        public string StartSimulation(int custFlow, int lunchTime, int dinnerTime, bool peakHour, bool runSimulation)
         {
-            totalTimer.AutoReset = true;
-            totalTimer.Elapsed += TotalTimer_Elapsed;
-            totalTimer.Interval = custFlow;
+            var tablesCount = componentOnPlan.Count(c => c is Table);
 
-            lunchDuration = lunchTime;
-            dinnerDuration = dinnerTime;
+            if (tablesCount >= 1)
+            {
+                totalTimer.AutoReset = true;
+                totalTimer.Elapsed += TotalTimer_Elapsed;
+                totalTimer.Interval = custFlow * 1000;
 
-            stopWatch.Start();
-            totalTimer.Start();
+                secondsTimer.AutoReset = true;
+                secondsTimer.Interval = 1000;
+                secondsTimer.Elapsed += SecondsTimer_Elapsed;
+
+                lunchDuration = lunchTime;
+                dinnerDuration = dinnerTime;
+
+                stopWatch.Start();
+                totalTimer.Start();
+                secondsTimer.Start();
+
+                return null;
+            }
+            else
+            {
+                return "Could not start simulation. You have to place at least one table on the plan!";
+            }
+        }
+
+        private void SecondsTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var allWaitingTables = componentOnPlan.FindAll(t => t is Table && (t as Table).OnWA && !(t as Table).Available);
+            var tableAvailability = componentOnPlan.Count(t => t is Table && (t as Table).Available && !(t as Table).OnWA);
+
+            if ((lobby.Size != 0 || allWaitingTables.Count != 0) && tableAvailability != 0)
+            {
+                // Waiting tables are with priority.
+                foreach (var table in allWaitingTables)
+                {
+                    var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+                    (t as Table).TableSize >= (table as Table).Customers.GroupSize && !(t as Table).OnWA);
+
+                    if (availableTable != null)
+                    {
+                        (availableTable as Table).SeatCustomersAtTable((table as Table).Customers);
+                        customerList.Add((table as Table).Customers);
+                        (table as Table).Customers = null;
+                        (table as Table).Available = true;
+                    }
+                }
+
+                foreach (var group in lobby.GetGroupsInLobby())
+                {
+                    var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+                    (t as Table).TableSize >= group.GroupSize && !(t as Table).OnWA);
+
+                    if (availableTable != null)
+                    {
+                        (availableTable as Table).SeatCustomersAtTable(group);
+                        customerList.Add(group);
+                        lobby.RemoveCustGroupFromLobby(group);
+                    }
+                }
+            }
         }
 
         // This is executed everytime the timer interval elapses.
@@ -495,6 +551,48 @@ namespace RestaurantSimulation
                 simulationRunTime = stopWatch.Elapsed;
                 stopWatch.Reset();
             }
+        }
+
+
+        public void QuitWaiting(CustomerGroup group)
+        {
+            var inLobby = lobby.GetGroupsInLobby().Find(gr => gr.Equals(group));
+            var atWaitingTable = componentOnPlan.Find(t => t is Table && (t as Table).OnWA &&
+            (t as Table).Customers.Equals(group));
+
+            if (inLobby != null)
+            {
+                customersSendAway += inLobby.GroupSize;
+                lobby.RemoveCustGroupFromLobby(inLobby);
+            }
+            else if (atWaitingTable != null)
+            {
+                customersSendAway += (atWaitingTable as Table).Customers.GroupSize;
+                (atWaitingTable as Table).ClearTable();
+            }
+        }
+
+        public void FinishEating(CustomerGroup group)
+        {
+            var table = componentOnPlan.Find(t => t is Table && !(t as Table).Available && !(t as Table).OnWA &&
+            (t as Table).Customers.Equals(group));
+
+            if (table != null && (table as Table).Customers != null)
+            {
+                customerList.Remove(group);
+                servedCustomers += (table as Table).Customers.GroupSize;
+                (table as Table).ClearTable();
+            }
+        }
+
+        public List<int> Data()
+        {
+            List<int> data = new List<int>();
+
+            data.Add(servedCustomers);
+            data.Add(customersSendAway);
+
+            return data;
         }
     }
 }

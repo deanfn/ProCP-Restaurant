@@ -29,14 +29,15 @@
         private void InitializeComponent()
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.PeakHourCB = new System.Windows.Forms.CheckBox();
-            this.btnPause = new System.Windows.Forms.Button();
-            this.btnStart = new System.Windows.Forms.Button();
+            this.nudCustomerFlow = new System.Windows.Forms.NumericUpDown();
+            this.nudDinnerDuration = new System.Windows.Forms.NumericUpDown();
+            this.nudLunchDuration = new System.Windows.Forms.NumericUpDown();
+            this.lblDinnerDuration = new System.Windows.Forms.Label();
+            this.lblLunchDuration = new System.Windows.Forms.Label();
+            this.cbPeakHour = new System.Windows.Forms.CheckBox();
             this.tbRestaurantStaff = new System.Windows.Forms.TextBox();
-            this.tbCustomerFlow = new System.Windows.Forms.TextBox();
             this.PeakHourOptionlbl = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblPeakHours = new System.Windows.Forms.Label();
             this.PeakHourlbl = new System.Windows.Forms.Label();
             this.RestaurantStafflbl = new System.Windows.Forms.Label();
             this.CustomerFlowlbl = new System.Windows.Forms.Label();
@@ -57,67 +58,145 @@
             this.btnWaitingA = new System.Windows.Forms.Button();
             this.btnTable = new System.Windows.Forms.Button();
             this.restaurantPlan = new System.Windows.Forms.PictureBox();
+            this.gbSimulationOverview = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblServedCustomers = new System.Windows.Forms.Label();
+            this.lblRunTime = new System.Windows.Forms.Label();
+            this.gbStartStopPause = new System.Windows.Forms.GroupBox();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnPause = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCustomerFlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDinnerDuration)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLunchDuration)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.restaurantPlan)).BeginInit();
+            this.gbSimulationOverview.SuspendLayout();
+            this.gbStartStopPause.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnStop);
-            this.groupBox3.Controls.Add(this.PeakHourCB);
-            this.groupBox3.Controls.Add(this.btnPause);
-            this.groupBox3.Controls.Add(this.btnStart);
+            this.groupBox3.Controls.Add(this.nudCustomerFlow);
+            this.groupBox3.Controls.Add(this.nudDinnerDuration);
+            this.groupBox3.Controls.Add(this.nudLunchDuration);
+            this.groupBox3.Controls.Add(this.lblDinnerDuration);
+            this.groupBox3.Controls.Add(this.lblLunchDuration);
+            this.groupBox3.Controls.Add(this.cbPeakHour);
             this.groupBox3.Controls.Add(this.tbRestaurantStaff);
-            this.groupBox3.Controls.Add(this.tbCustomerFlow);
             this.groupBox3.Controls.Add(this.PeakHourOptionlbl);
-            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.lblPeakHours);
             this.groupBox3.Controls.Add(this.PeakHourlbl);
             this.groupBox3.Controls.Add(this.RestaurantStafflbl);
             this.groupBox3.Controls.Add(this.CustomerFlowlbl);
             this.groupBox3.Location = new System.Drawing.Point(7, 312);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(193, 173);
+            this.groupBox3.Size = new System.Drawing.Size(273, 173);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Restaurant properties";
             // 
-            // btnStop
+            // nudCustomerFlow
             // 
-            this.btnStop.Location = new System.Drawing.Point(116, 138);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(46, 23);
-            this.btnStop.TabIndex = 6;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
+            this.nudCustomerFlow.Location = new System.Drawing.Point(91, 27);
+            this.nudCustomerFlow.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.nudCustomerFlow.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCustomerFlow.Name = "nudCustomerFlow";
+            this.nudCustomerFlow.Size = new System.Drawing.Size(94, 20);
+            this.nudCustomerFlow.TabIndex = 11;
+            this.nudCustomerFlow.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // PeakHourCB
+            // nudDinnerDuration
             // 
-            this.PeakHourCB.AutoSize = true;
-            this.PeakHourCB.Location = new System.Drawing.Point(100, 84);
-            this.PeakHourCB.Name = "PeakHourCB";
-            this.PeakHourCB.Size = new System.Drawing.Size(15, 14);
-            this.PeakHourCB.TabIndex = 5;
-            this.PeakHourCB.UseVisualStyleBackColor = true;
+            this.nudDinnerDuration.Location = new System.Drawing.Point(216, 109);
+            this.nudDinnerDuration.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.nudDinnerDuration.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudDinnerDuration.Name = "nudDinnerDuration";
+            this.nudDinnerDuration.Size = new System.Drawing.Size(51, 20);
+            this.nudDinnerDuration.TabIndex = 10;
+            this.nudDinnerDuration.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // btnPause
+            // nudLunchDuration
             // 
-            this.btnPause.Location = new System.Drawing.Point(64, 138);
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(46, 23);
-            this.btnPause.TabIndex = 5;
-            this.btnPause.Text = "Pause";
-            this.btnPause.UseVisualStyleBackColor = true;
+            this.nudLunchDuration.Location = new System.Drawing.Point(216, 82);
+            this.nudLunchDuration.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.nudLunchDuration.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudLunchDuration.Name = "nudLunchDuration";
+            this.nudLunchDuration.Size = new System.Drawing.Size(51, 20);
+            this.nudLunchDuration.TabIndex = 9;
+            this.nudLunchDuration.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // btnStart
+            // lblDinnerDuration
             // 
-            this.btnStart.Location = new System.Drawing.Point(12, 138);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(46, 23);
-            this.btnStart.TabIndex = 5;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
+            this.lblDinnerDuration.AutoSize = true;
+            this.lblDinnerDuration.Location = new System.Drawing.Point(127, 111);
+            this.lblDinnerDuration.Name = "lblDinnerDuration";
+            this.lblDinnerDuration.Size = new System.Drawing.Size(84, 13);
+            this.lblDinnerDuration.TabIndex = 8;
+            this.lblDinnerDuration.Text = "Dinner Duration:";
+            // 
+            // lblLunchDuration
+            // 
+            this.lblLunchDuration.AutoSize = true;
+            this.lblLunchDuration.Location = new System.Drawing.Point(127, 85);
+            this.lblLunchDuration.Name = "lblLunchDuration";
+            this.lblLunchDuration.Size = new System.Drawing.Size(83, 13);
+            this.lblLunchDuration.TabIndex = 7;
+            this.lblLunchDuration.Text = "Lunch Duration:";
+            // 
+            // cbPeakHour
+            // 
+            this.cbPeakHour.AutoSize = true;
+            this.cbPeakHour.Location = new System.Drawing.Point(100, 84);
+            this.cbPeakHour.Name = "cbPeakHour";
+            this.cbPeakHour.Size = new System.Drawing.Size(15, 14);
+            this.cbPeakHour.TabIndex = 5;
+            this.cbPeakHour.UseVisualStyleBackColor = true;
             // 
             // tbRestaurantStaff
             // 
@@ -125,13 +204,6 @@
             this.tbRestaurantStaff.Name = "tbRestaurantStaff";
             this.tbRestaurantStaff.Size = new System.Drawing.Size(94, 20);
             this.tbRestaurantStaff.TabIndex = 4;
-            // 
-            // tbCustomerFlow
-            // 
-            this.tbCustomerFlow.Location = new System.Drawing.Point(91, 26);
-            this.tbCustomerFlow.Name = "tbCustomerFlow";
-            this.tbCustomerFlow.Size = new System.Drawing.Size(94, 20);
-            this.tbCustomerFlow.TabIndex = 3;
             // 
             // PeakHourOptionlbl
             // 
@@ -142,14 +214,14 @@
             this.PeakHourOptionlbl.TabIndex = 2;
             this.PeakHourOptionlbl.Text = "off";
             // 
-            // label5
+            // lblPeakHours
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 111);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 13);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Peak hours         : ";
+            this.lblPeakHours.AutoSize = true;
+            this.lblPeakHours.Location = new System.Drawing.Point(7, 111);
+            this.lblPeakHours.Name = "lblPeakHours";
+            this.lblPeakHours.Size = new System.Drawing.Size(94, 13);
+            this.lblPeakHours.TabIndex = 2;
+            this.lblPeakHours.Text = "Peak hours         : ";
             // 
             // PeakHourlbl
             // 
@@ -353,7 +425,7 @@
             // 
             // restaurantPlan
             // 
-            this.restaurantPlan.Location = new System.Drawing.Point(205, 2);
+            this.restaurantPlan.Location = new System.Drawing.Point(470, 12);
             this.restaurantPlan.Name = "restaurantPlan";
             this.restaurantPlan.Size = new System.Drawing.Size(680, 483);
             this.restaurantPlan.TabIndex = 6;
@@ -361,11 +433,164 @@
             this.restaurantPlan.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.restaurantPlan.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RestaurantPlan_MouseClick);
             // 
+            // gbSimulationOverview
+            // 
+            this.gbSimulationOverview.Controls.Add(this.label10);
+            this.gbSimulationOverview.Controls.Add(this.label9);
+            this.gbSimulationOverview.Controls.Add(this.label8);
+            this.gbSimulationOverview.Controls.Add(this.label7);
+            this.gbSimulationOverview.Controls.Add(this.label6);
+            this.gbSimulationOverview.Controls.Add(this.label5);
+            this.gbSimulationOverview.Controls.Add(this.label4);
+            this.gbSimulationOverview.Controls.Add(this.label3);
+            this.gbSimulationOverview.Controls.Add(this.lblServedCustomers);
+            this.gbSimulationOverview.Controls.Add(this.lblRunTime);
+            this.gbSimulationOverview.Location = new System.Drawing.Point(205, 2);
+            this.gbSimulationOverview.Name = "gbSimulationOverview";
+            this.gbSimulationOverview.Size = new System.Drawing.Size(259, 304);
+            this.gbSimulationOverview.TabIndex = 7;
+            this.gbSimulationOverview.TabStop = false;
+            this.gbSimulationOverview.Text = "Simulation Overview";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(138, 135);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 13);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "label10";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(138, 108);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(35, 13);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "label9";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(138, 81);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "label8";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(138, 57);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "label7";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(138, 27);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "label6";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(15, 135);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "label5";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(15, 108);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "label4";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 81);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(116, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Customers Send Away:";
+            // 
+            // lblServedCustomers
+            // 
+            this.lblServedCustomers.AutoSize = true;
+            this.lblServedCustomers.Location = new System.Drawing.Point(15, 54);
+            this.lblServedCustomers.Name = "lblServedCustomers";
+            this.lblServedCustomers.Size = new System.Drawing.Size(96, 13);
+            this.lblServedCustomers.TabIndex = 1;
+            this.lblServedCustomers.Text = "Served Customers:";
+            // 
+            // lblRunTime
+            // 
+            this.lblRunTime.AutoSize = true;
+            this.lblRunTime.Location = new System.Drawing.Point(15, 27);
+            this.lblRunTime.Name = "lblRunTime";
+            this.lblRunTime.Size = new System.Drawing.Size(56, 13);
+            this.lblRunTime.TabIndex = 0;
+            this.lblRunTime.Text = "Run Time:";
+            // 
+            // gbStartStopPause
+            // 
+            this.gbStartStopPause.Controls.Add(this.btnStop);
+            this.gbStartStopPause.Controls.Add(this.btnPause);
+            this.gbStartStopPause.Controls.Add(this.btnStart);
+            this.gbStartStopPause.Location = new System.Drawing.Point(286, 312);
+            this.gbStartStopPause.Name = "gbStartStopPause";
+            this.gbStartStopPause.Size = new System.Drawing.Size(178, 173);
+            this.gbStartStopPause.TabIndex = 8;
+            this.gbStartStopPause.TabStop = false;
+            this.gbStartStopPause.Text = "Control Simulation";
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(43, 99);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(80, 30);
+            this.btnStop.TabIndex = 9;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.Location = new System.Drawing.Point(43, 63);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(80, 30);
+            this.btnPause.TabIndex = 7;
+            this.btnPause.Text = "Pause";
+            this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(43, 27);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(80, 30);
+            this.btnStart.TabIndex = 8;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click_1);
+            // 
             // RestaurantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(885, 486);
+            this.ClientSize = new System.Drawing.Size(1162, 494);
+            this.Controls.Add(this.gbStartStopPause);
+            this.Controls.Add(this.gbSimulationOverview);
             this.Controls.Add(this.restaurantPlan);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -374,10 +599,16 @@
             this.Text = "Restaurant simulator";
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCustomerFlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDinnerDuration)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLunchDuration)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.restaurantPlan)).EndInit();
+            this.gbSimulationOverview.ResumeLayout(false);
+            this.gbSimulationOverview.PerformLayout();
+            this.gbStartStopPause.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -385,14 +616,10 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.CheckBox PeakHourCB;
-        private System.Windows.Forms.Button btnPause;
-        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.CheckBox cbPeakHour;
         private System.Windows.Forms.TextBox tbRestaurantStaff;
-        private System.Windows.Forms.TextBox tbCustomerFlow;
         private System.Windows.Forms.Label PeakHourOptionlbl;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblPeakHours;
         private System.Windows.Forms.Label PeakHourlbl;
         private System.Windows.Forms.Label RestaurantStafflbl;
         private System.Windows.Forms.Label CustomerFlowlbl;
@@ -413,6 +640,26 @@
         private System.Windows.Forms.PictureBox restaurantPlan;
         private System.Windows.Forms.Button btnShowGATables;
         private System.Windows.Forms.Button btnShowSATables;
+        private System.Windows.Forms.NumericUpDown nudDinnerDuration;
+        private System.Windows.Forms.NumericUpDown nudLunchDuration;
+        private System.Windows.Forms.Label lblDinnerDuration;
+        private System.Windows.Forms.Label lblLunchDuration;
+        private System.Windows.Forms.NumericUpDown nudCustomerFlow;
+        private System.Windows.Forms.GroupBox gbSimulationOverview;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblServedCustomers;
+        private System.Windows.Forms.Label lblRunTime;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox gbStartStopPause;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.Button btnStart;
     }
 }
 

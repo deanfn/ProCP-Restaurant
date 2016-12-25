@@ -35,6 +35,9 @@ namespace RestaurantSimulation
         Point table1;
         Point table2;
 
+        // Timer for redrawing the restaurant plan.
+        Timer timer;
+
         //Enum
         enum component { table, bar, groupArea, smokingArea, waitingArea, eraser, merge, unmerge };
         component? choosenComponent = null;
@@ -47,6 +50,26 @@ namespace RestaurantSimulation
             table2 = new Point();
 
             newPlan = RestaurantPlan.Instance;
+
+            ToolTip toolTip1 = new ToolTip();
+
+            toolTip1.AutoPopDelay = 10000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            toolTip1.ShowAlways = true;
+
+            toolTip1.SetToolTip(nudDinnerDuration, "The time in seconds for a customer group to have dinner.");
+            toolTip1.SetToolTip(nudLunchDuration, "The time in seconds for a customer group to have lunch.");
+            toolTip1.SetToolTip(nudLunchDuration, "The interval for which a customer group will be generated.");
+
+            timer = new Timer();
+            timer.Interval = 500;
+            timer.Tick += Timer_Tick;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            restaurantPlan.Invalidate();
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -218,6 +241,53 @@ namespace RestaurantSimulation
         private void btnUnmerge_Click(object sender, EventArgs e)
         {
             choosenComponent = component.unmerge;
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            newPlan.StopPauseSimulation(true);
+            timer.Stop();
+
+            groupBox1.Enabled = true;
+            groupBox2.Enabled = true;
+            groupBox3.Enabled = true;
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            newPlan.StopPauseSimulation(false);
+            timer.Stop();
+
+            label7.Text = "";
+            label8.Text = "";
+
+            label7.Text = newPlan.Data()[0].ToString();
+            label8.Text = newPlan.Data()[1].ToString();
+
+            groupBox1.Enabled = true;
+            groupBox2.Enabled = true;
+            groupBox3.Enabled = true;
+        }
+
+        private void btnStart_Click_1(object sender, EventArgs e)
+        {
+            int customerFlow = Convert.ToInt32(nudCustomerFlow.Value);
+            int lunchTime = Convert.ToInt32(nudLunchDuration.Value);
+            int dinnerTime = Convert.ToInt32(nudDinnerDuration.Value);
+            bool peakHourOption = cbPeakHour.Checked ? true : false;
+            string message = newPlan.StartSimulation(customerFlow, lunchTime, dinnerTime, peakHourOption, true);
+
+            if (message != null)
+            {
+                MessageBox.Show(message);
+            }
+            else
+            {
+                groupBox1.Enabled = false;
+                groupBox2.Enabled = false;
+                groupBox3.Enabled = false;
+                timer.Start();
+            }
         }
     }
 }
