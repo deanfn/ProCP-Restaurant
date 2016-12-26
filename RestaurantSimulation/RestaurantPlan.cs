@@ -594,5 +594,19 @@ namespace RestaurantSimulation
 
             return data;
         }
+        public List<CustomerGroup> LobbyCustomers()
+        {
+            var group = lobby.GetGroupsInLobby();
+            List<CustomerGroup> temp = new List<CustomerGroup>();
+            if (group != null)
+            {
+                for (int i = 0; i < group.Count-1; i++)
+                {
+                    temp.Add(group[i]);
+                }
+                return temp;
+            }
+            return null;
+        }
     }
 }

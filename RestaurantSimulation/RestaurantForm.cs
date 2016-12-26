@@ -63,13 +63,19 @@ namespace RestaurantSimulation
             toolTip1.SetToolTip(nudLunchDuration, "The interval for which a customer group will be generated.");
 
             timer = new Timer();
-            timer.Interval = 500;
+            timer.Interval = 1000;
             timer.Tick += Timer_Tick;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             restaurantPlan.Invalidate();
+            listBox1.Items.Clear();
+            var group = newPlan.LobbyCustomers();
+            for (int i = 0; i <= group.Count - 1; i++)
+            {
+                listBox1.Items.Add("Group ID: " + group[i].ID + " Group size: " + group[i].GroupSize);
+            }
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -267,6 +273,7 @@ namespace RestaurantSimulation
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;
             groupBox3.Enabled = true;
+            listBox1.Items.Clear();
         }
 
         private void btnStart_Click_1(object sender, EventArgs e)

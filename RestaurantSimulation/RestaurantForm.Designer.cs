@@ -57,11 +57,13 @@
             this.btnTable = new System.Windows.Forms.Button();
             this.restaurantPlan = new System.Windows.Forms.PictureBox();
             this.gbSimulationOverview = new System.Windows.Forms.GroupBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -420,11 +422,13 @@
             // 
             // gbSimulationOverview
             // 
+            this.gbSimulationOverview.Controls.Add(this.listBox1);
             this.gbSimulationOverview.Controls.Add(this.label10);
             this.gbSimulationOverview.Controls.Add(this.label9);
             this.gbSimulationOverview.Controls.Add(this.label8);
             this.gbSimulationOverview.Controls.Add(this.label7);
             this.gbSimulationOverview.Controls.Add(this.label6);
+            this.gbSimulationOverview.Controls.Add(this.label1);
             this.gbSimulationOverview.Controls.Add(this.label5);
             this.gbSimulationOverview.Controls.Add(this.label4);
             this.gbSimulationOverview.Controls.Add(this.label3);
@@ -436,6 +440,14 @@
             this.gbSimulationOverview.TabIndex = 7;
             this.gbSimulationOverview.TabStop = false;
             this.gbSimulationOverview.Text = "Simulation Overview";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(18, 197);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(235, 95);
+            this.listBox1.TabIndex = 10;
             // 
             // label10
             // 
@@ -481,6 +493,15 @@
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "label6";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(17, 171);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Lobby overview";
             // 
             // label5
             // 
@@ -643,6 +664,8 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
