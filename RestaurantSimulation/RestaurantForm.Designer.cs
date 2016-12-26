@@ -112,7 +112,7 @@
             0});
             this.nudCustomerFlow.Location = new System.Drawing.Point(91, 27);
             this.nudCustomerFlow.Maximum = new decimal(new int[] {
-            200,
+            60,
             0,
             0,
             0});
@@ -125,7 +125,7 @@
             this.nudCustomerFlow.Size = new System.Drawing.Size(94, 20);
             this.nudCustomerFlow.TabIndex = 11;
             this.nudCustomerFlow.Value = new decimal(new int[] {
-            50,
+            1,
             0,
             0,
             0});
@@ -134,12 +134,12 @@
             // 
             this.nudDinnerDuration.Location = new System.Drawing.Point(218, 87);
             this.nudDinnerDuration.Maximum = new decimal(new int[] {
-            120,
+            25,
             0,
             0,
             0});
             this.nudDinnerDuration.Minimum = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -147,7 +147,7 @@
             this.nudDinnerDuration.Size = new System.Drawing.Size(51, 20);
             this.nudDinnerDuration.TabIndex = 10;
             this.nudDinnerDuration.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -156,12 +156,12 @@
             // 
             this.nudLunchDuration.Location = new System.Drawing.Point(218, 60);
             this.nudLunchDuration.Maximum = new decimal(new int[] {
-            120,
+            30,
             0,
             0,
             0});
             this.nudLunchDuration.Minimum = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
@@ -169,7 +169,7 @@
             this.nudLunchDuration.Size = new System.Drawing.Size(51, 20);
             this.nudLunchDuration.TabIndex = 9;
             this.nudLunchDuration.Value = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});

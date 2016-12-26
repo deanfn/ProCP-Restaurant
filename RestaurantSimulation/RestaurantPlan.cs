@@ -417,14 +417,14 @@ namespace RestaurantSimulation
 
             /* If the number is less or equal to 8 the group will be with size 1 to 4 people,
              * else the group will be larger, up to 16 people. */
-            if (r.Next(1, 11) <= 8)
-            {
+            //if (r.Next(1, 11) <= 10)
+            //{
                 size = r.Next(1, 5);
-            }
-            else
-            {
-                size = r.Next(5, 17);
-            }
+            //}
+            //else
+            //{
+            //    size = r.Next(5, 17);
+            //}
 
             var custGroup = new CustomerGroup(size, dinnerTime, lunchTime);
 
@@ -472,7 +472,7 @@ namespace RestaurantSimulation
             {
                 totalTimer.AutoReset = true;
                 totalTimer.Elapsed += TotalTimer_Elapsed;
-                totalTimer.Interval = custFlow * 100;
+                totalTimer.Interval = custFlow * 1000;
 
                 secondsTimer.AutoReset = true;
                 secondsTimer.Interval = 1000;
@@ -600,13 +600,16 @@ namespace RestaurantSimulation
             List<CustomerGroup> temp = new List<CustomerGroup>();
             if (group != null)
             {
-                for (int i = 0; i < group.Count-1; i++)
+                if (group.Count != 0)
                 {
-                    temp.Add(group[i]);
+                    for (int i = 0; i < group.Count - 1; i++)
+                    {
+                        temp.Add(group[i]);
+                    }
+                    return temp;
                 }
-                return temp;
             }
-            return null;
+            return temp;
         }
     }
 }

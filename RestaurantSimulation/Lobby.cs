@@ -9,7 +9,7 @@ namespace RestaurantSimulation
     sealed class Lobby
     {
         private static readonly Lobby instance = new Lobby();
-        private readonly int lobbyCapacity = 6;
+        private readonly int lobbyCapacity = 20;
         private List<CustomerGroup> customers;
 
         // Property to get the instance
