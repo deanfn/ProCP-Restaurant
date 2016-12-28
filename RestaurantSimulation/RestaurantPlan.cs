@@ -16,6 +16,7 @@ namespace RestaurantSimulation
     {
         private static readonly RestaurantPlan instance = new RestaurantPlan();
         private List<Component> componentOnPlan;
+        //private RestaurantForm restaurantPlan;
 
         //Properties for simulation running
         private List<CustomerGroup> customerList;
@@ -39,6 +40,7 @@ namespace RestaurantSimulation
         private Stopwatch stopWatch;
 
         // Property to get the instance
+
         public static RestaurantPlan Instance
         {
             get
@@ -53,7 +55,7 @@ namespace RestaurantSimulation
         {
         }
 
-        private RestaurantPlan()
+        private RestaurantPlan(/*RestaurantForm rf*/)
         {
             componentOnPlan = new List<Component>();
             customerList = new List<CustomerGroup>();
@@ -63,6 +65,7 @@ namespace RestaurantSimulation
             stopWatch = new Stopwatch();
             totalTimer = new Timer();
             secondsTimer = new Timer();
+            //this.restaurantPlan = rf;
         }
 
         public bool AddComponent(Point coordinates, int type, int size)
@@ -458,6 +461,7 @@ namespace RestaurantSimulation
                 else if (lobby.AddCustGroupToLobby(group))
                 {
                     lobbyList.Add(group);
+                    //restaurantPlan.LobbyOverview(lobbyList);
                 }
                 else return false;
             }
@@ -531,6 +535,8 @@ namespace RestaurantSimulation
                         customerList.Add(group);
                         lobby.RemoveCustGroupFromLobby(group);
                         lobbyList.RemoveAt(groupIndex);
+                        //restaurantPlan.LobbyOverview(lobbyList);
+                        
                     }
                 }
 

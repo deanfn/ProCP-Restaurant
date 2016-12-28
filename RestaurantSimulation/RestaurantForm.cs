@@ -50,6 +50,7 @@ namespace RestaurantSimulation
             table2 = new Point();
 
             newPlan = RestaurantPlan.Instance;
+            //newPlan = new RestaurantPlan(this);
 
             ToolTip toolTip1 = new ToolTip();
 
@@ -70,12 +71,6 @@ namespace RestaurantSimulation
         private void Timer_Tick(object sender, EventArgs e)
         {
             restaurantPlan.Invalidate();
-            listBox1.Items.Clear();
-            var group = newPlan.LobbyCustomers();
-            for (int i = 0; i <= group.Count - 1; i++)
-            {
-                listBox1.Items.Add("Group ID: " + group[i].ID + " Group size: " + group[i].GroupSize);
-            }
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -296,5 +291,14 @@ namespace RestaurantSimulation
                 timer.Start();
             }
         }
+
+        //public void LobbyOverview(List<CustomerGroup> cg)
+        //{
+        //    listBox1.Items.Clear();
+        //    for (int i = 0; i <= cg.Count - 1; i++)
+        //    {
+        //        listBox1.Items.Add("Group ID: " + cg[i].ID + " Group size: " + cg[i].GroupSize);
+        //    }
+        //}
     }
 }
