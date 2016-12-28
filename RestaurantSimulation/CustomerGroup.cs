@@ -14,11 +14,12 @@ namespace RestaurantSimulation
         private mealType? meal = null;
         private Timer t, wait;
         private static int id = 0;
+        //private RestaurantPlan restaurantPlan;
 
         public int ID { get; set; }
         public int GroupSize { get; set; }
 
-        private RestaurantPlan restaurantPlan;
+        public CustomerGroup(int gSize, int dinnerT, int lunchT/*, RestaurantPlan rp*/)
         {
             id++;
             /* When a group of customers come to the restaurant it will be assigned an ID,
@@ -27,6 +28,7 @@ namespace RestaurantSimulation
             this.ID = id;
             this.GroupSize = gSize;
             this.meal = DinnerOrLunch(meal);
+            //this.restaurantPlan = rp;
             t = new Timer(SetInterval(meal,dinnerT,lunchT));
             t.Elapsed += OnTimedEvent;
 
@@ -69,8 +71,8 @@ namespace RestaurantSimulation
         public void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             t.Stop();
-            restaurantPlan.FinishEating(this);
-            //RestaurantPlan.Instance.FinishEating(this);
+            //restaurantPlan.FinishEating(this);
+            RestaurantPlan.Instance.FinishEating(this);
         }
 
         // Waiting time is randomly generated and is between 15 and 24 seconds.
@@ -90,8 +92,8 @@ namespace RestaurantSimulation
         public void Leave(object sender, ElapsedEventArgs e)
         {
             StopWaiting();
-            restaurantPlan.QuitWaiting(this);
-            //RestaurantPlan.Instance.QuitWaiting(this);
+            //restaurantPlan.QuitWaiting(this);
+            RestaurantPlan.Instance.QuitWaiting(this);
         }
 
     }
