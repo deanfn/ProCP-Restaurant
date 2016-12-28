@@ -63,7 +63,7 @@ namespace RestaurantSimulation
             toolTip1.SetToolTip(nudLunchDuration, "The time in seconds for which a customer group will be generated.");
 
             timer = new Timer();
-            timer.Interval = 1000;
+            timer.Interval = 500;
             timer.Tick += Timer_Tick;
         }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Timers;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace RestaurantSimulation
 {
@@ -18,7 +19,8 @@ namespace RestaurantSimulation
 
         //Properties for simulation running
         private List<CustomerGroup> customerList;
-        private bool simulation;
+        private List<CustomerGroup> lobbyList = new List<CustomerGroup>();
+        //private bool simulation;
 
         // Lobby object. Note the Lobby class is singleton, only one object can exists.
         private Lobby lobby;
@@ -419,7 +421,7 @@ namespace RestaurantSimulation
              * else the group will be larger, up to 16 people. */
             //if (r.Next(1, 11) <= 10)
             //{
-                size = r.Next(1, 5);
+            size = r.Next(1, 5);
             //}
             //else
             //{
@@ -453,10 +455,11 @@ namespace RestaurantSimulation
                 {
                     (waitingAreaTable as Table).SeatCustomersAtTable(group);
                 }
-                else if (!lobby.AddCustGroupToLobby(group))
+                else if (lobby.AddCustGroupToLobby(group))
                 {
-                    return false;
+                    lobbyList.Add(group);
                 }
+                else return false;
             }
 
             return true;
@@ -495,6 +498,7 @@ namespace RestaurantSimulation
 
         private void SecondsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+
             var allWaitingTables = componentOnPlan.FindAll(t => t is Table && (t as Table).OnWA && !(t as Table).Available);
             var tableAvailability = componentOnPlan.Count(t => t is Table && (t as Table).Available && !(t as Table).OnWA);
 
@@ -519,14 +523,17 @@ namespace RestaurantSimulation
                 {
                     var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
                     (t as Table).TableSize >= group.GroupSize && !(t as Table).OnWA);
+                    int groupIndex = lobbyList.FindIndex(i => i.ID == group.ID);
 
                     if (availableTable != null)
                     {
                         (availableTable as Table).SeatCustomersAtTable(group);
                         customerList.Add(group);
                         lobby.RemoveCustGroupFromLobby(group);
+                        lobbyList.RemoveAt(groupIndex);
                     }
                 }
+
             }
         }
 
@@ -594,22 +601,10 @@ namespace RestaurantSimulation
 
             return data;
         }
+
         public List<CustomerGroup> LobbyCustomers()
         {
-            var group = lobby.GetGroupsInLobby();
-            List<CustomerGroup> temp = new List<CustomerGroup>();
-            if (group != null)
-            {
-                if (group.Count != 0)
-                {
-                    for (int i = 0; i < group.Count - 1; i++)
-                    {
-                        temp.Add(group[i]);
-                    }
-                    return temp;
-                }
-            }
-            return temp;
+            return lobbyList;
         }
     }
 }
