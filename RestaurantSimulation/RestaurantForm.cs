@@ -146,7 +146,7 @@ namespace RestaurantSimulation
 
             else if (choosenComponent == component.eraser)
             {
-                newPlan.RemoveComponent(newPlan.GetComponent(col, row));
+                newPlan.RemoveComponent(newPlan.GetComponent(col, row), newPlan.GetSpecialArea(col, row));
             }
 
             else if (choosenComponent == component.merge)

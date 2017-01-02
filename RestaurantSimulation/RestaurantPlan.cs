@@ -178,7 +178,7 @@ namespace RestaurantSimulation
 
         /* Checks whether two points are within a Group area and if they are
          * returns that group area, otherwise returns null. */
-        public Component GetGroupArea(int x, int y)
+        public GroupArea GetGroupArea(int x, int y)
         {
             // List of all group areas.
             var groupAreas = componentOnPlan.FindAll(c => c is GroupArea);
@@ -189,11 +189,30 @@ namespace RestaurantSimulation
                 {
                     if ((x == point.Coordinates.X && y == point.Coordinates.Y))
                     {
-                        return ga;
+                        return (GroupArea)ga;
                     }
                 }
             }
 
+            return null;
+        }
+        /* Checks whether two points are within a Special area and if they are
+        * returns that special area, otherwise returns null. */
+        public SpecialAreas GetSpecialArea(int x, int y)
+        {
+            // List of all group areas.
+            var specialAreas = componentOnPlan.FindAll(c => c is SpecialAreas);
+
+            foreach (var areas in specialAreas)
+            {
+                foreach (var point in (areas as SpecialAreas).Spots)
+                {
+                    if ((x == point.Coordinates.X && y == point.Coordinates.Y))
+                    {
+                        return (SpecialAreas)areas;
+                    }
+                }
+            }
             return null;
         }
 
@@ -206,54 +225,59 @@ namespace RestaurantSimulation
                 return true;
         }
 
-        public bool RemoveComponent(Component c)
+        public bool RemoveComponent(Component c = null, SpecialAreas sa = null)
         {
             int ComCounter = 0;
 
-            if (c != null)
+            if (c != null || sa != null)
             {
-                foreach (Component com in componentOnPlan)
+                if (c != null)
                 {
-                    if (c.X == com.X && c.Y == com.Y)
+                    foreach (Component com in componentOnPlan)
                     {
-                        if (c is Table || c is Bar || c is MergedTable)
+                        if (c.X == com.X && c.Y == com.Y)
                         {
-                            for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                            if (c is Table || c is Bar || c is MergedTable || c is SpecialAreas)
                             {
-                                if (c is Table && componentOnPlan.ElementAt(i) is Table)
+                                for (int i = ComCounter; i < componentOnPlan.Count; i++)
                                 {
-                                    componentOnPlan.ElementAt(i).DecreaseID();
+                                    if (c is Table && componentOnPlan.ElementAt(i) is Table)
+                                    {
+                                        componentOnPlan.ElementAt(i).DecreaseID();
+                                    }
                                 }
-                            }
 
-                            for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                                for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                                {
+                                    if (c is Bar && componentOnPlan.ElementAt(i) is Bar)
+                                    {
+                                        componentOnPlan.ElementAt(i).DecreaseID();
+                                    }
+                                }
+
+                                for (int i = ComCounter; i < componentOnPlan.Count; i++)
+                                {
+                                    if (c is MergedTable && componentOnPlan.ElementAt(i) is MergedTable)
+                                    {
+                                        componentOnPlan.ElementAt(i).DecreaseID();
+                                    }
+                                }
+                                c.DecreaseCount();
+                            }
+                            if (c is Table && (c as Table).OnGA)
                             {
-                                if (c is Bar && componentOnPlan.ElementAt(i) is Bar)
-                                {
-                                    componentOnPlan.ElementAt(i).DecreaseID();
-                                }
+                                RemoveTableFromGA(c);
                             }
-
-                            for (int i = ComCounter; i < componentOnPlan.Count; i++)
-                            {
-                                if (c is MergedTable && componentOnPlan.ElementAt(i) is MergedTable)
-                                {
-                                    componentOnPlan.ElementAt(i).DecreaseID();
-                                }
-                            }
-
-                            c.DecreaseCount();
-
+                            componentOnPlan.Remove(c);
+                            return true;
                         }
-                        if (c is Table && (c as Table).OnGA)
-                        {
-                            RemoveTableFromGA(c);
-                        }
-                        componentOnPlan.Remove(c);
-                        return true;
                     }
-
                     ComCounter++;
+                }
+                else
+                {
+                    componentOnPlan.Remove(sa);
+                    return true;
                 }
             }
 
@@ -536,7 +560,7 @@ namespace RestaurantSimulation
                         lobby.RemoveCustGroupFromLobby(group);
                         lobbyList.RemoveAt(groupIndex);
                         //restaurantPlan.LobbyOverview(lobbyList);
-                        
+
                     }
                 }
 
