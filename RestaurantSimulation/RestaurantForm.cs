@@ -66,6 +66,13 @@ namespace RestaurantSimulation
             timer = new Timer();
             timer.Interval = 500;
             timer.Tick += Timer_Tick;
+
+            lblPeakHourInfo.Text = "With this mode turned on, you will generate \nnew customer group every 0.5 seconds.";
+            lblCustSentAwayInfo.Text = "0";
+            lblRunTimeCounter.Text = "0:00:00";
+            lblServedCustomersInfo.Text = "0";
+
+            btnNone.Enabled = false;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -107,11 +114,25 @@ namespace RestaurantSimulation
         private void btnTable_Click(object sender, EventArgs e)
         {
             choosenComponent = component.table;
+            btnTable.Enabled = false;
+            btnBar.Enabled = true;
+            btnGroupA.Enabled = true;
+            btnWaitingA.Enabled = true;
+            btnSmokingA.Enabled = true;
+            btnNone.Enabled = true;
+            btnDelete.Enabled = true;
         }
 
         private void btnBar_Click(object sender, EventArgs e)
         {
             choosenComponent = component.bar;
+            btnTable.Enabled = true ;
+            btnBar.Enabled = false;
+            btnGroupA.Enabled = true;
+            btnWaitingA.Enabled = true;
+            btnSmokingA.Enabled = true;
+            btnNone.Enabled = true;
+            btnDelete.Enabled = true;
         }
 
         private void RestaurantPlan_MouseClick(object sender, MouseEventArgs e)
@@ -136,7 +157,7 @@ namespace RestaurantSimulation
 
                 if (newPlan.AddComponent(e.Location, (int)choosenComponent, size))
                 {
-                    choosenComponent = null;
+                    
                 }
                 else
                 {
@@ -163,8 +184,12 @@ namespace RestaurantSimulation
                 }
                 else if (step == 3 && !table1.Equals(table2))
                 {
-                    if (!newPlan.MergeTables(newPlan.GetComponent(table1.X, table1.Y), newPlan.GetComponent(table2.X, table2.Y),
+                    if (newPlan.MergeTables(newPlan.GetComponent(table1.X, table1.Y), newPlan.GetComponent(table2.X, table2.Y),
                         e.Location))
+                    {
+                        choosenComponent = null;
+                    }
+                    else
                     {
                         MessageBox.Show("Cannot merge tables!");
                         step = 1;
@@ -206,11 +231,23 @@ namespace RestaurantSimulation
         private void btnGroupA_Click(object sender, EventArgs e)
         {
             choosenComponent = component.groupArea;
+            btnTable.Enabled = true;
+            btnBar.Enabled = true;
+            btnGroupA.Enabled = false;
+            btnWaitingA.Enabled = true;
+            btnSmokingA.Enabled = true;
+            btnNone.Enabled = true;
         }
 
         private void btnSmokingA_Click(object sender, EventArgs e)
         {
             choosenComponent = component.smokingArea;
+            btnTable.Enabled = true;
+            btnBar.Enabled = true;
+            btnGroupA.Enabled = true;
+            btnWaitingA.Enabled = true;
+            btnSmokingA.Enabled = false;
+            btnNone.Enabled = true;
         }
 
         private void btnShowGATables_Click(object sender, EventArgs e)
@@ -226,22 +263,48 @@ namespace RestaurantSimulation
         private void btnWaitingA_Click(object sender, EventArgs e)
         {
             choosenComponent = component.waitingArea;
+            btnTable.Enabled = true;
+            btnBar.Enabled = true;
+            btnGroupA.Enabled = true;
+            btnWaitingA.Enabled = false;
+            btnSmokingA.Enabled = true;
+            btnNone.Enabled = true;
+            btnDelete.Enabled = true;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             choosenComponent = component.eraser;
+            btnDelete.Enabled = false;
+            btnTable.Enabled = true;
+            btnBar.Enabled = true;
+            btnGroupA.Enabled = true;
+            btnWaitingA.Enabled = true;
+            btnSmokingA.Enabled = true;
+            btnNone.Enabled = true;
         }
 
         private void btnMerge_Click(object sender, EventArgs e)
         {
             choosenComponent = component.merge;
             step = 1;
+            btnTable.Enabled = true;
+            btnBar.Enabled = true;
+            btnGroupA.Enabled = true;
+            btnWaitingA.Enabled = true;
+            btnSmokingA.Enabled = true;
+            btnNone.Enabled = true;
         }
 
         private void btnUnmerge_Click(object sender, EventArgs e)
         {
             choosenComponent = component.unmerge;
+            btnTable.Enabled = true;
+            btnBar.Enabled = true;
+            btnGroupA.Enabled = true;
+            btnWaitingA.Enabled = true;
+            btnSmokingA.Enabled = true;
+            btnNone.Enabled = true;
         }
 
         private void btnPause_Click(object sender, EventArgs e)
@@ -259,11 +322,11 @@ namespace RestaurantSimulation
             newPlan.StopPauseSimulation(false);
             timer.Stop();
 
-            label7.Text = "";
-            label8.Text = "";
+            lblServedCustomersInfo.Text = "";
+            lblCustSentAwayInfo.Text = "";
 
-            label7.Text = newPlan.Data()[0].ToString();
-            label8.Text = newPlan.Data()[1].ToString();
+            lblServedCustomersInfo.Text = newPlan.Data()[0].ToString();
+            lblCustSentAwayInfo.Text = newPlan.Data()[1].ToString();
 
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;
@@ -290,6 +353,35 @@ namespace RestaurantSimulation
                 groupBox3.Enabled = false;
                 timer.Start();
             }
+        }
+
+        private void cbPeakHour_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbPeakHour.Checked)
+            {
+                lblPeakHourInfo.Visible = true;
+                nudCustomerFlow.Enabled = false;
+                lblPeakHourOption.Text = "On";
+            }
+            else
+            {
+                lblPeakHourInfo.Visible = false;
+                nudCustomerFlow.Enabled = true;
+                lblPeakHourOption.Text = "Off";
+            }
+              
+        }
+
+        private void btnNone_Click(object sender, EventArgs e)
+        {
+            choosenComponent = null;
+            btnNone.Enabled = false;
+            btnTable.Enabled = true;
+            btnBar.Enabled = true;
+            btnGroupA.Enabled = true;
+            btnWaitingA.Enabled = true;
+            btnSmokingA.Enabled = true;
+            btnDelete.Enabled = true;
         }
 
         //public void LobbyOverview(List<CustomerGroup> cg)

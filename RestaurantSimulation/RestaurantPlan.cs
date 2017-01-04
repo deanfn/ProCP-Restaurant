@@ -503,7 +503,11 @@ namespace RestaurantSimulation
             {
                 totalTimer.AutoReset = true;
                 totalTimer.Elapsed += TotalTimer_Elapsed;
-                totalTimer.Interval = custFlow * 1000;
+                if (!peakHour)
+                {
+                    totalTimer.Interval = custFlow * 1000;
+                }
+                else totalTimer.Interval = 500;
 
                 secondsTimer.AutoReset = true;
                 secondsTimer.Interval = 1000;

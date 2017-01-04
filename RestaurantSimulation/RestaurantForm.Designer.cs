@@ -35,7 +35,7 @@
             this.lblDinnerDuration = new System.Windows.Forms.Label();
             this.lblLunchDuration = new System.Windows.Forms.Label();
             this.cbPeakHour = new System.Windows.Forms.CheckBox();
-            this.PeakHourOptionlbl = new System.Windows.Forms.Label();
+            this.lblPeakHourOption = new System.Windows.Forms.Label();
             this.lblPeakHours = new System.Windows.Forms.Label();
             this.PeakHourlbl = new System.Windows.Forms.Label();
             this.CustomerFlowlbl = new System.Windows.Forms.Label();
@@ -60,19 +60,21 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblCustSentAwayInfo = new System.Windows.Forms.Label();
+            this.lblServedCustomersInfo = new System.Windows.Forms.Label();
+            this.lblRunTimeCounter = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblCustSentAway = new System.Windows.Forms.Label();
             this.lblServedCustomers = new System.Windows.Forms.Label();
             this.lblRunTime = new System.Windows.Forms.Label();
             this.gbStartStopPause = new System.Windows.Forms.GroupBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
+            this.lblPeakHourInfo = new System.Windows.Forms.Label();
+            this.btnNone = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCustomerFlow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDinnerDuration)).BeginInit();
@@ -86,13 +88,14 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.lblPeakHourInfo);
             this.groupBox3.Controls.Add(this.nudCustomerFlow);
             this.groupBox3.Controls.Add(this.nudDinnerDuration);
             this.groupBox3.Controls.Add(this.nudLunchDuration);
             this.groupBox3.Controls.Add(this.lblDinnerDuration);
             this.groupBox3.Controls.Add(this.lblLunchDuration);
             this.groupBox3.Controls.Add(this.cbPeakHour);
-            this.groupBox3.Controls.Add(this.PeakHourOptionlbl);
+            this.groupBox3.Controls.Add(this.lblPeakHourOption);
             this.groupBox3.Controls.Add(this.lblPeakHours);
             this.groupBox3.Controls.Add(this.PeakHourlbl);
             this.groupBox3.Controls.Add(this.CustomerFlowlbl);
@@ -200,15 +203,16 @@
             this.cbPeakHour.Size = new System.Drawing.Size(15, 14);
             this.cbPeakHour.TabIndex = 5;
             this.cbPeakHour.UseVisualStyleBackColor = true;
+            this.cbPeakHour.CheckedChanged += new System.EventHandler(this.cbPeakHour_CheckedChanged);
             // 
-            // PeakHourOptionlbl
+            // lblPeakHourOption
             // 
-            this.PeakHourOptionlbl.AutoSize = true;
-            this.PeakHourOptionlbl.Location = new System.Drawing.Point(99, 89);
-            this.PeakHourOptionlbl.Name = "PeakHourOptionlbl";
-            this.PeakHourOptionlbl.Size = new System.Drawing.Size(19, 13);
-            this.PeakHourOptionlbl.TabIndex = 2;
-            this.PeakHourOptionlbl.Text = "off";
+            this.lblPeakHourOption.AutoSize = true;
+            this.lblPeakHourOption.Location = new System.Drawing.Point(99, 89);
+            this.lblPeakHourOption.Name = "lblPeakHourOption";
+            this.lblPeakHourOption.Size = new System.Drawing.Size(21, 13);
+            this.lblPeakHourOption.TabIndex = 2;
+            this.lblPeakHourOption.Text = "Off";
             // 
             // lblPeakHours
             // 
@@ -345,6 +349,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnNone);
             this.groupBox1.Controls.Add(this.btnBar);
             this.groupBox1.Controls.Add(this.btnGroupA);
             this.groupBox1.Controls.Add(this.btnSmokingA);
@@ -425,13 +430,13 @@
             this.gbSimulationOverview.Controls.Add(this.listBox1);
             this.gbSimulationOverview.Controls.Add(this.label10);
             this.gbSimulationOverview.Controls.Add(this.label9);
-            this.gbSimulationOverview.Controls.Add(this.label8);
-            this.gbSimulationOverview.Controls.Add(this.label7);
-            this.gbSimulationOverview.Controls.Add(this.label6);
+            this.gbSimulationOverview.Controls.Add(this.lblCustSentAwayInfo);
+            this.gbSimulationOverview.Controls.Add(this.lblServedCustomersInfo);
+            this.gbSimulationOverview.Controls.Add(this.lblRunTimeCounter);
             this.gbSimulationOverview.Controls.Add(this.label1);
             this.gbSimulationOverview.Controls.Add(this.label5);
             this.gbSimulationOverview.Controls.Add(this.label4);
-            this.gbSimulationOverview.Controls.Add(this.label3);
+            this.gbSimulationOverview.Controls.Add(this.lblCustSentAway);
             this.gbSimulationOverview.Controls.Add(this.lblServedCustomers);
             this.gbSimulationOverview.Controls.Add(this.lblRunTime);
             this.gbSimulationOverview.Location = new System.Drawing.Point(205, 2);
@@ -467,32 +472,32 @@
             this.label9.TabIndex = 8;
             this.label9.Text = "label9";
             // 
-            // label8
+            // lblCustSentAwayInfo
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(138, 81);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "label8";
+            this.lblCustSentAwayInfo.AutoSize = true;
+            this.lblCustSentAwayInfo.Location = new System.Drawing.Point(138, 81);
+            this.lblCustSentAwayInfo.Name = "lblCustSentAwayInfo";
+            this.lblCustSentAwayInfo.Size = new System.Drawing.Size(104, 13);
+            this.lblCustSentAwayInfo.TabIndex = 7;
+            this.lblCustSentAwayInfo.Text = "lblCustSentAwayInfo";
             // 
-            // label7
+            // lblServedCustomersInfo
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(138, 57);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "label7";
+            this.lblServedCustomersInfo.AutoSize = true;
+            this.lblServedCustomersInfo.Location = new System.Drawing.Point(138, 57);
+            this.lblServedCustomersInfo.Name = "lblServedCustomersInfo";
+            this.lblServedCustomersInfo.Size = new System.Drawing.Size(100, 13);
+            this.lblServedCustomersInfo.TabIndex = 6;
+            this.lblServedCustomersInfo.Text = "lblServedCustomers";
             // 
-            // label6
+            // lblRunTimeCounter
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(138, 27);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "label6";
+            this.lblRunTimeCounter.AutoSize = true;
+            this.lblRunTimeCounter.Location = new System.Drawing.Point(138, 27);
+            this.lblRunTimeCounter.Name = "lblRunTimeCounter";
+            this.lblRunTimeCounter.Size = new System.Drawing.Size(97, 13);
+            this.lblRunTimeCounter.TabIndex = 5;
+            this.lblRunTimeCounter.Text = "lblRunTimeCounter";
             // 
             // label1
             // 
@@ -521,14 +526,14 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "label4";
             // 
-            // label3
+            // lblCustSentAway
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 81);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(116, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Customers Send Away:";
+            this.lblCustSentAway.AutoSize = true;
+            this.lblCustSentAway.Location = new System.Drawing.Point(15, 81);
+            this.lblCustSentAway.Name = "lblCustSentAway";
+            this.lblCustSentAway.Size = new System.Drawing.Size(116, 13);
+            this.lblCustSentAway.TabIndex = 2;
+            this.lblCustSentAway.Text = "Customers Send Away:";
             // 
             // lblServedCustomers
             // 
@@ -590,6 +595,26 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click_1);
             // 
+            // lblPeakHourInfo
+            // 
+            this.lblPeakHourInfo.AutoSize = true;
+            this.lblPeakHourInfo.Location = new System.Drawing.Point(11, 115);
+            this.lblPeakHourInfo.Name = "lblPeakHourInfo";
+            this.lblPeakHourInfo.Size = new System.Drawing.Size(83, 13);
+            this.lblPeakHourInfo.TabIndex = 12;
+            this.lblPeakHourInfo.Text = "lblPeakHourInfo";
+            this.lblPeakHourInfo.Visible = false;
+            // 
+            // btnNone
+            // 
+            this.btnNone.Location = new System.Drawing.Point(101, 26);
+            this.btnNone.Name = "btnNone";
+            this.btnNone.Size = new System.Drawing.Size(81, 23);
+            this.btnNone.TabIndex = 3;
+            this.btnNone.Text = "None";
+            this.btnNone.UseVisualStyleBackColor = true;
+            this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
+            // 
             // RestaurantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -623,7 +648,7 @@
 
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox cbPeakHour;
-        private System.Windows.Forms.Label PeakHourOptionlbl;
+        private System.Windows.Forms.Label lblPeakHourOption;
         private System.Windows.Forms.Label lblPeakHours;
         private System.Windows.Forms.Label PeakHourlbl;
         private System.Windows.Forms.Label CustomerFlowlbl;
@@ -651,14 +676,14 @@
         private System.Windows.Forms.NumericUpDown nudCustomerFlow;
         private System.Windows.Forms.GroupBox gbSimulationOverview;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblCustSentAway;
         private System.Windows.Forms.Label lblServedCustomers;
         private System.Windows.Forms.Label lblRunTime;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblCustSentAwayInfo;
+        private System.Windows.Forms.Label lblServedCustomersInfo;
+        private System.Windows.Forms.Label lblRunTimeCounter;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox gbStartStopPause;
         private System.Windows.Forms.Button btnStop;
@@ -666,6 +691,8 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPeakHourInfo;
+        private System.Windows.Forms.Button btnNone;
     }
 }
 
