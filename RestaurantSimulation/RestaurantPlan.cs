@@ -551,20 +551,25 @@ namespace RestaurantSimulation
                     }
                 }
 
-                foreach (var group in lobby.GetGroupsInLobby())
+                if (lobby.Size != 0)
                 {
-                    var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
-                    (t as Table).TableSize >= group.GroupSize && !(t as Table).OnWA);
-                    int groupIndex = lobbyList.FindIndex(i => i.ID == group.ID);
+                    var lobbyGroups = lobby.GetGroupsInLobby();
 
-                    if (availableTable != null)
+                    for (int j = 0; j < lobbyGroups.Count; j++)
                     {
-                        (availableTable as Table).SeatCustomersAtTable(group);
-                        customerList.Add(group);
-                        lobby.RemoveCustGroupFromLobby(group);
-                        lobbyList.RemoveAt(groupIndex);
-                        //restaurantPlan.LobbyOverview(lobbyList);
+                        var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+                        (t as Table).TableSize >= lobbyGroups[j].GroupSize && !(t as Table).OnWA);
+                        int groupIndex = lobbyList.FindIndex(i => i.ID == lobbyGroups[j].ID);
 
+                        if (availableTable != null)
+                        {
+                            (availableTable as Table).SeatCustomersAtTable(lobbyGroups[j]);
+                            customerList.Add(lobbyGroups[j]);
+                            lobby.RemoveCustGroupFromLobby(lobbyGroups[j]);
+                            lobbyList.RemoveAt(groupIndex);
+                            //restaurantPlan.LobbyOverview(lobbyList);
+
+                        }
                     }
                 }
 

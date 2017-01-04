@@ -78,6 +78,7 @@ namespace RestaurantSimulation
         private void Timer_Tick(object sender, EventArgs e)
         {
             restaurantPlan.Invalidate();
+            LobbyOverview();
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -384,13 +385,15 @@ namespace RestaurantSimulation
             btnDelete.Enabled = true;
         }
 
-        //public void LobbyOverview(List<CustomerGroup> cg)
-        //{
-        //    listBox1.Items.Clear();
-        //    for (int i = 0; i <= cg.Count - 1; i++)
-        //    {
-        //        listBox1.Items.Add("Group ID: " + cg[i].ID + " Group size: " + cg[i].GroupSize);
-        //    }
-        //}
+        public void LobbyOverview()
+        {
+            listBox1.Items.Clear();
+            var lobby = newPlan.LobbyCustomers();
+
+            for (int i = 0; i <= lobby.Count - 1; i++)
+            {
+                listBox1.Items.Add("Group ID: " + lobby[i].ID + " Group size: " + lobby[i].GroupSize);
+            }
+        }
     }
 }
