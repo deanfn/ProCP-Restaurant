@@ -42,6 +42,8 @@ namespace RestaurantSimulation
         enum component { table, bar, groupArea, smokingArea, waitingArea, eraser, merge, unmerge };
         component? choosenComponent = null;
 
+        int hours, minutes, seconds, ms;
+
         public RestaurantForm()
         {
             InitializeComponent();
@@ -66,6 +68,7 @@ namespace RestaurantSimulation
             timer = new Timer();
             timer.Interval = 500;
             timer.Tick += Timer_Tick;
+            
 
             lblPeakHourInfo.Text = "With this mode turned on, you will generate \nnew customer group every 0.5 seconds.";
             lblCustSentAwayInfo.Text = "0";
@@ -79,6 +82,10 @@ namespace RestaurantSimulation
         {
             restaurantPlan.Invalidate();
             LobbyOverview();
+            lblRunTimeCounter.Text = UpdateTotalTimeCounter();
+            lblServedCustomersInfo.Text = newPlan.ServedCustomers.ToString();
+            lblCustSentAwayInfo.Text = newPlan.CustomersSendAway.ToString();
+            
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -326,9 +333,8 @@ namespace RestaurantSimulation
             lblServedCustomersInfo.Text = "";
             lblCustSentAwayInfo.Text = "";
 
-            lblServedCustomersInfo.Text = newPlan.Data()[0].ToString();
-            lblCustSentAwayInfo.Text = newPlan.Data()[1].ToString();
-
+            lblServedCustomersInfo.Text = newPlan.ServedCustomers.ToString();
+            lblCustSentAwayInfo.Text = newPlan.CustomersSendAway.ToString();
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;
             groupBox3.Enabled = true;
@@ -352,6 +358,10 @@ namespace RestaurantSimulation
                 groupBox1.Enabled = false;
                 groupBox2.Enabled = false;
                 groupBox3.Enabled = false;
+                hours = 0;
+                minutes =0;
+                seconds=0;
+                ms = 0;
                 timer.Start();
             }
         }
@@ -394,6 +404,26 @@ namespace RestaurantSimulation
             {
                 listBox1.Items.Add("Group ID: " + lobby[i].ID + " Group size: " + lobby[i].GroupSize);
             }
+        }
+        private string UpdateTotalTimeCounter()
+        {
+            ms += 5;
+            if(ms == 10)
+            {
+                ms = 0;
+                seconds += 1;
+                if(seconds==60)
+                {
+                    seconds = 0;
+                    minutes += 1;
+                    if(minutes == 60)
+                    {
+                        minutes = 0;
+                        hours += 1;
+                    }
+                }
+            }
+            return hours + ":" + minutes.ToString().PadLeft(2, '0') + ":" + seconds.ToString().PadLeft(2, '0');
         }
     }
 }

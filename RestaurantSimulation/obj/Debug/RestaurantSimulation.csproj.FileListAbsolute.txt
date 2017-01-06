@@ -25,14 +25,6 @@ C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\Restaura
 C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.RestaurantForm.resources
 C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.Properties.Resources.resources
 C:\Users\Dean\Documents\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csproj.GenerateResource.Cache
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe.config
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.RestaurantForm.resources
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.Properties.Resources.resources
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csproj.GenerateResource.Cache
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
-C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe.config
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
@@ -42,4 +34,12 @@ f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulati
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
 f:\Repository\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csprojResolveAssemblyReference.cache
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe.config
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
 C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csprojResolveAssemblyReference.cache
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.RestaurantForm.resources
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.Properties.Resources.resources
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csproj.GenerateResource.Cache
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
+C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb

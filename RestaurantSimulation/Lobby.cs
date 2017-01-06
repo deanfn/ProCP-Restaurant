@@ -33,6 +33,10 @@ namespace RestaurantSimulation
         static Lobby()
         {
         }
+        public void NewLoby()
+        {
+            customers = new List<CustomerGroup>();
+        }
 
         public bool AddCustGroupToLobby(CustomerGroup group)
         {

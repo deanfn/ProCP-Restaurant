@@ -20,7 +20,7 @@ namespace RestaurantSimulation
 
         //Properties for simulation running
         private List<CustomerGroup> customerList;
-        private List<CustomerGroup> lobbyList = new List<CustomerGroup>();
+        private List<CustomerGroup> lobbyList;
         //private bool simulation;
 
         // Lobby object. Note the Lobby class is singleton, only one object can exists.
@@ -38,6 +38,9 @@ namespace RestaurantSimulation
         // Timer and stopwatch
         private Timer totalTimer, secondsTimer;
         private Stopwatch stopWatch;
+
+        public int ServedCustomers { get { return servedCustomers; } }
+        public int CustomersSendAway { get { return customersSendAway; } }
 
         // Property to get the instance
 
@@ -58,10 +61,9 @@ namespace RestaurantSimulation
         private RestaurantPlan(/*RestaurantForm rf*/)
         {
             componentOnPlan = new List<Component>();
-            customerList = new List<CustomerGroup>();
+
             lobby = Lobby.Instance;
             simulationRunTime = new TimeSpan();
-            customersSendAway = 0;
             stopWatch = new Stopwatch();
             totalTimer = new Timer();
             secondsTimer = new Timer();
@@ -501,6 +503,13 @@ namespace RestaurantSimulation
 
             if (tablesCount >= 1)
             {
+                lobbyList = new List<CustomerGroup>();
+                customerList = new List<CustomerGroup>();
+                lobby.NewLoby();
+
+                customersSendAway = 0;
+                servedCustomers = 0;
+
                 totalTimer.AutoReset = true;
                 totalTimer.Elapsed += TotalTimer_Elapsed;
                 if (!peakHour)
@@ -629,16 +638,6 @@ namespace RestaurantSimulation
                 servedCustomers += (table as Table).Customers.GroupSize;
                 (table as Table).ClearTable();
             }
-        }
-
-        public List<int> Data()
-        {
-            List<int> data = new List<int>();
-
-            data.Add(servedCustomers);
-            data.Add(customersSendAway);
-
-            return data;
         }
 
         public List<CustomerGroup> LobbyCustomers()
