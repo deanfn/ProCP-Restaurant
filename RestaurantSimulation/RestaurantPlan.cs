@@ -421,6 +421,12 @@ namespace RestaurantSimulation
             (GetGroupArea(table.X, table.Y) as GroupArea).RemoveTable(table);
         }
 
+        /// <summary>
+        /// Unmerges merged table into it's original tables
+        /// </summary>
+        /// <param name="mt"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
         public bool UnMergeTable(Component mt, Point location)
         {
             if (mt is MergedTable)
@@ -436,6 +442,11 @@ namespace RestaurantSimulation
             return false;
         }
 
+        /// <summary>
+        /// Checks if unmerged table, is unmerged completely
+        /// </summary>
+        /// <param name="mt"></param>
+        /// <returns></returns>
         public bool ListCheck(Component mt)
         {
             if ((mt as MergedTable).Tables.Count != 0)
@@ -451,16 +462,16 @@ namespace RestaurantSimulation
             Random r = new Random();
             int size = 0;
 
-            /* If the number is less or equal to 8 the group will be with size 1 to 4 people,
+            /* If the number is less or equal to 10 the group will be with size 1 to 4 people,
              * else the group will be larger, up to 16 people. */
-            //if (r.Next(1, 11) <= 10)
-            //{
+            if (r.Next(1, 11) <= 10)
+            {
             size = r.Next(1, 5);
-            //}
-            //else
-            //{
-            //    size = r.Next(5, 17);
-            //}
+            }
+            else
+            {
+                size = r.Next(5, 17);
+            }
 
             var custGroup = new CustomerGroup(size, dinnerTime, lunchTime);
 

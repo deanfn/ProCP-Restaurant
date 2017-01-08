@@ -358,7 +358,7 @@ namespace RestaurantSimulation
             saveSimulationDataToolStripMenuItem.Enabled = true;
             openToolStripMenuItem.Enabled = true;
 
-            listBox1.Items.Clear();
+            lbLobbyOverview.Items.Clear();
 
             restaurantPlan.Invalidate();
         }
@@ -424,12 +424,12 @@ namespace RestaurantSimulation
 
         public void LobbyOverview()
         {
-            listBox1.Items.Clear();
+            lbLobbyOverview.Items.Clear();
             var lobby = newPlan.LobbyCustomers();
 
             for (int i = 0; i <= lobby.Count - 1; i++)
             {
-                listBox1.Items.Add("Group ID: " + lobby[i].ID + " Group size: " + lobby[i].GroupSize);
+                lbLobbyOverview.Items.Add("Group ID: " + lobby[i].ID + " Group size: " + lobby[i].GroupSize);
             }
         }
 

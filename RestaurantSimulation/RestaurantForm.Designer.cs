@@ -45,7 +45,6 @@
             this.btnShowGATables = new System.Windows.Forms.Button();
             this.btnUnmerge = new System.Windows.Forms.Button();
             this.btnMerge = new System.Windows.Forms.Button();
-            this.btnConfirm = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.rbSize4 = new System.Windows.Forms.RadioButton();
             this.rbSize2 = new System.Windows.Forms.RadioButton();
@@ -59,15 +58,11 @@
             this.btnTable = new System.Windows.Forms.Button();
             this.restaurantPlan = new System.Windows.Forms.PictureBox();
             this.gbSimulationOverview = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lbLobbyOverview = new System.Windows.Forms.ListBox();
             this.lblCustSentAwayInfo = new System.Windows.Forms.Label();
             this.lblServedCustomersInfo = new System.Windows.Forms.Label();
             this.lblRunTimeCounter = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.lblCustSentAway = new System.Windows.Forms.Label();
             this.lblServedCustomers = new System.Windows.Forms.Label();
             this.lblRunTime = new System.Windows.Forms.Label();
@@ -154,12 +149,12 @@
             // 
             this.nudDinnerDuration.Location = new System.Drawing.Point(218, 87);
             this.nudDinnerDuration.Maximum = new decimal(new int[] {
-            25,
+            35,
             0,
             0,
             0});
             this.nudDinnerDuration.Minimum = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -167,7 +162,7 @@
             this.nudDinnerDuration.Size = new System.Drawing.Size(51, 20);
             this.nudDinnerDuration.TabIndex = 10;
             this.nudDinnerDuration.Value = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -181,7 +176,7 @@
             0,
             0});
             this.nudLunchDuration.Minimum = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});
@@ -189,7 +184,7 @@
             this.nudLunchDuration.Size = new System.Drawing.Size(51, 20);
             this.nudLunchDuration.TabIndex = 9;
             this.nudLunchDuration.Value = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});
@@ -264,7 +259,6 @@
             this.groupBox2.Controls.Add(this.btnShowGATables);
             this.groupBox2.Controls.Add(this.btnUnmerge);
             this.groupBox2.Controls.Add(this.btnMerge);
-            this.groupBox2.Controls.Add(this.btnConfirm);
             this.groupBox2.Controls.Add(this.btnDelete);
             this.groupBox2.Location = new System.Drawing.Point(7, 195);
             this.groupBox2.Name = "groupBox2";
@@ -313,19 +307,9 @@
             this.btnMerge.UseVisualStyleBackColor = true;
             this.btnMerge.Click += new System.EventHandler(this.btnMerge_Click);
             // 
-            // btnConfirm
-            // 
-            this.btnConfirm.Location = new System.Drawing.Point(9, 29);
-            this.btnConfirm.Name = "btnConfirm";
-            this.btnConfirm.Size = new System.Drawing.Size(81, 23);
-            this.btnConfirm.TabIndex = 4;
-            this.btnConfirm.Text = "Confirm";
-            this.btnConfirm.UseVisualStyleBackColor = true;
-            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
-            // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(101, 29);
+            this.btnDelete.Location = new System.Drawing.Point(10, 29);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(81, 23);
             this.btnDelete.TabIndex = 3;
@@ -454,15 +438,11 @@
             // 
             // gbSimulationOverview
             // 
-            this.gbSimulationOverview.Controls.Add(this.listBox1);
-            this.gbSimulationOverview.Controls.Add(this.label10);
-            this.gbSimulationOverview.Controls.Add(this.label9);
+            this.gbSimulationOverview.Controls.Add(this.lbLobbyOverview);
             this.gbSimulationOverview.Controls.Add(this.lblCustSentAwayInfo);
             this.gbSimulationOverview.Controls.Add(this.lblServedCustomersInfo);
             this.gbSimulationOverview.Controls.Add(this.lblRunTimeCounter);
             this.gbSimulationOverview.Controls.Add(this.label1);
-            this.gbSimulationOverview.Controls.Add(this.label5);
-            this.gbSimulationOverview.Controls.Add(this.label4);
             this.gbSimulationOverview.Controls.Add(this.lblCustSentAway);
             this.gbSimulationOverview.Controls.Add(this.lblServedCustomers);
             this.gbSimulationOverview.Controls.Add(this.lblRunTime);
@@ -473,31 +453,13 @@
             this.gbSimulationOverview.TabStop = false;
             this.gbSimulationOverview.Text = "Simulation Overview";
             // 
-            // listBox1
+            // lbLobbyOverview
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(18, 197);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(235, 95);
-            this.listBox1.TabIndex = 10;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(138, 135);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 13);
-            this.label10.TabIndex = 9;
-            this.label10.Text = "label10";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(138, 108);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 13);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "label9";
+            this.lbLobbyOverview.FormattingEnabled = true;
+            this.lbLobbyOverview.Location = new System.Drawing.Point(18, 197);
+            this.lbLobbyOverview.Name = "lbLobbyOverview";
+            this.lbLobbyOverview.Size = new System.Drawing.Size(235, 95);
+            this.lbLobbyOverview.TabIndex = 10;
             // 
             // lblCustSentAwayInfo
             // 
@@ -534,24 +496,6 @@
             this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Lobby overview";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 135);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "label5";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 108);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "label4";
             // 
             // lblCustSentAway
             // 
@@ -715,7 +659,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnUnmerge;
         private System.Windows.Forms.Button btnMerge;
-        private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.RadioButton rbSize4;
         private System.Windows.Forms.RadioButton rbSize2;
@@ -735,21 +678,17 @@
         private System.Windows.Forms.Label lblLunchDuration;
         private System.Windows.Forms.NumericUpDown nudCustomerFlow;
         private System.Windows.Forms.GroupBox gbSimulationOverview;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblCustSentAway;
         private System.Windows.Forms.Label lblServedCustomers;
         private System.Windows.Forms.Label lblRunTime;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblCustSentAwayInfo;
         private System.Windows.Forms.Label lblServedCustomersInfo;
         private System.Windows.Forms.Label lblRunTimeCounter;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox gbStartStopPause;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lbLobbyOverview;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblPeakHourInfo;
         private System.Windows.Forms.Button btnNone;
