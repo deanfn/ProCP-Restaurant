@@ -353,6 +353,10 @@ namespace RestaurantSimulation
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;
             groupBox3.Enabled = true;
+            saveAsToolStripMenuItem.Enabled = true;
+            saveToolStripMenuItem.Enabled = true;
+            saveSimulationDataToolStripMenuItem.Enabled = true;
+            openToolStripMenuItem.Enabled = true;
 
             listBox1.Items.Clear();
 
