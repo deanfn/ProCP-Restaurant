@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     class SpecialAreas : Component
     {
         // List of spots
@@ -40,6 +41,14 @@ namespace RestaurantSimulation
             }
 
             return false;
+        }
+
+        /* Clears the static list in the child classes and populates
+         * the list with previously saved tables.
+         * It is up to the child classes to provide implementation */
+        public virtual void LoadTableList(List<Component> tables)
+        {
+
         }
 
         // Implementation is not necessary. Areas don't have IDs.

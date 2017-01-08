@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lblPeakHourInfo = new System.Windows.Forms.Label();
             this.nudCustomerFlow = new System.Windows.Forms.NumericUpDown();
             this.nudDinnerDuration = new System.Windows.Forms.NumericUpDown();
             this.nudLunchDuration = new System.Windows.Forms.NumericUpDown();
@@ -50,6 +51,7 @@
             this.rbSize2 = new System.Windows.Forms.RadioButton();
             this.TableSizelbl = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnNone = new System.Windows.Forms.Button();
             this.btnBar = new System.Windows.Forms.Button();
             this.btnGroupA = new System.Windows.Forms.Button();
             this.btnSmokingA = new System.Windows.Forms.Button();
@@ -73,8 +75,12 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
-            this.lblPeakHourInfo = new System.Windows.Forms.Label();
-            this.btnNone = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveSimulationDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCustomerFlow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDinnerDuration)).BeginInit();
@@ -84,6 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.restaurantPlan)).BeginInit();
             this.gbSimulationOverview.SuspendLayout();
             this.gbStartStopPause.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -99,12 +106,22 @@
             this.groupBox3.Controls.Add(this.lblPeakHours);
             this.groupBox3.Controls.Add(this.PeakHourlbl);
             this.groupBox3.Controls.Add(this.CustomerFlowlbl);
-            this.groupBox3.Location = new System.Drawing.Point(7, 312);
+            this.groupBox3.Location = new System.Drawing.Point(7, 334);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(273, 173);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Restaurant properties";
+            // 
+            // lblPeakHourInfo
+            // 
+            this.lblPeakHourInfo.AutoSize = true;
+            this.lblPeakHourInfo.Location = new System.Drawing.Point(11, 115);
+            this.lblPeakHourInfo.Name = "lblPeakHourInfo";
+            this.lblPeakHourInfo.Size = new System.Drawing.Size(83, 13);
+            this.lblPeakHourInfo.TabIndex = 12;
+            this.lblPeakHourInfo.Text = "lblPeakHourInfo";
+            this.lblPeakHourInfo.Visible = false;
             // 
             // nudCustomerFlow
             // 
@@ -249,7 +266,7 @@
             this.groupBox2.Controls.Add(this.btnMerge);
             this.groupBox2.Controls.Add(this.btnConfirm);
             this.groupBox2.Controls.Add(this.btnDelete);
-            this.groupBox2.Location = new System.Drawing.Point(7, 173);
+            this.groupBox2.Location = new System.Drawing.Point(7, 195);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(189, 133);
             this.groupBox2.TabIndex = 4;
@@ -358,12 +375,22 @@
             this.groupBox1.Controls.Add(this.btnTable);
             this.groupBox1.Controls.Add(this.rbSize2);
             this.groupBox1.Controls.Add(this.TableSizelbl);
-            this.groupBox1.Location = new System.Drawing.Point(10, 2);
+            this.groupBox1.Location = new System.Drawing.Point(10, 24);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(189, 165);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Component menu";
+            // 
+            // btnNone
+            // 
+            this.btnNone.Location = new System.Drawing.Point(101, 26);
+            this.btnNone.Name = "btnNone";
+            this.btnNone.Size = new System.Drawing.Size(81, 23);
+            this.btnNone.TabIndex = 3;
+            this.btnNone.Text = "None";
+            this.btnNone.UseVisualStyleBackColor = true;
+            this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
             // 
             // btnBar
             // 
@@ -417,7 +444,7 @@
             // 
             // restaurantPlan
             // 
-            this.restaurantPlan.Location = new System.Drawing.Point(470, 12);
+            this.restaurantPlan.Location = new System.Drawing.Point(470, 34);
             this.restaurantPlan.Name = "restaurantPlan";
             this.restaurantPlan.Size = new System.Drawing.Size(680, 483);
             this.restaurantPlan.TabIndex = 6;
@@ -439,7 +466,7 @@
             this.gbSimulationOverview.Controls.Add(this.lblCustSentAway);
             this.gbSimulationOverview.Controls.Add(this.lblServedCustomers);
             this.gbSimulationOverview.Controls.Add(this.lblRunTime);
-            this.gbSimulationOverview.Location = new System.Drawing.Point(205, 2);
+            this.gbSimulationOverview.Location = new System.Drawing.Point(205, 24);
             this.gbSimulationOverview.Name = "gbSimulationOverview";
             this.gbSimulationOverview.Size = new System.Drawing.Size(259, 304);
             this.gbSimulationOverview.TabIndex = 7;
@@ -558,7 +585,7 @@
             this.gbStartStopPause.Controls.Add(this.btnStop);
             this.gbStartStopPause.Controls.Add(this.btnPause);
             this.gbStartStopPause.Controls.Add(this.btnStart);
-            this.gbStartStopPause.Location = new System.Drawing.Point(286, 312);
+            this.gbStartStopPause.Location = new System.Drawing.Point(286, 334);
             this.gbStartStopPause.Name = "gbStartStopPause";
             this.gbStartStopPause.Size = new System.Drawing.Size(178, 173);
             this.gbStartStopPause.TabIndex = 8;
@@ -595,37 +622,67 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click_1);
             // 
-            // lblPeakHourInfo
+            // menuStrip1
             // 
-            this.lblPeakHourInfo.AutoSize = true;
-            this.lblPeakHourInfo.Location = new System.Drawing.Point(11, 115);
-            this.lblPeakHourInfo.Name = "lblPeakHourInfo";
-            this.lblPeakHourInfo.Size = new System.Drawing.Size(83, 13);
-            this.lblPeakHourInfo.TabIndex = 12;
-            this.lblPeakHourInfo.Text = "lblPeakHourInfo";
-            this.lblPeakHourInfo.Visible = false;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1162, 24);
+            this.menuStrip1.TabIndex = 9;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // btnNone
+            // fileToolStripMenuItem
             // 
-            this.btnNone.Location = new System.Drawing.Point(101, 26);
-            this.btnNone.Name = "btnNone";
-            this.btnNone.Size = new System.Drawing.Size(81, 23);
-            this.btnNone.TabIndex = 3;
-            this.btnNone.Text = "None";
-            this.btnNone.UseVisualStyleBackColor = true;
-            this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.saveSimulationDataToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // saveSimulationDataToolStripMenuItem
+            // 
+            this.saveSimulationDataToolStripMenuItem.Name = "saveSimulationDataToolStripMenuItem";
+            this.saveSimulationDataToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.saveSimulationDataToolStripMenuItem.Text = "Save Simulation Data";
+            this.saveSimulationDataToolStripMenuItem.Click += new System.EventHandler(this.saveSimulationDataToolStripMenuItem_Click);
             // 
             // RestaurantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1162, 494);
+            this.ClientSize = new System.Drawing.Size(1162, 523);
             this.Controls.Add(this.gbStartStopPause);
             this.Controls.Add(this.gbSimulationOverview);
             this.Controls.Add(this.restaurantPlan);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "RestaurantForm";
             this.Text = "Restaurant simulator";
             this.groupBox3.ResumeLayout(false);
@@ -640,7 +697,10 @@
             this.gbSimulationOverview.ResumeLayout(false);
             this.gbSimulationOverview.PerformLayout();
             this.gbStartStopPause.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -693,6 +753,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblPeakHourInfo;
         private System.Windows.Forms.Button btnNone;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveSimulationDataToolStripMenuItem;
     }
 }
 

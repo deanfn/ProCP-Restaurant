@@ -7,21 +7,22 @@ using System.Drawing;
 using System.Timers;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace RestaurantSimulation
 {
     enum TimeOfDay { afternoon, evening }
 
+    [Serializable]
     sealed class RestaurantPlan
     {
         private static readonly RestaurantPlan instance = new RestaurantPlan();
         private List<Component> componentOnPlan;
-        //private RestaurantForm restaurantPlan;
 
         //Properties for simulation running
         private List<CustomerGroup> customerList;
-        private List<CustomerGroup> lobbyList;
-        //private bool simulation;
 
         // Lobby object. Note the Lobby class is singleton, only one object can exists.
         private Lobby lobby;
@@ -32,18 +33,22 @@ namespace RestaurantSimulation
 
         // Fields that keep track of all the data that later can be saved.
         private int customersSendAway;
-        private TimeSpan simulationRunTime;
         private int servedCustomers;
 
         // Timer and stopwatch
+        [NonSerialized]
         private Timer totalTimer, secondsTimer;
+        [NonSerialized]
         private Stopwatch stopWatch;
 
+        // Indicates whether a simulation is paused or not
+        private bool pauseSim;
+
         public int ServedCustomers { get { return servedCustomers; } }
+
         public int CustomersSendAway { get { return customersSendAway; } }
 
         // Property to get the instance
-
         public static RestaurantPlan Instance
         {
             get
@@ -58,16 +63,16 @@ namespace RestaurantSimulation
         {
         }
 
-        private RestaurantPlan(/*RestaurantForm rf*/)
+        private RestaurantPlan()
         {
             componentOnPlan = new List<Component>();
+            customerList = new List<CustomerGroup>();
 
             lobby = Lobby.Instance;
-            simulationRunTime = new TimeSpan();
             stopWatch = new Stopwatch();
             totalTimer = new Timer();
             secondsTimer = new Timer();
-            //this.restaurantPlan = rf;
+            pauseSim = false;
         }
 
         public bool AddComponent(Point coordinates, int type, int size)
@@ -484,43 +489,66 @@ namespace RestaurantSimulation
                 {
                     (waitingAreaTable as Table).SeatCustomersAtTable(group);
                 }
-                else if (lobby.AddCustGroupToLobby(group))
+                else if (!lobby.AddCustGroupToLobby(group))
                 {
-                    lobbyList.Add(group);
-                    //restaurantPlan.LobbyOverview(lobbyList);
+                    return false;
                 }
-                else return false;
             }
 
             return true;
         }
 
-        /* The interval of the timer depends on the custFlow parameter. After the interval elapse
-         * new custgroup will be generated. */
+        /* This method starts/resumes a simulation. The interval of the timer depends on the custFlow parameter.
+         * After the interval elapse new custgroup will be generated. */
         public string StartSimulation(int custFlow, int lunchTime, int dinnerTime, bool peakHour, bool runSimulation)
         {
             var tablesCount = componentOnPlan.Count(c => c is Table);
 
             if (tablesCount >= 1)
             {
-                lobbyList = new List<CustomerGroup>();
-                customerList = new List<CustomerGroup>();
-                lobby.NewLoby();
+                if (!pauseSim)
+                {
+                    customersSendAway = 0;
+                    servedCustomers = 0;
 
-                customersSendAway = 0;
-                servedCustomers = 0;
+                    stopWatch.Reset();
 
-                totalTimer.AutoReset = true;
-                totalTimer.Elapsed += TotalTimer_Elapsed;
+                    totalTimer.AutoReset = true;
+                    totalTimer.Elapsed += TotalTimer_Elapsed;
+
+                    secondsTimer.AutoReset = true;
+                    secondsTimer.Interval = 1000;
+                    secondsTimer.Elapsed += SecondsTimer_Elapsed;
+                }
+                else
+                {
+                    var takenTables = componentOnPlan.FindAll(t => t is Table && !(t as Table).Available && !(t as Table).OnWA);
+                    var waitingTables = componentOnPlan.FindAll(t => t is Table && !(t as Table).Available && (t as Table).OnWA);
+
+                    for (int i = 0; i < takenTables.Count; i++)
+                    {
+                        (takenTables[i] as Table).Customers.StartEating();
+                    }
+
+                    for (int i = 0; i < waitingTables.Count; i++)
+                    {
+                        (waitingTables[i] as Table).Customers.Wait();
+                    }
+
+                    foreach (var custGroup in lobby.GetGroupsInLobby())
+                    {
+                        custGroup.Wait();
+                    }
+                }
+
                 if (!peakHour)
                 {
                     totalTimer.Interval = custFlow * 1000;
                 }
-                else totalTimer.Interval = 500;
-
-                secondsTimer.AutoReset = true;
-                secondsTimer.Interval = 1000;
-                secondsTimer.Elapsed += SecondsTimer_Elapsed;
+                else
+                {
+                    totalTimer.Interval = 500;
+                }
 
                 lunchDuration = lunchTime;
                 dinnerDuration = dinnerTime;
@@ -568,16 +596,12 @@ namespace RestaurantSimulation
                     {
                         var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
                         (t as Table).TableSize >= lobbyGroups[j].GroupSize && !(t as Table).OnWA);
-                        int groupIndex = lobbyList.FindIndex(i => i.ID == lobbyGroups[j].ID);
 
                         if (availableTable != null)
                         {
                             (availableTable as Table).SeatCustomersAtTable(lobbyGroups[j]);
                             customerList.Add(lobbyGroups[j]);
                             lobby.RemoveCustGroupFromLobby(lobbyGroups[j]);
-                            lobbyList.RemoveAt(groupIndex);
-                            //restaurantPlan.LobbyOverview(lobbyList);
-
                         }
                     }
                 }
@@ -601,10 +625,27 @@ namespace RestaurantSimulation
             totalTimer.Stop();
             stopWatch.Stop();
 
+            foreach (var customer in customerList)
+            {
+                if (customer != null)
+                    customer.ClearTimers();
+            }
+
+            pauseSim = true;
+
             if (!pause)
             {
-                simulationRunTime = stopWatch.Elapsed;
-                stopWatch.Reset();
+                customerList.Clear();
+                lobby.ClearLobby();
+
+                var tables = componentOnPlan.FindAll(table => table is Table && !(table as Table).Available);
+
+                for (int i = 0; i < tables.Count; i++)
+                {
+                    (tables[i] as Table).ClearTable();
+                }
+
+                pauseSim = false;
             }
         }
 
@@ -613,7 +654,7 @@ namespace RestaurantSimulation
         {
             var inLobby = lobby.GetGroupsInLobby().Find(gr => gr.Equals(group));
             var atWaitingTable = componentOnPlan.Find(t => t is Table && (t as Table).OnWA &&
-            (t as Table).Customers.Equals(group));
+            (t as Table).Customers != null && (t as Table).Customers.Equals(group));
 
             if (inLobby != null)
             {
@@ -632,7 +673,7 @@ namespace RestaurantSimulation
             var table = componentOnPlan.Find(t => t is Table && !(t as Table).Available && !(t as Table).OnWA &&
             (t as Table).Customers.Equals(group));
 
-            if (table != null && (table as Table).Customers != null)
+            if (table != null && (table as Table).Customers != null && customerList.Count > 0)
             {
                 customerList.Remove(group);
                 servedCustomers += (table as Table).Customers.GroupSize;
@@ -642,7 +683,131 @@ namespace RestaurantSimulation
 
         public List<CustomerGroup> LobbyCustomers()
         {
-            return lobbyList;
+            return lobby.GetGroupsInLobby();
         }
+
+        public TimeSpan GetSimulationRunTime()
+        {
+            return stopWatch.Elapsed;
+        }
+
+        // Save stats to a text file.
+        public string ExportStatistics()
+        {
+            return String.Format("Served customers: {0}{1}Customers sent away: {2}{3}Time simulation ran: {4}",
+                servedCustomers, Environment.NewLine, customersSendAway, Environment.NewLine,
+                GetSimulationRunTime().ToString(@"hh\:mm\:ss"));
+        }
+
+        public string SaveSimulation(string filename)
+        {
+            Stream stream = new FileStream(filename, FileMode.Create, FileAccess.Write);
+
+            try
+            {
+                IFormatter formatter = new BinaryFormatter();
+
+                formatter.Serialize(stream, Instance);
+
+                return "Simulation successfully saved!";
+            }
+            catch (SerializationException ex)
+            {
+                return String.Format("Serialization failed: {0}", ex.Message);
+            }
+            finally
+            {
+                stream.Dispose();
+            }
+        }
+
+        public string LoadSimulation(string filename)
+        {
+            Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+
+            try
+            {
+                IFormatter formatter = new BinaryFormatter();
+
+                RestaurantPlan save = (RestaurantPlan)formatter.Deserialize(stream);
+
+                // Clear all the lists
+                customerList.Clear();
+                componentOnPlan.Clear();
+                lobby.ClearLobby();
+
+
+                // Populate all the lists with the saved objects
+                LoadComponents(save.componentOnPlan);
+
+                var groupArea = save.componentOnPlan.FirstOrDefault(c => c is GroupArea);
+                var gaTables = save.componentOnPlan.FindAll(t => t is Table && (t as Table).OnGA);
+                LoadGroupAreaTables(groupArea, gaTables);
+
+                var sma = save.componentOnPlan.FirstOrDefault(c => c is SmokeArea);
+                var smaTables = save.componentOnPlan.FindAll(t => t is Table && (t as Table).OnSA);
+                LoadSmokingAreaTables(sma, smaTables);
+
+                var wa = save.componentOnPlan.FirstOrDefault(c => c is WaitingArea);
+                var waTables = save.componentOnPlan.FindAll(t => t is Table && (t as Table).OnWA);
+                LoadWaitingAreaTables(wa, waTables);
+
+                return "Simulation loaded successfully";
+            }
+            catch (SerializationException ex)
+            {
+                return String.Format("Deserialization failed: {1}", ex.Message);
+            }
+            finally
+            {
+                stream.Dispose();
+            }
+        }
+
+        // Assigns back the timers and stopwatch to the RestaurantPlan instance.
+        [OnDeserialized]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            stopWatch = new Stopwatch();
+            totalTimer = new Timer();
+            secondsTimer = new Timer();
+        }
+
+        // Method for loading all the components from a saved file.
+        private void LoadComponents(List<Component> allComponents)
+        {
+            for (int i = 0; i < allComponents.Count; i++)
+            {
+                componentOnPlan.Add(allComponents[i]);
+            }
+        }
+
+        // Loads the tables in the group area.
+        private void LoadGroupAreaTables(Component ga, List<Component> tables)
+        {
+            if (ga != null)
+            {
+                (ga as GroupArea).LoadTableList(tables);
+            }
+        }
+
+        // Loads the tables in the smoking area.
+        private void LoadSmokingAreaTables(Component sma, List<Component> tables)
+        {
+            if (sma != null)
+            {
+                (sma as SmokeArea).LoadTableList(tables);
+            }
+        }
+
+        // Loads the tables in the waiting area.
+        private void LoadWaitingAreaTables(Component wa, List<Component> tables)
+        {
+            if (wa != null)
+            {
+                (wa as WaitingArea).LoadTableList(tables);
+            }
+        }
+
     }
 }

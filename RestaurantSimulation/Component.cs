@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     abstract class Component
     {
         //Properties to Get X and Y Location

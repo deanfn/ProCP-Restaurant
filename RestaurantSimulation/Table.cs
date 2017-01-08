@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     class Table : Component
     {
         private static int count = 0;

@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     class Spot
     {
         public bool Free { get; set; }

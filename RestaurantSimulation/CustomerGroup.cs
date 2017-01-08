@@ -4,22 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Runtime.Serialization;
 
 namespace RestaurantSimulation
 {
     enum mealType { lunch, dinner, drinks };
 
+    [Serializable]
     class CustomerGroup
     {
         private mealType? meal = null;
+
+        [NonSerialized]
         private Timer t, wait;
         private static int id = 0;
-        //private RestaurantPlan restaurantPlan;
+
+        // Fields for the lunch and dinner times.
+        private int lunchTime;
+        private int dinnerTime;
 
         public int ID { get; set; }
         public int GroupSize { get; set; }
 
-        public CustomerGroup(int gSize, int dinnerT, int lunchT/*, RestaurantPlan rp*/)
+        public CustomerGroup(int gSize, int dinnerT, int lunchT)
         {
             id++;
             /* When a group of customers come to the restaurant it will be assigned an ID,
@@ -28,18 +35,21 @@ namespace RestaurantSimulation
             this.ID = id;
             this.GroupSize = gSize;
             this.meal = DinnerOrLunch(meal);
-            //this.restaurantPlan = rp;
+            lunchTime = lunchT;
+            dinnerTime = dinnerT;
+
             t = new Timer(SetInterval(meal,dinnerT,lunchT));
             t.Elapsed += OnTimedEvent;
 
             // Timer for waiting for available table;
             wait = new Timer();
-            t.Elapsed += Leave;
+            wait.Elapsed += Leave;
         }
 
         public int SetInterval(mealType? m, int dinnerT, int lunchT)
         {
             int interval = 0;
+
             if (m == mealType.drinks || m == mealType.dinner)
             {
                 return interval = dinnerT * 1000;
@@ -71,7 +81,7 @@ namespace RestaurantSimulation
         public void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             t.Stop();
-            //restaurantPlan.FinishEating(this);
+            t.Dispose();
             RestaurantPlan.Instance.FinishEating(this);
         }
 
@@ -80,20 +90,37 @@ namespace RestaurantSimulation
         {
             Random rand = new Random();
 
-            wait.Interval = rand.Next(15, 25) * 1000;
+            wait.Interval = 10 * 1000;
             wait.Start();
         }
 
         public void StopWaiting()
         {
             wait.Stop();
+            wait.Dispose();
         }
 
         public void Leave(object sender, ElapsedEventArgs e)
         {
             StopWaiting();
-            //restaurantPlan.QuitWaiting(this);
             RestaurantPlan.Instance.QuitWaiting(this);
+        }
+
+        public void ClearTimers()
+        {
+            t.Stop();
+            wait.Stop();
+        }
+
+        // Assign the timers objects after deserialization.
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            t = new Timer(SetInterval(meal, dinnerTime, lunchTime));
+            t.Elapsed += OnTimedEvent;
+
+            wait = new Timer();
+            wait.Elapsed += Leave;
         }
 
     }

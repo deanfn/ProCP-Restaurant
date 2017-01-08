@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     class GroupArea : SpecialAreas
     {
         private static List<Component> tablesList = new List<Component>();
@@ -65,6 +66,19 @@ namespace RestaurantSimulation
             }
 
             return false;
+        }
+
+        public override void LoadTableList(List<Component> tables)
+        {
+            tablesList.Clear();
+
+            if (tables.Count != 0)
+            {
+                foreach (var table in tables)
+                {
+                    tablesList.Add(table);
+                }
+            }
         }
 
         public void RemoveTable(Component table)

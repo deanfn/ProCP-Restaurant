@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using RestaurantSimulation.Properties;
 
 namespace RestaurantSimulation
@@ -38,11 +39,12 @@ namespace RestaurantSimulation
         // Timer for redrawing the restaurant plan.
         Timer timer;
 
+        // Filepath of the saved/oopened simulation.
+        string filename;
+
         //Enum
         enum component { table, bar, groupArea, smokingArea, waitingArea, eraser, merge, unmerge };
         component? choosenComponent = null;
-
-        int hours, minutes, seconds, ms;
 
         public RestaurantForm()
         {
@@ -68,7 +70,7 @@ namespace RestaurantSimulation
             timer = new Timer();
             timer.Interval = 500;
             timer.Tick += Timer_Tick;
-            
+
 
             lblPeakHourInfo.Text = "With this mode turned on, you will generate \nnew customer group every 0.5 seconds.";
             lblCustSentAwayInfo.Text = "0";
@@ -76,16 +78,22 @@ namespace RestaurantSimulation
             lblServedCustomersInfo.Text = "0";
 
             btnNone.Enabled = false;
+
+            // Disable the Pause and Stop buttons
+            btnStop.Enabled = false;
+            btnPause.Enabled = false;
+
+            filename = null;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             restaurantPlan.Invalidate();
             LobbyOverview();
-            lblRunTimeCounter.Text = UpdateTotalTimeCounter();
+            lblRunTimeCounter.Text = newPlan.GetSimulationRunTime().ToString(@"hh\:mm\:ss");
             lblServedCustomersInfo.Text = newPlan.ServedCustomers.ToString();
             lblCustSentAwayInfo.Text = newPlan.CustomersSendAway.ToString();
-            
+
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -134,7 +142,7 @@ namespace RestaurantSimulation
         private void btnBar_Click(object sender, EventArgs e)
         {
             choosenComponent = component.bar;
-            btnTable.Enabled = true ;
+            btnTable.Enabled = true;
             btnBar.Enabled = false;
             btnGroupA.Enabled = true;
             btnWaitingA.Enabled = true;
@@ -165,7 +173,7 @@ namespace RestaurantSimulation
 
                 if (newPlan.AddComponent(e.Location, (int)choosenComponent, size))
                 {
-                    
+
                 }
                 else
                 {
@@ -320,6 +328,9 @@ namespace RestaurantSimulation
             newPlan.StopPauseSimulation(true);
             timer.Stop();
 
+            btnStart.Enabled = true;
+            btnStop.Enabled = false;
+            btnPause.Enabled = false;
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;
             groupBox3.Enabled = true;
@@ -335,12 +346,20 @@ namespace RestaurantSimulation
 
             lblServedCustomersInfo.Text = newPlan.ServedCustomers.ToString();
             lblCustSentAwayInfo.Text = newPlan.CustomersSendAway.ToString();
+
+            btnStart.Enabled = true;
+            btnPause.Enabled = false;
+            btnStop.Enabled = false;
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;
             groupBox3.Enabled = true;
+
             listBox1.Items.Clear();
+
+            restaurantPlan.Invalidate();
         }
 
+        // Starts the simulation or displays an error message
         private void btnStart_Click_1(object sender, EventArgs e)
         {
             int customerFlow = Convert.ToInt32(nudCustomerFlow.Value);
@@ -355,13 +374,17 @@ namespace RestaurantSimulation
             }
             else
             {
+                btnStart.Enabled = false;
+                btnPause.Enabled = true;
+                btnStop.Enabled = true;
                 groupBox1.Enabled = false;
                 groupBox2.Enabled = false;
                 groupBox3.Enabled = false;
-                hours = 0;
-                minutes =0;
-                seconds=0;
-                ms = 0;
+                saveAsToolStripMenuItem.Enabled = false;
+                saveToolStripMenuItem.Enabled = false;
+                saveSimulationDataToolStripMenuItem.Enabled = false;
+                openToolStripMenuItem.Enabled = false;
+
                 timer.Start();
             }
         }
@@ -380,7 +403,7 @@ namespace RestaurantSimulation
                 nudCustomerFlow.Enabled = true;
                 lblPeakHourOption.Text = "Off";
             }
-              
+
         }
 
         private void btnNone_Click(object sender, EventArgs e)
@@ -405,25 +428,83 @@ namespace RestaurantSimulation
                 listBox1.Items.Add("Group ID: " + lobby[i].ID + " Group size: " + lobby[i].GroupSize);
             }
         }
-        private string UpdateTotalTimeCounter()
+
+        private void saveSimulationDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ms += 5;
-            if(ms == 10)
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            
+            saveDialog.DefaultExt = "txt";
+            saveDialog.Filter = "Text files (*.txt)|*.txt";
+            var result = saveDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
             {
-                ms = 0;
-                seconds += 1;
-                if(seconds==60)
+                File.WriteAllText(saveDialog.FileName, newPlan.ExportStatistics());
+            }
+        }
+
+        // Saves the simulation in a binary file.
+        private void SaveSimulation()
+        {
+            if (filename == null)
+            {
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                DialogResult result;
+
+                saveDialog.DefaultExt = "bin";
+                saveDialog.Filter = "Binary files (*.bin)|*.bin";
+                saveDialog.FileName = filename;
+
+                result = saveDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
                 {
-                    seconds = 0;
-                    minutes += 1;
-                    if(minutes == 60)
-                    {
-                        minutes = 0;
-                        hours += 1;
-                    }
+                    filename = saveDialog.FileName;
+                }
+                else
+                {
+                    return;
                 }
             }
-            return hours + ":" + minutes.ToString().PadLeft(2, '0') + ":" + seconds.ToString().PadLeft(2, '0');
+
+            string msg = newPlan.SaveSimulation(filename);
+            MessageBox.Show(msg);
         }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveSimulation();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveSimulation();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!newPlan.Empty())
+            {
+                var result = MessageBox.Show("Would you like to save the current simulation?", "Save", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    SaveSimulation();
+                }
+            }
+
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.DefaultExt = "bin";
+            openFile.Filter = "Binary files (*.bin)|*.bin";
+            var returned = openFile.ShowDialog();
+
+            if (returned == DialogResult.OK)
+            {
+                string msg = newPlan.LoadSimulation(openFile.FileName);
+                restaurantPlan.Invalidate();
+                MessageBox.Show(msg);
+            }
+        }
+
     }
 }

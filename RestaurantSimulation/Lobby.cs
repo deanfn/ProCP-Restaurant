@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     sealed class Lobby
     {
         private static readonly Lobby instance = new Lobby();
@@ -33,9 +34,12 @@ namespace RestaurantSimulation
         static Lobby()
         {
         }
-        public void NewLoby()
+
+        // Clears the lobby list. This method is used when a new simulation is starting.
+        public void ClearLobby()
         {
-            customers = new List<CustomerGroup>();
+            customers.Clear();
+            Size = 0;
         }
 
         public bool AddCustGroupToLobby(CustomerGroup group)

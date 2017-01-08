@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     class WaitingArea : SpecialAreas
     {
         private const int maxTables = 6;
@@ -26,6 +27,19 @@ namespace RestaurantSimulation
             }
 
             return false;
+        }
+
+        public override void LoadTableList(List<Component> tables)
+        {
+            tablesList.Clear();
+
+            if (tables.Count != 0)
+            {
+                foreach (var table in tables)
+                {
+                    tablesList.Add(table);
+                }
+            }
         }
 
         public override void Draw(Graphics g)

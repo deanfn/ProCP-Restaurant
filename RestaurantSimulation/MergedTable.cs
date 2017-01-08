@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     class MergedTable : Table
     {
         private static int count = 0;
