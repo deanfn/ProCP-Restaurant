@@ -180,7 +180,7 @@ namespace RestaurantSimulation
                 }
             }
 
-            return componentOnPlan.Find(t => (t is Table && t.X == x && t.Y == y));
+            return componentOnPlan.Find(t => (((t is Table)||(t is Bar)) && t.X == x && t.Y == y));
         }
 
         /* Checks whether two points are within a Group area and if they are
