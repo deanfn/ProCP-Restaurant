@@ -76,6 +76,8 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveSimulationDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblDrinkDuration = new System.Windows.Forms.Label();
+            this.nudDrinkDuration = new System.Windows.Forms.NumericUpDown();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCustomerFlow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDinnerDuration)).BeginInit();
@@ -86,14 +88,17 @@
             this.gbSimulationOverview.SuspendLayout();
             this.gbStartStopPause.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDrinkDuration)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.lblPeakHourInfo);
             this.groupBox3.Controls.Add(this.nudCustomerFlow);
+            this.groupBox3.Controls.Add(this.nudDrinkDuration);
             this.groupBox3.Controls.Add(this.nudDinnerDuration);
             this.groupBox3.Controls.Add(this.nudLunchDuration);
+            this.groupBox3.Controls.Add(this.lblDrinkDuration);
             this.groupBox3.Controls.Add(this.lblDinnerDuration);
             this.groupBox3.Controls.Add(this.lblLunchDuration);
             this.groupBox3.Controls.Add(this.cbPeakHour);
@@ -111,7 +116,7 @@
             // lblPeakHourInfo
             // 
             this.lblPeakHourInfo.AutoSize = true;
-            this.lblPeakHourInfo.Location = new System.Drawing.Point(11, 115);
+            this.lblPeakHourInfo.Location = new System.Drawing.Point(9, 145);
             this.lblPeakHourInfo.Name = "lblPeakHourInfo";
             this.lblPeakHourInfo.Size = new System.Drawing.Size(83, 13);
             this.lblPeakHourInfo.TabIndex = 12;
@@ -615,6 +620,37 @@
             this.saveSimulationDataToolStripMenuItem.Text = "Save Simulation Data";
             this.saveSimulationDataToolStripMenuItem.Click += new System.EventHandler(this.saveSimulationDataToolStripMenuItem_Click);
             // 
+            // lblDrinkDuration
+            // 
+            this.lblDrinkDuration.AutoSize = true;
+            this.lblDrinkDuration.Location = new System.Drawing.Point(129, 116);
+            this.lblDrinkDuration.Name = "lblDrinkDuration";
+            this.lblDrinkDuration.Size = new System.Drawing.Size(78, 13);
+            this.lblDrinkDuration.TabIndex = 8;
+            this.lblDrinkDuration.Text = "Drink Duration:";
+            // 
+            // nudDrinkDuration
+            // 
+            this.nudDrinkDuration.Location = new System.Drawing.Point(218, 114);
+            this.nudDrinkDuration.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.nudDrinkDuration.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudDrinkDuration.Name = "nudDrinkDuration";
+            this.nudDrinkDuration.Size = new System.Drawing.Size(51, 20);
+            this.nudDrinkDuration.TabIndex = 10;
+            this.nudDrinkDuration.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
             // RestaurantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -643,6 +679,7 @@
             this.gbStartStopPause.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDrinkDuration)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -698,6 +735,8 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveSimulationDataToolStripMenuItem;
+        private System.Windows.Forms.NumericUpDown nudDrinkDuration;
+        private System.Windows.Forms.Label lblDrinkDuration;
     }
 }
 

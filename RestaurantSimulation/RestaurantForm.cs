@@ -369,8 +369,9 @@ namespace RestaurantSimulation
             int customerFlow = Convert.ToInt32(nudCustomerFlow.Value);
             int lunchTime = Convert.ToInt32(nudLunchDuration.Value);
             int dinnerTime = Convert.ToInt32(nudDinnerDuration.Value);
+            int drinkTime = Convert.ToInt32(nudDrinkDuration.Value);
             bool peakHourOption = cbPeakHour.Checked ? true : false;
-            string message = newPlan.StartSimulation(customerFlow, lunchTime, dinnerTime, peakHourOption, true);
+            string message = newPlan.StartSimulation(customerFlow, lunchTime, dinnerTime,drinkTime, peakHourOption, true);
 
             if (message != null)
             {

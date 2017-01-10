@@ -21,6 +21,7 @@ namespace RestaurantSimulation
         private static readonly RestaurantPlan instance = new RestaurantPlan();
         private List<Component> componentOnPlan;
 
+
         //Properties for simulation running
         private List<CustomerGroup> customerList;
 
@@ -30,6 +31,7 @@ namespace RestaurantSimulation
         // Fields to store the duration of the lunch and dinner respectively.
         private int lunchDuration;
         private int dinnerDuration;
+        private int drinkDuration;
 
         // Fields that keep track of all the data that later can be saved.
         private int customersSendAway;
@@ -457,23 +459,9 @@ namespace RestaurantSimulation
         }
 
         // Creates a Customer group on TimerTick.
-        private CustomerGroup GenerateGroup(int dinnerTime, int lunchTime)
+        private CustomerGroup GenerateGroup(int dinnerTime, int lunchTime, int drinkTime)
         {
-            Random r = new Random();
-            int size = 0;
-
-            /* If the number is less or equal to 10 the group will be with size 1 to 4 people,
-             * else the group will be larger, up to 16 people. */
-            if (r.Next(1, 11) <= 10)
-            {
-            size = r.Next(1, 5);
-            }
-            else
-            {
-                size = r.Next(5, 17);
-            }
-
-            var custGroup = new CustomerGroup(size, dinnerTime, lunchTime);
+            var custGroup = new CustomerGroup(dinnerTime, lunchTime,drinkTime);
 
             return custGroup;
         }
@@ -483,35 +471,66 @@ namespace RestaurantSimulation
         {
             var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
             (t as Table).TableSize >= group.GroupSize && !(t as Table).OnWA);
+            var availableBar = componentOnPlan.Find(c=> c is Bar&&(c as Bar).Available && (c as Bar).GetSize() >= group.GroupSize);
 
-            if (availableTable != null)
+            if (group.MealT != mealType.drinks)
             {
-                (availableTable as Table).SeatCustomersAtTable(group);
-                customerList.Add(group);
+                if (availableTable != null)
+                {
+                    (availableTable as Table).SeatCustomersAtTable(group);
+                    customerList.Add(group);
+                }
+                else
+                {
+                    // Check if there are any available waiting area tables.
+                    var waitingAreaTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+                    (t as Table).TableSize >= group.GroupSize && (t as Table).OnWA);
+
+                    // If there is no table on waiting area for the group place group in the lobby.
+                    if (waitingAreaTable != null)
+                    {
+                        (waitingAreaTable as Table).SeatCustomersAtTable(group);
+                    }
+                    else if (!lobby.AddCustGroupToLobby(group))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
             else
             {
-                // Check if there are any available waiting area tables.
-                var waitingAreaTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
-                (t as Table).TableSize >= group.GroupSize && (t as Table).OnWA);
+                if (availableBar != null)
+                {
+                    (availableBar as Bar).SeatCustomersAtTable(group);
+                    customerList.Add(group);
+                }
+                else
+                {
+                    // Check if there are any available waiting area tables.
+                    var waitingAreaTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+                    (t as Table).TableSize >= group.GroupSize && (t as Table).OnWA);
 
-                // If there is no table on waiting area for the group place group in the lobby.
-                if (waitingAreaTable != null)
-                {
-                    (waitingAreaTable as Table).SeatCustomersAtTable(group);
+                    // If there is no table on waiting area for the group place group in the lobby.
+                    if (waitingAreaTable != null)
+                    {
+                        (waitingAreaTable as Table).SeatCustomersAtTable(group);
+                    }
+                    else if (!lobby.AddCustGroupToLobby(group))
+                    {
+                        return false;
+                    }
                 }
-                else if (!lobby.AddCustGroupToLobby(group))
-                {
-                    return false;
-                }
+
+                return true;
             }
 
-            return true;
         }
 
         /* This method starts/resumes a simulation. The interval of the timer depends on the custFlow parameter.
          * After the interval elapse new custgroup will be generated. */
-        public string StartSimulation(int custFlow, int lunchTime, int dinnerTime, bool peakHour, bool runSimulation)
+        public string StartSimulation(int custFlow, int lunchTime, int dinnerTime,int drinkTime, bool peakHour, bool runSimulation)
         {
             var tablesCount = componentOnPlan.Count(c => c is Table);
 
@@ -563,6 +582,7 @@ namespace RestaurantSimulation
 
                 lunchDuration = lunchTime;
                 dinnerDuration = dinnerTime;
+                drinkDuration = drinkTime;
 
                 stopWatch.Start();
                 totalTimer.Start();
@@ -623,7 +643,7 @@ namespace RestaurantSimulation
         // This is executed everytime the timer interval elapses.
         private void TotalTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var generatedGroup = GenerateGroup(dinnerDuration, lunchDuration);
+            var generatedGroup = GenerateGroup(dinnerDuration, lunchDuration,drinkDuration);
 
             if (!CheckForFreeTable(generatedGroup))
             {
@@ -650,10 +670,15 @@ namespace RestaurantSimulation
                 lobby.ClearLobby();
 
                 var tables = componentOnPlan.FindAll(table => table is Table && !(table as Table).Available);
+                var bars = componentOnPlan.FindAll(bar => bar is Bar && !(bar as Bar).Available);
 
                 for (int i = 0; i < tables.Count; i++)
                 {
                     (tables[i] as Table).ClearTable();
+                }
+                for (int i = 0; i < bars.Count; i++)
+                {
+                    (bars[i] as Bar).ClearBar();
                 }
 
                 pauseSim = false;
@@ -689,6 +714,18 @@ namespace RestaurantSimulation
                 customerList.Remove(group);
                 servedCustomers += (table as Table).Customers.GroupSize;
                 (table as Table).ClearTable();
+            }
+        }
+        public void FinishDrinking(CustomerGroup group)
+        {
+            var bar = componentOnPlan.Find(c => c is Bar && !(c as Bar).Available &&
+            (c as Bar).Customers.Equals(group));
+
+            if (bar != null && (bar as Bar).Customers != null && customerList.Count > 0)
+            {
+                customerList.Remove(group);
+                servedCustomers += (bar as Bar).Customers.GroupSize;
+                (bar as Bar).ClearBar();
             }
         }
 
