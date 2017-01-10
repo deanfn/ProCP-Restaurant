@@ -14,11 +14,10 @@ namespace RestaurantSimulation
     class CustomerGroup
     {
         private mealType? meal = null;
-
+        private Random r = new Random();
         [NonSerialized]
         private Timer t, wait;
         private static int id = 0;
-
         // Fields for the lunch and dinner times.
         private int lunchTime;
         private int dinnerTime;
@@ -40,7 +39,7 @@ namespace RestaurantSimulation
              * the ID will remain until a table becomes available. */
             this.ID = id;
             this.meal = DinnerOrLunch(meal);
-            this.GroupSize = GenerateGroupSize(meal);    
+            this.GroupSize = GenerateGroupSize(meal);
             lunchTime = lunchT;
             dinnerTime = dinnerT;
             drinkTime = drinkT;
@@ -54,9 +53,9 @@ namespace RestaurantSimulation
         }
         public int GenerateGroupSize(mealType? m)
         {
-            Random r = new Random();
+
             int size = 0;
-            if(m!=mealType.drinks)
+            if (m != mealType.drinks)
             {
                 /* If the number is less or equal to 10 the group will be with size 1 to 4 people,
                  * else the group will be larger, up to 16 people. */
@@ -71,7 +70,7 @@ namespace RestaurantSimulation
             }
             else
             {
-                return size = r.Next(1, 5);   
+                return size = r.Next(1, 5);
             }
 
         }
@@ -79,22 +78,20 @@ namespace RestaurantSimulation
         public int SetInterval(mealType? m, int dinnerT, int lunchT, int drinkT)
         {
             int interval = 0;
-            switch(m)
-                {
+            switch (m)
+            {
                 case mealType.drinks:
                     return interval = drinkT * 1000;
                 case mealType.lunch:
                     return interval = lunchT * 1000;
                 case mealType.dinner:
                     return interval = dinnerT * 1000;
-                }
+            }
             return 0;
         }
 
         public mealType? DinnerOrLunch(mealType? m)
         {
-            Random r = new Random();
-
             switch (r.Next(1, 4))
             {
                 case 1:
@@ -128,8 +125,6 @@ namespace RestaurantSimulation
         // Waiting time is randomly generated and is between 15 and 24 seconds.
         public void Wait()
         {
-            Random rand = new Random();
-
             wait.Interval = 10 * 1000;
             wait.Start();
         }
@@ -156,7 +151,7 @@ namespace RestaurantSimulation
         [OnDeserialized]
         internal void OnDeserializedMethod(StreamingContext context)
         {
-            t = new Timer(SetInterval(meal, dinnerTime, lunchTime,drinkTime));
+            t = new Timer(SetInterval(meal, dinnerTime, lunchTime, drinkTime));
             t.Elapsed += OnTimedEvent;
 
             wait = new Timer();
