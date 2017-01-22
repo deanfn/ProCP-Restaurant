@@ -151,10 +151,10 @@ namespace RestaurantSimulation
         [OnDeserialized]
         internal void OnDeserializedMethod(StreamingContext context)
         {
-            Timer t = new Timer(SetInterval(meal, dinnerTime, lunchTime, drinkTime));
+            t = new Timer(SetInterval(meal, dinnerTime, lunchTime, drinkTime));
             t.Elapsed += OnTimedEvent;
 
-            Timer wait = new Timer();
+            wait = new Timer();
             wait.Elapsed += Leave;
         }
 

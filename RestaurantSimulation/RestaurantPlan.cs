@@ -187,27 +187,6 @@ namespace RestaurantSimulation
             return componentOnPlan.Find(t => (((t is Table) || (t is Bar)) && t.X == x && t.Y == y));
         }
 
-        /* Checks whether two points are within a Group area and if they are
-         * returns that group area, otherwise returns null. */
-        public GroupArea GetGroupArea(int x, int y)
-        {
-            // List of all group areas.
-            var groupAreas = componentOnPlan.FindAll(c => c is GroupArea);
-
-            foreach (var ga in groupAreas)
-            {
-                foreach (var point in (ga as GroupArea).Spots)
-                {
-                    if ((x == point.Coordinates.X && y == point.Coordinates.Y))
-                    {
-                        return (GroupArea)ga;
-                    }
-                }
-            }
-
-            return null;
-        }
-
         /* Checks whether two points are within a Special area and if they are
         * returns that special area, otherwise returns null. */
         public SpecialArea GetSpecialArea(int x, int y)
