@@ -364,6 +364,8 @@ namespace RestaurantSimulation
             saveToolStripMenuItem.Enabled = true;
             saveSimulationDataToolStripMenuItem.Enabled = true;
             openToolStripMenuItem.Enabled = true;
+            rbNoon.Enabled = true;
+            rbEvening.Enabled = true;
 
             lbLobbyOverview.Items.Clear();
 
@@ -398,6 +400,8 @@ namespace RestaurantSimulation
                 saveToolStripMenuItem.Enabled = false;
                 saveSimulationDataToolStripMenuItem.Enabled = false;
                 openToolStripMenuItem.Enabled = false;
+                rbEvening.Enabled = false;
+                rbNoon.Enabled = false;
 
                 timer.Start();
             }
@@ -432,7 +436,7 @@ namespace RestaurantSimulation
             btnDelete.Enabled = true;
         }
 
-        public void LobbyOverview()
+        private void LobbyOverview()
         {
             lbLobbyOverview.Items.Clear();
             var lobby = newPlan.LobbyCustomers();
