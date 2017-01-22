@@ -370,6 +370,8 @@ namespace RestaurantSimulation
             lbLobbyOverview.Items.Clear();
 
             restaurantPlan.Invalidate();
+
+            MessageBox.Show("Simulation has been stopped!");
         }
 
         // Starts the simulation or displays an error message
