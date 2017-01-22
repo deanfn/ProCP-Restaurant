@@ -16,7 +16,7 @@ namespace RestaurantSimulation
     enum TimeOfDay { afternoon, evening }
 
     [Serializable]
-    sealed class RestaurantPlan : ISerializable
+    sealed class RestaurantPlan
     {
         private static readonly RestaurantPlan instance = new RestaurantPlan();
         private List<Component> componentOnPlan;
@@ -49,6 +49,9 @@ namespace RestaurantSimulation
         public int ServedCustomers { get { return servedCustomers; } }
 
         public int CustomersSendAway { get { return customersSendAway; } }
+
+        // Time of the day. It could be noon or evening.
+        public TimeOfDay TimeOfDay { get; private set; }
 
         // Property to get the instance
         public static RestaurantPlan Instance
@@ -149,17 +152,17 @@ namespace RestaurantSimulation
                     (comp.X == c.X && comp.Y - 1 == c.Y) || (comp.X - 1 == c.X && comp.Y + 1 == c.Y) ||
                     (comp.X + 1 == c.X && comp.Y - 1 == c.Y))
                 {
-                    if (comp is Table)
-                    {
-                        (comp as Table).DecreaseCount();
-                    }
-                    else if (comp is Bar)
-                    {
-                        (comp as Bar).DecreaseCount();
-                    }
-
                     return false;
                 }
+            }
+
+            if (comp is Table)
+            {
+                (comp as Table).AssignID();
+            }
+            else if (comp is Bar)
+            {
+                (comp as Bar).AssignID();
             }
 
             componentOnPlan.Add(comp);
@@ -181,7 +184,7 @@ namespace RestaurantSimulation
                 }
             }
 
-            return componentOnPlan.Find(t => (((t is Table)||(t is Bar)) && t.X == x && t.Y == y));
+            return componentOnPlan.Find(t => (((t is Table) || (t is Bar)) && t.X == x && t.Y == y));
         }
 
         /* Checks whether two points are within a Group area and if they are
@@ -204,6 +207,7 @@ namespace RestaurantSimulation
 
             return null;
         }
+
         /* Checks whether two points are within a Special area and if they are
         * returns that special area, otherwise returns null. */
         public SpecialArea GetSpecialArea(int x, int y)
@@ -235,8 +239,6 @@ namespace RestaurantSimulation
 
         public bool RemoveComponent(Component c = null, SpecialArea sa = null)
         {
-            int ComCounter = 0;
-
             if (c != null || sa != null)
             {
                 if (c != null)
@@ -245,42 +247,15 @@ namespace RestaurantSimulation
                     {
                         if (c.X == com.X && c.Y == com.Y)
                         {
-                            if (c is Table || c is Bar || c is MergedTable || c is SpecialArea)
-                            {
-                                for (int i = ComCounter; i < componentOnPlan.Count; i++)
-                                {
-                                    if (c is Table && componentOnPlan.ElementAt(i) is Table)
-                                    {
-                                        componentOnPlan.ElementAt(i).DecreaseID();
-                                    }
-                                }
-
-                                for (int i = ComCounter; i < componentOnPlan.Count; i++)
-                                {
-                                    if (c is Bar && componentOnPlan.ElementAt(i) is Bar)
-                                    {
-                                        componentOnPlan.ElementAt(i).DecreaseID();
-                                    }
-                                }
-
-                                for (int i = ComCounter; i < componentOnPlan.Count; i++)
-                                {
-                                    if (c is MergedTable && componentOnPlan.ElementAt(i) is MergedTable)
-                                    {
-                                        componentOnPlan.ElementAt(i).DecreaseID();
-                                    }
-                                }
-                                c.DecreaseCount();
-                            }
                             if (c is Table && (c as Table).OnGA)
                             {
                                 RemoveTableFromGA(c);
                             }
+
                             componentOnPlan.Remove(c);
                             return true;
                         }
                     }
-                    ComCounter++;
                 }
                 else
                 {
@@ -371,18 +346,22 @@ namespace RestaurantSimulation
                 mergedTable = new MergedTable(location, t1, t2);
             }
 
-            var ga = GetGroupArea(mergedTable.X, mergedTable.Y);
+            var ga = GetSpecialArea(mergedTable.X, mergedTable.Y);
 
-            if (CheckCoordinates(mergedTable.Coordinates))
+            if (CheckCoordinates(mergedTable.Coordinates) && ga is GroupArea)
             {
                 componentOnPlan.Add(mergedTable);
                 (ga as GroupArea).AddTable(mergedTable);
 
                 foreach (Point p in mergedTable.Coordinates)
                 {
-                    var groupArea = GetGroupArea(p.X, p.Y);
-                    var spot = (groupArea as GroupArea).Spots.Find(s => s.Coordinates.Equals(p));
-                    spot.Free = false;
+                    var groupArea = GetSpecialArea(p.X, p.Y);
+
+                    if (groupArea is GroupArea)
+                    {
+                        var spot = (groupArea as GroupArea).Spots.Find(s => s.Coordinates.Equals(p));
+                        spot.Free = false;
+                    }
                 }
             }
             else
@@ -407,19 +386,33 @@ namespace RestaurantSimulation
             {
                 foreach (Point p in (table as MergedTable).Coordinates)
                 {
-                    var ga = GetGroupArea(p.X, p.Y);
-                    var spot = (ga as GroupArea).Spots.Find(s => s.Coordinates.Equals(p));
-                    spot.Free = true;
+                    var ga = GetSpecialArea(p.X, p.Y);
+
+                    if (ga is GroupArea)
+                    {
+                        var spot = (ga as GroupArea).Spots.Find(s => s.Coordinates.Equals(p));
+                        spot.Free = true;
+                    }
                 }
             }
             else
             {
-                var ga = GetGroupArea(table.X, table.Y);
-                var spot = (ga as GroupArea).Spots.Find(s => s.Coordinates.Equals(new Point(table.X, table.Y)));
-                spot.Free = true;
+                var ga = GetSpecialArea(table.X, table.Y);
+
+                if (ga is SpecialArea)
+                {
+                    var spot = (ga as GroupArea).Spots.Find(s => s.Coordinates.Equals(new Point(table.X, table.Y)));
+                    spot.Free = true;
+                }
+                
             }
 
-            (GetGroupArea(table.X, table.Y) as GroupArea).RemoveTable(table);
+            var area = GetSpecialArea(table.X, table.Y);
+
+            if (area is GroupArea)
+            {
+                (area as GroupArea).RemoveTable(table);
+            }
         }
 
         /// <summary>
@@ -470,7 +463,7 @@ namespace RestaurantSimulation
         {
             var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
             (t as Table).TableSize >= group.GroupSize && !(t as Table).OnWA);
-            var availableBar = componentOnPlan.Find(c=> c is Bar&&(c as Bar).Available && (c as Bar).GetSize() >= group.GroupSize);
+            var availableBar = componentOnPlan.Find(c => c is Bar && (c as Bar).Available && (c as Bar).GetSize() >= group.GroupSize);
 
             if (group.MealT != mealType.drinks)
             {
@@ -529,7 +522,8 @@ namespace RestaurantSimulation
 
         /* This method starts/resumes a simulation. The interval of the timer depends on the custFlow parameter.
          * After the interval elapses new custgroup will be generated. */
-        public string StartSimulation(int custFlow, int lunchTime, int dinnerTime, int drinkTime, bool peakHour, bool runSimulation)
+        public string StartSimulation(int custFlow, int lunchTime, int dinnerTime, int drinkTime, bool peakHour, bool runSimulation,
+            TimeOfDay timeOfDay)
         {
             var tablesCount = componentOnPlan.Count(c => c is Table);
 
@@ -642,7 +636,7 @@ namespace RestaurantSimulation
         // This is executed everytime the timer interval elapses.
         private void TotalTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var generatedGroup = GenerateGroup(dinnerDuration, lunchDuration,drinkDuration);
+            var generatedGroup = GenerateGroup(dinnerDuration, lunchDuration, drinkDuration);
 
             if (!CheckForFreeTable(generatedGroup))
             {
@@ -754,7 +748,8 @@ namespace RestaurantSimulation
             {
                 IFormatter formatter = new BinaryFormatter();
 
-                formatter.Serialize(stream, Instance);
+                RestaurantPlan plan = RestaurantPlan.Instance;
+                formatter.Serialize(stream, plan);
 
                 return "Simulation successfully saved!";
             }
@@ -764,7 +759,7 @@ namespace RestaurantSimulation
             }
             finally
             {
-                stream.Dispose();
+                stream.Close();
             }
         }
 
@@ -776,13 +771,12 @@ namespace RestaurantSimulation
             {
                 IFormatter formatter = new BinaryFormatter();
 
-                RestaurantPlan save = (RestaurantPlan)formatter.Deserialize(stream);
+                RestaurantPlan save = (RestaurantPlan) formatter.Deserialize(stream);
 
                 // Clear all the lists
                 customerList.Clear();
                 componentOnPlan.Clear();
                 lobby.ClearLobby();
-
 
                 // Populate all the lists with the saved objects
                 LoadComponents(save.componentOnPlan);
@@ -807,7 +801,7 @@ namespace RestaurantSimulation
             }
             finally
             {
-                stream.Dispose();
+                stream.Close();
             }
         }
 
@@ -854,14 +848,6 @@ namespace RestaurantSimulation
             {
                 (wa as WaitingArea).LoadTableList(tables);
             }
-        }
-
-        // A method called when serializing a RestaurantPlan.
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            // Instead of serializing this object, 
-            // serialize a SingletonSerializationHelp instead.
-            info.SetType(typeof(SingletonSerializationHelper));
         }
     }
 }

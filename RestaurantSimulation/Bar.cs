@@ -7,11 +7,13 @@ using System.Drawing;
 
 namespace RestaurantSimulation
 {
+    [Serializable]
     class Bar : Component
     {
         private int id;
         private static int count;
         private int size;
+
         public bool Available { get; set; }
 
         public CustomerGroup Customers { get; set; }
@@ -24,9 +26,7 @@ namespace RestaurantSimulation
             : base(p)
         {
             this.size = size;
-            this.id = count;
             this.Available = true;
-            count++;
         }
 
         //Draw Bar
@@ -56,6 +56,8 @@ namespace RestaurantSimulation
                 g.DrawString(0 + "/" + Convert.ToString(size), newFont, Brushes.Black, (X * 40) + 1, (Y * 40) + 10);
             }
 
+            newFont = new Font("Arial", 10);
+            g.DrawString(id.ToString(), newFont, Brushes.Black, (X * 40), (Y * 40));
         }
 
 
@@ -75,14 +77,10 @@ namespace RestaurantSimulation
             Available = true;
         }
 
-        public override void DecreaseCount()
+        public void AssignID()
         {
-            count--;
-        }
-
-        public override void DecreaseID()
-        {
-            id--;
+            this.id = count;
+            count++;
         }
 
         public override int GetSize()

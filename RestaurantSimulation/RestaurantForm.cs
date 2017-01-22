@@ -66,6 +66,10 @@ namespace RestaurantSimulation
             toolTip1.SetToolTip(nudDinnerDuration, "The time in seconds for a customer group to have dinner.");
             toolTip1.SetToolTip(nudLunchDuration, "The time in seconds for a customer group to have lunch.");
             toolTip1.SetToolTip(nudLunchDuration, "The time in seconds for which a customer group will be generated.");
+            toolTip1.SetToolTip(nudCustomerFlow, "The time in seconds that a group of customers will be generated.");
+            toolTip1.SetToolTip(cbPeakHour, "If this is checked, customers will be generated every 0.5 seconds.");
+            toolTip1.SetToolTip(rbNoon, "If checked the simulation will be during lunch time.");
+            toolTip1.SetToolTip(rbEvening, "If checked the simulation will be during dinner time.");
 
             timer = new Timer();
             timer.Interval = 500;
@@ -84,6 +88,9 @@ namespace RestaurantSimulation
             btnPause.Enabled = false;
 
             filename = null;
+
+            rbSize2.Checked = true;
+            rbEvening.Checked = true;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -371,7 +378,9 @@ namespace RestaurantSimulation
             int dinnerTime = Convert.ToInt32(nudDinnerDuration.Value);
             int drinkTime = Convert.ToInt32(nudDrinkDuration.Value);
             bool peakHourOption = cbPeakHour.Checked ? true : false;
-            string message = newPlan.StartSimulation(customerFlow, lunchTime, dinnerTime,drinkTime, peakHourOption, true);
+            TimeOfDay timeOfDay = rbEvening.Checked ? TimeOfDay.evening : TimeOfDay.afternoon;
+            string message = newPlan.StartSimulation(customerFlow, lunchTime, dinnerTime,drinkTime, peakHourOption, true,
+                timeOfDay);
 
             if (message != null)
             {

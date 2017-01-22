@@ -14,6 +14,7 @@ namespace RestaurantSimulation
         private static int count = 0;
 
         public int ID { get; set; }
+
         public int TableSize { get; set; }
 
         // Boolean indicating whether the table is on group area spot or not.
@@ -43,8 +44,6 @@ namespace RestaurantSimulation
             OnGA = false;
             OnSA = false;
             OnWA = false;
-            this.ID = count;
-            count++;
         }
 
         /// <summary>
@@ -104,14 +103,11 @@ namespace RestaurantSimulation
             }
         }
 
-        public override void DecreaseCount()
+        // Assigns an id number to the table using the static field count.
+        public void AssignID()
         {
-            count -= 1;
-        }
-
-        public override void DecreaseID()
-        {
-            ID--;
+            this.ID = count;
+            count++;
         }
 
         public override int GetSize()

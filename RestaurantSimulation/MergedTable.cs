@@ -125,8 +125,20 @@ namespace RestaurantSimulation
             }
 
             Font newFont = new Font("Arial", 16);
-            g.DrawString(TableSize.ToString(), newFont, Brushes.Black, (X * 40) + 10, (Y * 40) + 10);
-            g.DrawString(ID.ToString(), new Font("Arial", 10), Brushes.Black, (X * 40), (Y * 40));
+            
+            if (Customers != null)
+            {
+                g.DrawString(Customers.GroupSize.ToString() + "/" + TableSize.ToString(), newFont, Brushes.Black,
+                    (X * 40) + 1, (Y * 40) + 10);
+            }
+            else
+            {
+                g.DrawString(0 + "/" + TableSize.ToString(), newFont, Brushes.Black,
+                    (X * 40) + 1, (Y * 40) + 10);
+            }
+
+            newFont = new Font("Arial", 10);
+            g.DrawString(ID.ToString(), newFont, Brushes.Black, (X * 40), (Y * 40));
         }
 
         /* Checks if a tables coordinates are the same as
@@ -144,21 +156,10 @@ namespace RestaurantSimulation
             return false;
         }
 
-        public override void DecreaseCount()
-        {
-            count--;
-        }
-
-        public override void DecreaseID()
-        {
-            ID--;
-        }
-
         //For Unmerging 
         public override int GetSize()
         {
             throw new NotImplementedException();
         }
-
     }
 }

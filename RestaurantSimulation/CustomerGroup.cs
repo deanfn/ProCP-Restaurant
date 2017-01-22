@@ -57,9 +57,9 @@ namespace RestaurantSimulation
             int size = 0;
             if (m != mealType.drinks)
             {
-                /* If the number is less or equal to 10 the group will be with size 1 to 4 people,
+                /* If the number is less or equal to 5 the group will be with size 1 to 4 people,
                  * else the group will be larger, up to 16 people. */
-                if (r.Next(1, 11) <= 10)
+                if (r.Next(1, 11) <= 5)
                 {
                     return size = r.Next(1, 5);
                 }
@@ -92,15 +92,15 @@ namespace RestaurantSimulation
 
         public mealType? DinnerOrLunch(mealType? m)
         {
-            switch (r.Next(1, 4))
+            if (RestaurantPlan.Instance.TimeOfDay == TimeOfDay.afternoon)
             {
-                case 1:
-                    return m = mealType.dinner;
-                case 2:
-                    return m = mealType.lunch;
-                case 3:
-                    return m = mealType.drinks;
+                m = r.Next(1, 6) <= 4 ? mealType.lunch : mealType.drinks;
             }
+            else
+            {
+                m = r.Next(1, 20) <= 13 ? mealType.dinner : mealType.drinks;
+            }
+
             return m;
         }
 
@@ -151,10 +151,10 @@ namespace RestaurantSimulation
         [OnDeserialized]
         internal void OnDeserializedMethod(StreamingContext context)
         {
-            t = new Timer(SetInterval(meal, dinnerTime, lunchTime, drinkTime));
+            Timer t = new Timer(SetInterval(meal, dinnerTime, lunchTime, drinkTime));
             t.Elapsed += OnTimedEvent;
 
-            wait = new Timer();
+            Timer wait = new Timer();
             wait.Elapsed += Leave;
         }
 

@@ -22,8 +22,6 @@ namespace RestaurantSimulation
         }
 
         public abstract void Draw(Graphics g);
-        public abstract void DecreaseCount();
-        public abstract void DecreaseID();
         public abstract int GetSize();
         
     }

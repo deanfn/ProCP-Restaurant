@@ -31,8 +31,10 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lblPeakHourInfo = new System.Windows.Forms.Label();
             this.nudCustomerFlow = new System.Windows.Forms.NumericUpDown();
+            this.nudDrinkDuration = new System.Windows.Forms.NumericUpDown();
             this.nudDinnerDuration = new System.Windows.Forms.NumericUpDown();
             this.nudLunchDuration = new System.Windows.Forms.NumericUpDown();
+            this.lblDrinkDuration = new System.Windows.Forms.Label();
             this.lblDinnerDuration = new System.Windows.Forms.Label();
             this.lblLunchDuration = new System.Windows.Forms.Label();
             this.cbPeakHour = new System.Windows.Forms.CheckBox();
@@ -76,10 +78,11 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveSimulationDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblDrinkDuration = new System.Windows.Forms.Label();
-            this.nudDrinkDuration = new System.Windows.Forms.NumericUpDown();
+            this.rbNoon = new System.Windows.Forms.RadioButton();
+            this.rbEvening = new System.Windows.Forms.RadioButton();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCustomerFlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDrinkDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDinnerDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLunchDuration)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -88,7 +91,6 @@
             this.gbSimulationOverview.SuspendLayout();
             this.gbStartStopPause.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDrinkDuration)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -150,6 +152,28 @@
             0,
             0});
             // 
+            // nudDrinkDuration
+            // 
+            this.nudDrinkDuration.Location = new System.Drawing.Point(218, 114);
+            this.nudDrinkDuration.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.nudDrinkDuration.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudDrinkDuration.Name = "nudDrinkDuration";
+            this.nudDrinkDuration.Size = new System.Drawing.Size(51, 20);
+            this.nudDrinkDuration.TabIndex = 10;
+            this.nudDrinkDuration.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
             // nudDinnerDuration
             // 
             this.nudDinnerDuration.Location = new System.Drawing.Point(218, 87);
@@ -193,6 +217,15 @@
             0,
             0,
             0});
+            // 
+            // lblDrinkDuration
+            // 
+            this.lblDrinkDuration.AutoSize = true;
+            this.lblDrinkDuration.Location = new System.Drawing.Point(129, 116);
+            this.lblDrinkDuration.Name = "lblDrinkDuration";
+            this.lblDrinkDuration.Size = new System.Drawing.Size(78, 13);
+            this.lblDrinkDuration.TabIndex = 8;
+            this.lblDrinkDuration.Text = "Drink Duration:";
             // 
             // lblDinnerDuration
             // 
@@ -531,6 +564,8 @@
             // 
             // gbStartStopPause
             // 
+            this.gbStartStopPause.Controls.Add(this.rbNoon);
+            this.gbStartStopPause.Controls.Add(this.rbEvening);
             this.gbStartStopPause.Controls.Add(this.btnStop);
             this.gbStartStopPause.Controls.Add(this.btnPause);
             this.gbStartStopPause.Controls.Add(this.btnStart);
@@ -620,36 +655,27 @@
             this.saveSimulationDataToolStripMenuItem.Text = "Save Simulation Data";
             this.saveSimulationDataToolStripMenuItem.Click += new System.EventHandler(this.saveSimulationDataToolStripMenuItem_Click);
             // 
-            // lblDrinkDuration
+            // rbNoon
             // 
-            this.lblDrinkDuration.AutoSize = true;
-            this.lblDrinkDuration.Location = new System.Drawing.Point(129, 116);
-            this.lblDrinkDuration.Name = "lblDrinkDuration";
-            this.lblDrinkDuration.Size = new System.Drawing.Size(78, 13);
-            this.lblDrinkDuration.TabIndex = 8;
-            this.lblDrinkDuration.Text = "Drink Duration:";
+            this.rbNoon.AutoSize = true;
+            this.rbNoon.Location = new System.Drawing.Point(23, 145);
+            this.rbNoon.Name = "rbNoon";
+            this.rbNoon.Size = new System.Drawing.Size(51, 17);
+            this.rbNoon.TabIndex = 13;
+            this.rbNoon.TabStop = true;
+            this.rbNoon.Text = "Noon";
+            this.rbNoon.UseVisualStyleBackColor = true;
             // 
-            // nudDrinkDuration
+            // rbEvening
             // 
-            this.nudDrinkDuration.Location = new System.Drawing.Point(218, 114);
-            this.nudDrinkDuration.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.nudDrinkDuration.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudDrinkDuration.Name = "nudDrinkDuration";
-            this.nudDrinkDuration.Size = new System.Drawing.Size(51, 20);
-            this.nudDrinkDuration.TabIndex = 10;
-            this.nudDrinkDuration.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
+            this.rbEvening.AutoSize = true;
+            this.rbEvening.Location = new System.Drawing.Point(93, 145);
+            this.rbEvening.Name = "rbEvening";
+            this.rbEvening.Size = new System.Drawing.Size(64, 17);
+            this.rbEvening.TabIndex = 14;
+            this.rbEvening.TabStop = true;
+            this.rbEvening.Text = "Evening";
+            this.rbEvening.UseVisualStyleBackColor = true;
             // 
             // RestaurantForm
             // 
@@ -668,6 +694,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCustomerFlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDrinkDuration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDinnerDuration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLunchDuration)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -677,9 +704,9 @@
             this.gbSimulationOverview.ResumeLayout(false);
             this.gbSimulationOverview.PerformLayout();
             this.gbStartStopPause.ResumeLayout(false);
+            this.gbStartStopPause.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDrinkDuration)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -737,6 +764,8 @@
         private System.Windows.Forms.ToolStripMenuItem saveSimulationDataToolStripMenuItem;
         private System.Windows.Forms.NumericUpDown nudDrinkDuration;
         private System.Windows.Forms.Label lblDrinkDuration;
+        private System.Windows.Forms.RadioButton rbNoon;
+        private System.Windows.Forms.RadioButton rbEvening;
     }
 }
 
