@@ -56,13 +56,12 @@
       <DependentUpon>RestaurantForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MergedTable.cs" />
-    <Compile Include="OutOfRangeException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestaurantPlan.cs" />
     <Compile Include="SingletonSerializationHelper.cs" />
     <Compile Include="SmokeArea.cs" />
-    <Compile Include="SpecialAreas.cs" />
+    <Compile Include="SpecialArea.cs" />
     <Compile Include="Spot.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="WaitingArea.cs" />

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace RestaurantSimulation
 {
     [Serializable]
-    class GroupArea : SpecialAreas
+    class GroupArea : SpecialArea
     {
         private static List<Component> tablesList = new List<Component>();
         private const int maxTables = 10;

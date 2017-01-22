@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace RestaurantSimulation
 {
     [Serializable]
-    class SpecialAreas : Component
+    class SpecialArea : Component
     {
         // List of spots
         public List<Spot> Spots { get; set; }
 
-        public SpecialAreas(Point coordinates) : base(coordinates)
+        public SpecialArea(Point coordinates) : base(coordinates)
         {
             Spots = new List<Spot>();
             Spots.Add(new Spot(new Point(coordinates.X / 40, coordinates.Y / 40)));

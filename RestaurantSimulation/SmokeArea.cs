@@ -8,7 +8,7 @@ using System.Drawing;
 namespace RestaurantSimulation
 {
     [Serializable]
-    class SmokeArea : SpecialAreas
+    class SmokeArea : SpecialArea
     {
         private static List<Component> tablesList = new List<Component>();
         private const int maxTables = 5;

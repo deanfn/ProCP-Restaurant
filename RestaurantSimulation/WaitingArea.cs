@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace RestaurantSimulation
 {
     [Serializable]
-    class WaitingArea : SpecialAreas
+    class WaitingArea : SpecialArea
     {
         private const int maxTables = 6;
         private static List<Component> tablesList = new List<Component>();

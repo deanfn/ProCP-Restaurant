@@ -16,7 +16,7 @@ namespace RestaurantSimulation
     enum TimeOfDay { afternoon, evening }
 
     [Serializable]
-    sealed class RestaurantPlan
+    sealed class RestaurantPlan : ISerializable
     {
         private static readonly RestaurantPlan instance = new RestaurantPlan();
         private List<Component> componentOnPlan;
@@ -28,7 +28,7 @@ namespace RestaurantSimulation
         // Lobby object. Note the Lobby class is singleton, only one object can exists.
         private Lobby lobby;
 
-        // Fields to store the duration of the lunch and dinner respectively.
+        // Fields to store the duration of the lunch, dinner and drinking respectively.
         private int lunchDuration;
         private int dinnerDuration;
         private int drinkDuration;
@@ -166,9 +166,8 @@ namespace RestaurantSimulation
             return true;
         }
 
-        /* Returns the the table that is located
-         * at the specified coordinates. Null if there
-         * is no such table. */
+        /* Returns the mergedtable that is located
+         * at the specified coordinates. Table/Bar otherwise. */
         public Component GetComponent(int x, int y)
         {
             var mergedTables = componentOnPlan.FindAll(t => t is MergedTable);
@@ -207,18 +206,18 @@ namespace RestaurantSimulation
         }
         /* Checks whether two points are within a Special area and if they are
         * returns that special area, otherwise returns null. */
-        public SpecialAreas GetSpecialArea(int x, int y)
+        public SpecialArea GetSpecialArea(int x, int y)
         {
             // List of all group areas.
-            var specialAreas = componentOnPlan.FindAll(c => c is SpecialAreas);
+            var specialAreas = componentOnPlan.FindAll(c => c is SpecialArea);
 
             foreach (var areas in specialAreas)
             {
-                foreach (var point in (areas as SpecialAreas).Spots)
+                foreach (var point in (areas as SpecialArea).Spots)
                 {
                     if ((x == point.Coordinates.X && y == point.Coordinates.Y))
                     {
-                        return (SpecialAreas)areas;
+                        return (SpecialArea)areas;
                     }
                 }
             }
@@ -234,7 +233,7 @@ namespace RestaurantSimulation
                 return true;
         }
 
-        public bool RemoveComponent(Component c = null, SpecialAreas sa = null)
+        public bool RemoveComponent(Component c = null, SpecialArea sa = null)
         {
             int ComCounter = 0;
 
@@ -246,7 +245,7 @@ namespace RestaurantSimulation
                     {
                         if (c.X == com.X && c.Y == com.Y)
                         {
-                            if (c is Table || c is Bar || c is MergedTable || c is SpecialAreas)
+                            if (c is Table || c is Bar || c is MergedTable || c is SpecialArea)
                             {
                                 for (int i = ComCounter; i < componentOnPlan.Count; i++)
                                 {
@@ -461,7 +460,7 @@ namespace RestaurantSimulation
         // Creates a Customer group on TimerTick.
         private CustomerGroup GenerateGroup(int dinnerTime, int lunchTime, int drinkTime)
         {
-            var custGroup = new CustomerGroup(dinnerTime, lunchTime,drinkTime);
+            var custGroup = new CustomerGroup(dinnerTime, lunchTime, drinkTime);
 
             return custGroup;
         }
@@ -529,8 +528,8 @@ namespace RestaurantSimulation
         }
 
         /* This method starts/resumes a simulation. The interval of the timer depends on the custFlow parameter.
-         * After the interval elapse new custgroup will be generated. */
-        public string StartSimulation(int custFlow, int lunchTime, int dinnerTime,int drinkTime, bool peakHour, bool runSimulation)
+         * After the interval elapses new custgroup will be generated. */
+        public string StartSimulation(int custFlow, int lunchTime, int dinnerTime, int drinkTime, bool peakHour, bool runSimulation)
         {
             var tablesCount = componentOnPlan.Count(c => c is Table);
 
@@ -857,5 +856,12 @@ namespace RestaurantSimulation
             }
         }
 
+        // A method called when serializing a RestaurantPlan.
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            // Instead of serializing this object, 
+            // serialize a SingletonSerializationHelp instead.
+            info.SetType(typeof(SingletonSerializationHelper));
+        }
     }
 }
