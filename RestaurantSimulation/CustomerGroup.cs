@@ -106,7 +106,14 @@ namespace RestaurantSimulation
 
         public void StartEating()
         {
+            try
+            {
             t.Start();
+            }
+            catch(ObjectDisposedException)
+            {
+                StopWaiting();
+            }
         }
 
         public void OnTimedEvent(object source, ElapsedEventArgs e)
