@@ -106,20 +106,13 @@ namespace RestaurantSimulation
 
         public void StartEating()
         {
-            try
-            {
             t.Start();
-            }
-            catch(ObjectDisposedException)
-            {
-                StopWaiting();
-            }
         }
 
         public void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             t.Stop();
-            t.Dispose();
+            
             if (meal != mealType.drinks)
             {
                 RestaurantPlan.Instance.FinishEating(this);
@@ -139,7 +132,6 @@ namespace RestaurantSimulation
         public void StopWaiting()
         {
             wait.Stop();
-            wait.Dispose();
         }
 
         public void Leave(object sender, ElapsedEventArgs e)

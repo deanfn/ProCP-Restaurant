@@ -383,7 +383,7 @@ namespace RestaurantSimulation
                     var spot = (ga as GroupArea).Spots.Find(s => s.Coordinates.Equals(new Point(table.X, table.Y)));
                     spot.Free = true;
                 }
-                
+
             }
 
             var area = GetSpecialArea(table.X, table.Y);
@@ -441,8 +441,16 @@ namespace RestaurantSimulation
         private bool CheckForFreeTable(CustomerGroup group)
         {
             var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
-            (t as Table).TableSize >= group.GroupSize && !(t as Table).OnWA);
-            var availableBar = componentOnPlan.Find(c => c is Bar && (c as Bar).Available && (c as Bar).GetSize() >= group.GroupSize);
+                (t as Table).TableSize >= group.GroupSize && !(t as Table).OnWA);
+            var availableBar = componentOnPlan.Find(c => c is Bar && (c as Bar).Available &&
+            (c as Bar).GetSize() >= group.GroupSize);
+
+            if (group.GroupSize <= 4)
+            {
+                availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+                (t as Table).TableSize >= group.GroupSize && ((t as Table).TableSize - group.GroupSize) <= 3 &&
+                !(t as Table).OnWA);
+            }
 
             if (group.MealT != mealType.drinks)
             {
@@ -600,7 +608,7 @@ namespace RestaurantSimulation
                         var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
                         (t as Table).TableSize >= lobbyGroups[j].GroupSize && !(t as Table).OnWA);
 
-                        if (availableTable != null)
+                        if (availableTable != null && lobbyGroups[j].MealT != mealType.drinks)
                         {
                             (availableTable as Table).SeatCustomersAtTable(lobbyGroups[j]);
                             customerList.Add(lobbyGroups[j]);
@@ -688,6 +696,7 @@ namespace RestaurantSimulation
                 (table as Table).ClearTable();
             }
         }
+
         public void FinishDrinking(CustomerGroup group)
         {
             var bar = componentOnPlan.Find(c => c is Bar && !(c as Bar).Available &&
@@ -750,7 +759,7 @@ namespace RestaurantSimulation
             {
                 IFormatter formatter = new BinaryFormatter();
 
-                RestaurantPlan save = (RestaurantPlan) formatter.Deserialize(stream);
+                RestaurantPlan save = (RestaurantPlan)formatter.Deserialize(stream);
 
                 // Clear all the lists
                 customerList.Clear();
