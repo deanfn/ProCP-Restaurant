@@ -605,7 +605,7 @@ namespace RestaurantSimulation
 
                     for (int j = 0; j < lobbyGroups.Count; j++)
                     {
-                        var availableTable = componentOnPlan.Find(t => t is Table && (t as Table).Available &&
+                        var availableTable = componentOnPlan.FirstOrDefault(t => t is Table && (t as Table).Available &&
                         (t as Table).TableSize >= lobbyGroups[j].GroupSize && !(t as Table).OnWA);
 
                         if (availableTable != null && lobbyGroups[j].MealT != mealType.drinks)
