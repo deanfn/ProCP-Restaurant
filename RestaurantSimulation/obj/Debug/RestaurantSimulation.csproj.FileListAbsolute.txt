@@ -43,12 +43,11 @@ C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\Re
 C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csproj.GenerateResource.Cache
 C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
 C:\Users\edgars\Desktop\ProCP\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
-C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe.config
-C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
-C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb
-C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe
-C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
 C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.RestaurantForm.resources
 C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.Properties.Resources.resources
 C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csproj.GenerateResource.Cache
-C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.csprojResolveAssemblyReference.cache
+C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe.config
+C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.exe
+C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\bin\Debug\RestaurantSimulation.pdb
+C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.exe
+C:\Users\edgars\Desktop\ProCP\ProCP_Sprint1_Deliverables\RestaurantSimulation\ProCP-Restaurant\RestaurantSimulation\obj\Debug\RestaurantSimulation.pdb

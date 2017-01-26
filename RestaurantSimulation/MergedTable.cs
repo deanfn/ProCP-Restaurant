@@ -105,6 +105,9 @@ namespace RestaurantSimulation
             int width = 39;
             int height = 39;
 
+            //Font
+            Font newFont;
+
             Image i = (Bitmap)Properties.Resources.MergedTable;
 
             if (TableSize == 4)
@@ -124,7 +127,15 @@ namespace RestaurantSimulation
                 g.DrawImage(i, col + 80, row, width, height);
             }
 
-            Font newFont = new Font("Arial", 16);
+            if(TableSize<=10)
+            {
+                newFont = new Font("Arial", 16);
+            }
+            else
+            {
+                newFont = new Font("Arial", 12);
+            }
+            
             
             if (Customers != null)
             {
